@@ -76,6 +76,7 @@ SIGNAL QkWrEN : STD_LOGIC; --
 
 SIGNAL Comp1Out : STD_LOGIC;
 SIGNAL Comp2Out : STD_LOGIC;
+SIGNAL Comp3Out : STD_LOGIC;
 
 SIGNAL Inv_Op_Input : STD_LOGIC_VECTOR (1 downto 0);
 SIGNAL Inv_Op_Output : STD_LOGIC_VECTOR (1 downto 0);
@@ -123,15 +124,21 @@ OpREG : Register2 Port Map (
            Rst =>RST);
 -- Comparator
 
+-- CDBQ == Qj
 Comp1 : CompareModule Port Map( 
 		   In0 =>CDBQ,
            In1 =>QjInternal,
            DOUT =>Comp1Out );
-
+-- CDBQ == Qk
 Comp2 : CompareModule Port Map( 
 		   In0 =>CDBQ,
            In1 =>QkInternal,
            DOUT =>Comp2Out );
+-- CDBQ == 00000
+Comp3 : CompareModule Port Map( 
+		   In0 =>CDBQ,
+           In1 =>"00000",
+           DOUT =>Comp3Out );
 
 
 -- Input-Output Invertion (For Correct Reset)
@@ -159,11 +166,11 @@ QjInput(2) <= Qj(2) AND (NOT Comp1Out);
 QjInput(3) <= Qj(3) AND (NOT Comp1Out);
 QjInput(4) <= Qj(4) AND (NOT Comp1Out);
 
-QkInput(0) <= Qj(0) AND (NOT Comp2Out);
-QkInput(1) <= Qj(1) AND (NOT Comp2Out);
-QkInput(2) <= Qj(2) AND (NOT Comp2Out);
-QkInput(3) <= Qj(3) AND (NOT Comp2Out);
-QkInput(4) <= Qj(4) AND (NOT Comp2Out);
+QkInput(0) <= Qk(0) AND (NOT Comp2Out);
+QkInput(1) <= Qk(1) AND (NOT Comp2Out);
+QkInput(2) <= Qk(2) AND (NOT Comp2Out);
+QkInput(3) <= Qk(3) AND (NOT Comp2Out);
+QkInput(4) <= Qk(4) AND (NOT Comp2Out);
 
 -- Multiplex V Inputs
 
@@ -177,10 +184,10 @@ with Comp2Out select
 
 -- Registers WrEn ORing
 
-VjWrEN <= WrEn OR Comp1Out ;
-VkWrEN <= WrEn OR Comp2Out ;
+VjWrEN <= WrEn OR (Comp1Out AND (NOT Comp3Out)) ;
+VkWrEN <= WrEn OR (Comp2Out AND (NOT Comp3Out)) ;
 
-QjWrEN <= WrEn OR Comp1Out ;
-QkWrEN <= WrEn OR Comp2Out ;
+QjWrEN <= WrEn OR (Comp1Out AND (NOT Comp3Out)) ;
+QkWrEN <= WrEn OR (Comp2Out AND (NOT Comp3Out)) ;
 
 end Behavioral;

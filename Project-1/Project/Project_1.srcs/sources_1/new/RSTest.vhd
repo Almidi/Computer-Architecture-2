@@ -88,6 +88,35 @@ begin
         RST <= '0';
         wait for 100 ns;
 
+        Vj <= "00000000000000000000000000000010";
+        Vk <= "00000000000000000000000000000100";
+        Qj <= "00010";
+        Qk <= "00100";
+
+        wait for  TbPeriod;
+        WrEn <= '1' ;
+        wait for  TbPeriod;
+        WrEn <= '0' ;
+
+        wait for  5* TbPeriod;
+
+        -- CDB STIMULATION
+
+        CDBV <= "00000000000000011000000000000010";
+        CDBQ <= "00010";
+
+        wait for  TbPeriod;
+
+        CDBQ <= "00000";
+
+        CDBV <= "00000000000000011000000011000010";
+        CDBQ <= "00100";
+
+        wait for  TbPeriod;
+
+        CDBV <= "00000000000000000000000000000000";
+        CDBQ <= "00000";
+
         -- EDIT Add stimuli here
         wait for 100 * TbPeriod;
 

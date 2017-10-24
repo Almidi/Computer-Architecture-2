@@ -14,9 +14,10 @@ process(Rst,Clk)
 begin
     if Rst='1' then
         DataOut<=std_logic_vector(to_unsigned(0,2));
-    	if WrEn='1' then
-    		DataOut<=DataIn;
-    	end if;
+    elsif rising_edge(Clk) then
+      if WrEn='1' then
+        DataOut<=DataIn;
+      end if;
     end if;
 end process;
 end Behavioral;
