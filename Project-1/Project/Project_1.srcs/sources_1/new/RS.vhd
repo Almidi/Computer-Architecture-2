@@ -55,6 +55,11 @@ SIGNAL QkInternal : STD_LOGIC_VECTOR (4 downto 0);
 SIGNAL VjWrEN : STD_LOGIC; -- TODO: OR these things correctly
 SIGNAL VkWrEN : STD_LOGIC; --
 
+SIGNAL Inv_Op_Input : STD_LOGIC_VECTOR (1 downto 0);
+SIGNAL Inv_Op_Output : STD_LOGIC_VECTOR (1 downto 0);
+
+SIGNAL BUSY : STD_LOGIC; --
+
 
 
 begin
@@ -89,11 +94,16 @@ QkREG : Register5 Port Map (
            Rst =>RST);
 
 OpREG : Register2 Port Map ( 
-		   DataIn =>Op,
+		   DataIn =>Inv_Op_Input,
            WrEn =>WrEn,
            Clk =>CLK,
-           DataOut =>OpOut,
+           DataOut =>Inv_Op_Output,
            Rst =>RST);
+
+
+BusyOut <= OpOut(0) NOR OpOut(1) ;
+Inv_Op_Input <= NOT Op ;
+OpOut <= NOT Inv_Op_Output ;
 
 
 end Behavioral;
