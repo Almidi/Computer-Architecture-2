@@ -12,7 +12,7 @@ entity RS is
            Vk : in STD_LOGIC_VECTOR (31 downto 0);
            Qj : in STD_LOGIC_VECTOR (4 downto 0);
            Qk : in STD_LOGIC_VECTOR (4 downto 0);
-           OpOut : out STD_LOGIC_VECTOR (2 downto 0);
+           OpOut : out STD_LOGIC_VECTOR (1 downto 0);
            VjOut : out STD_LOGIC_VECTOR (31 downto 0);
            VkOut : out STD_LOGIC_VECTOR (31 downto 0);
            ReadyOut : out STD_LOGIC;
@@ -41,10 +41,20 @@ component Register5 is
            DataOut : out STD_LOGIC_VECTOR (4 downto 0));
 end component;
 
+component Register2 is
+    Port ( DataIn : in STD_LOGIC_VECTOR (1 downto 0);
+           WrEn : in STD_LOGIC;
+           Rst : in STD_LOGIC;
+           Clk : in STD_LOGIC;
+           DataOut : out STD_LOGIC_VECTOR (1 downto 0));
+end component;
+
+
 SIGNAL QjInternal : STD_LOGIC_VECTOR (4 downto 0);
 SIGNAL QkInternal : STD_LOGIC_VECTOR (4 downto 0);
 SIGNAL VjWrEN : STD_LOGIC; -- TODO: OR these things correctly
 SIGNAL VkWrEN : STD_LOGIC; --
+
 
 
 begin
@@ -64,20 +74,26 @@ VkREG : Register32 Port Map (
            Rst =>RST);
 
 
-QkREG : Register5 Port Map ( 
-		   DataIn =>Vk,
+QjREG : Register5 Port Map ( 
+		   DataIn =>Qk,
            WrEn =>WrEn,
            Clk =>CLK,
            DataOut =>QjInternal,
            Rst =>RST);
 
 QkREG : Register5 Port Map ( 
-		   DataIn =>Vk,
+		   DataIn =>Qk,
            WrEn =>WrEn,
            Clk =>CLK,
            DataOut =>QkInternal,
            Rst =>RST);
 
+OpREG : Register2 Port Map ( 
+		   DataIn =>Op,
+           WrEn =>WrEn,
+           Clk =>CLK,
+           DataOut =>OpOut,
+           Rst =>RST);
 
 
 end Behavioral;
