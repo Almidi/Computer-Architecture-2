@@ -4,6 +4,7 @@
 
 library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;
+use IEEE.NUMERIC_STD.ALL;
 
 entity RS is
     Port ( WrEn : in STD_LOGIC;
@@ -49,17 +50,25 @@ component Register2 is
            DataOut : out STD_LOGIC_VECTOR (1 downto 0));
 end component;
 
+component CompareModule is
+    Port ( In0 : in  STD_LOGIC_VECTOR (4 downto 0);
+           In1 : in  STD_LOGIC_VECTOR (4 downto 0);
+           DOUT : out  STD_LOGIC);
+end component;
+
 
 SIGNAL QjInternal : STD_LOGIC_VECTOR (4 downto 0);
 SIGNAL QkInternal : STD_LOGIC_VECTOR (4 downto 0);
+SIGNAL Qj0 : STD_LOGIC; --
+SIGNAL Qk0 : STD_LOGIC; --
+
 SIGNAL VjWrEN : STD_LOGIC; -- TODO: OR these things correctly
 SIGNAL VkWrEN : STD_LOGIC; --
+SIGNAL Comp1Out : STD_LOGIC;
+SIGNAL Comp2Out : STD_LOGIC;
 
 SIGNAL Inv_Op_Input : STD_LOGIC_VECTOR (1 downto 0);
 SIGNAL Inv_Op_Output : STD_LOGIC_VECTOR (1 downto 0);
-
-SIGNAL BUSY : STD_LOGIC; --
-
 
 
 begin
@@ -100,10 +109,37 @@ OpREG : Register2 Port Map (
            DataOut =>Inv_Op_Output,
            Rst =>RST);
 
+Comp1 : CompareModule Port Map( 
+		   In0 =>CDBQ,
+           In1 =>QjInternal,
+           DOUT =>Comp1Out );
 
-BusyOut <= OpOut(0) NOR OpOut(1) ;
+Comp2 : CompareModule Port Map( 
+		   In0 =>CDBQ,
+           In1 =>QkInternal,
+           DOUT =>Comp2Out );
+
+
+-- Input-Output Invertion (For Correct Reset)
 Inv_Op_Input <= NOT Op ;
 OpOut <= NOT Inv_Op_Output ;
+
+-- Busy Signal
+BusyOut <= Inv_Op_Output(0) NOR Inv_Op_Output(1) ;
+
+-- Ready Signal 
+with QjInternal select
+	Qj0 <=      '0' when std_logic_vector(to_unsigned(0,5)),
+				'1' when others ;
+
+with QkInternal select
+	Qk0 <=      '0' when std_logic_vector(to_unsigned(0,5)),
+				'1' when others ;
+
+RD <= Qj0 NOR Qk0 ;
+
+
+
 
 
 end Behavioral;
