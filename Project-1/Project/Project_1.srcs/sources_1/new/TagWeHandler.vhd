@@ -1,45 +1,26 @@
-----------------------------------------------------------------------------------
--- Company: 
--- Engineer: 
--- 
--- Create Date: 10/24/2017 01:12:48 PM
--- Design Name: 
--- Module Name: TagWrEnHandler - Behavioral
--- Project Name: 
--- Target Devices: 
--- Tool Versions: 
--- Description: 
--- 
--- Dependencies: 
--- 
--- Revision:
--- Revision 0.01 - File Created
--- Additional Comments:
--- 
-----------------------------------------------------------------------------------
-
-
 library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;
-
--- Uncomment the following library declaration if using
--- arithmetic functions with Signed or Unsigned values
---use IEEE.NUMERIC_STD.ALL;
-
--- Uncomment the following library declaration if instantiating
--- any Xilinx leaf cells in this code.
---library UNISIM;
---use UNISIM.VComponents.all;
-
+use IEEE.NUMERIC_STD.ALL;
 entity TagWrEnHandler is
-    Port ( AddrW : in STD_LOGIC_VECTOR (31 downto 0);
+    Port ( AddrW : in STD_LOGIC_VECTOR (4 downto 0);
            WrEn : in STD_LOGIC;
            Output : out STD_LOGIC_VECTOR (31 downto 0));
 end TagWrEnHandler;
-
 architecture Behavioral of TagWrEnHandler is
-
+component Decoder5to32 is
+    Port ( Input : in STD_LOGIC_VECTOR (4 downto 0);
+           Output : out STD_LOGIC_VECTOR (31 downto 0));
+end component;
+signal decoderOut: std_logic_vector(31 downto 0);
 begin
+	Decoder5to32_0: Decoder5to32 port map(Input=>AddrW, Output=>decoderOut); 
 
-
+	process(AddrW,WrEn)
+	begin
+		if WrEn='1' then
+			Output<=decoderOut;
+		else
+			Output<=std_logic_vector(to_unsigned(0,32));
+		end if;
+	end process;
 end Behavioral;
