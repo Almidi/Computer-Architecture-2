@@ -2,7 +2,6 @@
 !.gitignore
 !*.vhd
 !*.wcfg
-!*.txt
 !*.data
 !*.pdf
 !*.png
