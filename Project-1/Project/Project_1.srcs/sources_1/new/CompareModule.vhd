@@ -7,5 +7,5 @@ entity CompareModule is
 end CompareModule;
 architecture Behavioral of CompareModule is
 begin
-	DOUT <= '1' when ((In1=In0) AND In1 /="00000") else '0';
+	DOUT <= '1' when ((In1=In0) AND In1 /="00000")	 else '0';
 end Behavioral;
