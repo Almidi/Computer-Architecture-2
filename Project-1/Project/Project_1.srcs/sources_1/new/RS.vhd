@@ -1,35 +1,9 @@
-----------------------------------------------------------------------------------
--- Company: 
--- Engineer: 
--- 
--- Create Date: 10/24/2017 01:12:17 PM
--- Design Name: 
--- Module Name: RS - Behavioral
--- Project Name: 
--- Target Devices: 
--- Tool Versions: 
--- Description: 
--- 
--- Dependencies: 
--- 
--- Revision:
--- Revision 0.01 - File Created
--- Additional Comments:
--- 
-----------------------------------------------------------------------------------
+-- Authors: Tzanis Fotakis
+--			Apostolos Vailakis
 
 
 library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;
-
--- Uncomment the following library declaration if using
--- arithmetic functions with Signed or Unsigned values
---use IEEE.NUMERIC_STD.ALL;
-
--- Uncomment the following library declaration if instantiating
--- any Xilinx leaf cells in this code.
---library UNISIM;
---use UNISIM.VComponents.all;
 
 entity RS is
     Port ( WrEn : in STD_LOGIC;
@@ -51,7 +25,59 @@ end RS;
 
 architecture Behavioral of RS is
 
+component Register32 is
+    Port ( DataIn : in STD_LOGIC_VECTOR (31 downto 0);
+           WrEn : in STD_LOGIC;
+           Clk : in STD_LOGIC;
+           DataOut : out STD_LOGIC_VECTOR (31 downto 0);
+           Rst : in STD_LOGIC);
+end component;
+
+component Register5 is
+    Port ( DataIn : in STD_LOGIC_VECTOR (4 downto 0);
+           WrEn : in STD_LOGIC;
+           Rst : in STD_LOGIC;
+           Clk : in STD_LOGIC;
+           DataOut : out STD_LOGIC_VECTOR (4 downto 0));
+end component;
+
+SIGNAL QjInternal : STD_LOGIC_VECTOR (4 downto 0);
+SIGNAL QkInternal : STD_LOGIC_VECTOR (4 downto 0);
+SIGNAL VjWrEN : STD_LOGIC; -- TODO: OR these things correctly
+SIGNAL VkWrEN : STD_LOGIC; --
+
+
 begin
+
+VjREG : Register32 Port Map (
+		   DataIn =>Vj,
+           WrEn =>VjWrEN,
+           Clk =>CLK,
+           DataOut =>VjOut,
+           Rst =>RST);
+
+VkREG : Register32 Port Map ( 
+		   DataIn =>Vk,
+           WrEn =>VkWrEN,
+           Clk =>CLK,
+           DataOut =>VkOut,
+           Rst =>RST);
+
+
+QkREG : Register5 Port Map ( 
+		   DataIn =>Vk,
+           WrEn =>WrEn,
+           Clk =>CLK,
+           DataOut =>QjInternal,
+           Rst =>RST);
+
+QkREG : Register5 Port Map ( 
+		   DataIn =>Vk,
+           WrEn =>WrEn,
+           Clk =>CLK,
+           DataOut =>QkInternal,
+           Rst =>RST);
+
 
 
 end Behavioral;
