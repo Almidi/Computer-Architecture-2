@@ -1,7 +1,7 @@
 library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;
 use work.Bus32pkg.ALL;
---use IEEE.NUMERIC_STD.ALL;
+use IEEE.NUMERIC_STD.ALL;
 entity RegisterFile is
     Port ( ReadAddr1 : in STD_LOGIC_VECTOR (4 downto 0);
            ReadAddr2 : in STD_LOGIC_VECTOR (4 downto 0);
@@ -45,16 +45,20 @@ architecture Structural of RegisterFile is
 	           In1 : in  STD_LOGIC_VECTOR (4 downto 0);
 	           DOUT : out  STD_LOGIC);
 	end component;
-	signal register32Out, register5Out: Bus32;
-	signal TagWrEnHandlerOut, ComparatorsOut: std_logic_vector(31 downto 0);
+	
+	type Bus5x32 is array (31 downto 0) of std_logic_vector(4 downto 0);
+	signal register32Out : Bus32;
+	signal register5Out: Bus5x32;
+	signal TagWrEnHandlerOut, ComparatorsOut, Register32WrEnSignal: std_logic_vector(31 downto 0);
+	signal isZero: std_logic;
 begin
 	Register32Generator:
 	for i in 0 to 31 generate
-		register32_i: Register32 port map(DataIn=>CDBV, WrEn=>ComparatorsOut(i), Clk=>Clk, DataOut=>register32Out(i), Rst=>Rst);
+		register32_i: Register32 port map(DataIn=>CDBV, WrEn=>Register32WrEnSignal(i), Clk=>Clk, DataOut=>register32Out(i), Rst=>Rst);
 	end generate;
 	Register5Generator:
 	for i in 0 to 31 generate
-		register5_i: Register5 port map(DataIn=>CDBQ, WrEn=>TagWrEnHandlerOut(i), Clk=>Clk, DataOut=>register5Out(i), Rst=>Rst);
+		register5_i: Register5 port map(DataIn=>Tag, WrEn=>TagWrEnHandlerOut(i), Clk=>Clk, DataOut=>register5Out(i), Rst=>Rst);
 	end generate;
 	BusMux32_1: BusMultiplexer32 port map(Input=>register32Out, Sel=>ReadAddr1, Output=>DataOut1);
 	BusMux32_2: BusMultiplexer32 port map(Input=>register32Out, Sel=>ReadAddr2, Output=>DataOut2);
@@ -62,5 +66,10 @@ begin
 	ComparatorsGenerators:
 	for i in 0 to 31 generate
 		comparator_i: CompareModule port map(In0=>CDBQ,In1=>register5Out(i),DOUT=>ComparatorsOut(i));
+	end generate;
+	CompareToZero: CompareModule port map(In0=>CDBQ,In1=>std_logic_vector(to_unsigned(0,5)),DOUT=>isZero);
+	Register32WrEnGenerator:
+	for i in 0 to 31 generate
+		Register32WrEnSignal(i)<=ComparatorsOut(i) and not isZero;
 	end generate;
 end Structural;

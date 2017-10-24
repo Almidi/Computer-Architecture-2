@@ -1,23 +1,22 @@
 library ieee;
 use ieee.std_logic_1164.all;
-
+use ieee.numeric_std.all;
 entity tb_RegisterFile is
 end tb_RegisterFile;
 
 architecture tb of tb_RegisterFile is
-
     component RegisterFile
-        port (ReadAddr1 : in std_logic_vector (4 downto 0);
-              ReadAddr2 : in std_logic_vector (4 downto 0);
-              CDBQ      : in std_logic_vector (4 downto 0);
-              CDBV      : in std_logic_vector (31 downto 0);
-              Tag       : in std_logic_vector (4 downto 0);
-              WrEn      : in std_logic;
-              AddrW     : in std_logic_vector (4 downto 0);
-              Clk       : in std_logic;
-              Rst       : in std_logic;
-              DataOut1  : out std_logic_vector (31 downto 0);
-              DataOut2  : out std_logic_vector (31 downto 0));
+        Port ( ReadAddr1 : in STD_LOGIC_VECTOR (4 downto 0);
+               ReadAddr2 : in STD_LOGIC_VECTOR (4 downto 0);
+               CDBQ : in STD_LOGIC_VECTOR (4 downto 0);
+               CDBV : in STD_LOGIC_VECTOR (31 downto 0);
+               Tag : in STD_LOGIC_VECTOR (4 downto 0);
+               WrEn : in STD_LOGIC;
+               AddrW : in STD_LOGIC_VECTOR (4 downto 0);
+               Clk : in STD_LOGIC;
+               Rst : in STD_LOGIC;
+               DataOut1 : out STD_LOGIC_VECTOR (31 downto 0);
+               DataOut2 : out STD_LOGIC_VECTOR (31 downto 0));
     end component;
 
     signal ReadAddr1 : std_logic_vector (4 downto 0);
@@ -32,7 +31,7 @@ architecture tb of tb_RegisterFile is
     signal DataOut1  : std_logic_vector (31 downto 0);
     signal DataOut2  : std_logic_vector (31 downto 0);
 
-    constant TbPeriod : time := 1000 ns; -- EDIT Put right period here
+    constant TbPeriod : time := 10 ns; -- EDIT Put right period here
     signal TbClock : std_logic := '0';
     signal TbSimEnded : std_logic := '0';
 
@@ -76,8 +75,17 @@ begin
         wait for 100 ns;
 
         -- EDIT Add stimuli here
-        wait for 100 * TbPeriod;
-
+        WrEn<='1';
+        for i in 0 to 31 loop
+       		AddrW<=std_logic_vector(to_unsigned(i,5));
+       		Tag<=std_logic_vector(to_unsigned(i,5));
+        	wait for 10 * TbPeriod;
+		end loop;
+		for i in 0 to 31 loop
+			CDBQ<=std_logic_vector(to_unsigned(i,5));
+			CDBV<=std_logic_vector(to_unsigned(i,32));
+			wait for 10 * TbPeriod;
+		end loop;
         -- Stop the clock and hence terminate the simulation
         TbSimEnded <= '1';
         wait;
