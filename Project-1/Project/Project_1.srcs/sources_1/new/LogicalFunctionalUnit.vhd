@@ -50,7 +50,6 @@ Signal TagReg2Input : STD_LOGIC_VECTOR (4 downto 0);
 Signal Reg1En : STD_LOGIC;
 Signal Reg2En : STD_LOGIC;
 
-Signal Reg0Nop : STD_LOGIC;
 Signal Reg1Nop : STD_LOGIC;
 
 Signal MaskerDataIn : STD_LOGIC_VECTOR (31 downto 0);
@@ -92,7 +91,7 @@ TagReg2 : Register5 Port Map (
            Rst =>RST);
 
 -- Functional Units
-AU : LogicalUnit Port Map (
+LU : LogicalUnit Port Map (
 		   Vj => Vj,
            Vk => Vk,
            Op => Op,
@@ -112,7 +111,7 @@ with En select
 --Register NOPs
 -- no need for register 2 NOP
 
-with DataReg2Input select
+with TagReg2Input select
 	Reg1Nop		<= '1' when "00000",
 				   '0' when others;
 
@@ -127,6 +126,6 @@ RequestOut <= NOT Reg1Nop ;
 
 -- Busy Signal
 
-BusyOut <= (Reg0Nop NOR Reg1Nop) AND (NOT Grant);
+BusyOut <= (NOT Reg1Nop) AND (NOT Grant);
 
 end Behavioral;

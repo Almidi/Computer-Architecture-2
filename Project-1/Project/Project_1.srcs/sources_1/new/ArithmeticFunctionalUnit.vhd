@@ -127,11 +127,11 @@ with En select
 --Register NOPs
 -- no need for register 2 NOP
 
-with DataReg1Input select
+with TagReg1Input select
 	Reg0Nop		<= '1' when "00000",
 				   '0' when others;
 
-with DataReg2Input select
+with TagReg2Input select
 	Reg1Nop		<= '1' when "00000",
 				   '0' when others;
 
