@@ -32,7 +32,7 @@ begin
 	process(Clk, Rst)
 	begin
 		if Rst='1' then
-			LogicalIssue<='0';
+			ArithmeticIssue<='0';
 			LogicalIssue<='0';
 			RFTag<=std_logic_vector(to_unsigned(0,5));
 			RFAddrW<=std_logic_vector(to_unsigned(0,5));
@@ -69,7 +69,7 @@ begin
 						Accepted<='0';
 					end if;
 				else
-					LogicalIssue<='0';
+					ArithmeticIssue<='0';
 					LogicalIssue<='0';
 					RFTag<=std_logic_vector(to_unsigned(0,5));
 					RFAddrW<=std_logic_vector(to_unsigned(0,5));
@@ -77,7 +77,7 @@ begin
 					Accepted<='0';
 				end if;
 			else
-				LogicalIssue<='0';
+				ArithmeticIssue<='0';
 				LogicalIssue<='0';
 				RFTag<=std_logic_vector(to_unsigned(0,5));
 				RFAddrW<=std_logic_vector(to_unsigned(0,5));
