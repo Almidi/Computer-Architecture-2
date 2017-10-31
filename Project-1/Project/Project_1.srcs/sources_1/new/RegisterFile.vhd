@@ -13,7 +13,9 @@ entity RegisterFile is
            Clk : in STD_LOGIC;
            Rst : in STD_LOGIC;
            DataOut1 : out STD_LOGIC_VECTOR (31 downto 0);
-           DataOut2 : out STD_LOGIC_VECTOR (31 downto 0));
+           Tag1Out: out STD_LOGIC_VECTOR (4 downto 0);
+           DataOut2 : out STD_LOGIC_VECTOR (31 downto 0);
+           Tag2Out: out STD_LOGIC_VECTOR (4 downto 0));
 end RegisterFile;
 architecture Structural of RegisterFile is
 	component Register32 is
