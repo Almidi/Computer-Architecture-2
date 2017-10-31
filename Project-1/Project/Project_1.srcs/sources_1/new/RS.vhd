@@ -56,7 +56,7 @@ component Register1 is
            WrEn : in STD_LOGIC;
            Rst : in STD_LOGIC;
            Clk : in STD_LOGIC;
-           DataOut : out STD_LOGIC;
+           DataOut : out STD_LOGIC);
 end component;
 
 component CompareModule is
@@ -89,7 +89,7 @@ SIGNAL Comp3Out : STD_LOGIC;
 
 SIGNAL BusyRegIn : STD_LOGIC;
 SIGNAL BusyRegWrEn : STD_LOGIC;
-
+SIGNAL IntBusyOut : STD_LOGIC;
 
 begin
 -- Busy Register
@@ -97,7 +97,7 @@ BREG : Register1 Port Map (
          DataIn =>BusyRegIn,
          WrEn =>BusyRegWrEn,
          Clk =>CLK,
-         DataOut =>BusyOut,
+         DataOut =>IntBusyOut,
          Rst =>RST);
 
 -- V Registers
@@ -160,8 +160,9 @@ Comp3 : CompareModule Port Map(
 -- Busy Signal Register
 BusyRegWrEn <= WrEn OR Ex ;
 BusyRegIn <= WrEn ;
+BusyOut <= IntBusyOut;
 
--- Ready Signal 
+-- Ready Signal (Ready to be excecuted)
 with QjInternal select
 	Qj0 <=      '0' when std_logic_vector(to_unsigned(0,5)),
 				      '1' when others ;
@@ -170,7 +171,7 @@ with QkInternal select
 	Qk0 <=      '0' when std_logic_vector(to_unsigned(0,5)),
 				      '1' when others ;
 
-ReadyOut <= (Qj0 NOR Qk0) AND Busy;
+ReadyOut <= (Qj0 NOR Qk0) AND IntBusyOut;
 
 -- Mask Q Register Input when CDBV Arrived
 QjInput(0) <= Qj(0) AND (NOT Comp1Out);
