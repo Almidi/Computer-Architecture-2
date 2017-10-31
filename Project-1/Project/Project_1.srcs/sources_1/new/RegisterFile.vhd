@@ -13,9 +13,9 @@ entity RegisterFile is
            Clk : in STD_LOGIC;
            Rst : in STD_LOGIC;
            DataOut1 : out STD_LOGIC_VECTOR (31 downto 0);
-           Tag1Out: out STD_LOGIC_VECTOR (4 downto 0);
+           TagOut1: out STD_LOGIC_VECTOR (4 downto 0);
            DataOut2 : out STD_LOGIC_VECTOR (31 downto 0);
-           Tag2Out: out STD_LOGIC_VECTOR (4 downto 0));
+           TagOut2: out STD_LOGIC_VECTOR (4 downto 0));
 end RegisterFile;
 architecture Structural of RegisterFile is
 	component Register32 is
@@ -42,15 +42,19 @@ architecture Structural of RegisterFile is
 				Sel : in  STD_LOGIC_VECTOR (4 downto 0);
 				Output : out  STD_LOGIC_VECTOR (31 downto 0));
 	end component;
+	component BusMultiplexer32x5 is
+	    Port (		Input : in Bus32x5;
+					Sel : in  STD_LOGIC_VECTOR (4 downto 0);
+					Output : out  STD_LOGIC_VECTOR (4 downto 0));
+	end component;
 	component CompareModule is
 	    Port ( In0 : in  STD_LOGIC_VECTOR (4 downto 0);
 	           In1 : in  STD_LOGIC_VECTOR (4 downto 0);
 	           DOUT : out  STD_LOGIC);
 	end component;
 	
-	type Bus5x32 is array (31 downto 0) of std_logic_vector(4 downto 0);
 	signal register32Out : Bus32;
-	signal register5Out: Bus5x32;
+	signal register5Out: Bus32x5;
 	signal TagWrEnHandlerOut, ComparatorsOut, Register32WrEnSignal: std_logic_vector(31 downto 0);
 	signal isZero: std_logic;
 begin
@@ -62,8 +66,10 @@ begin
 	for i in 0 to 31 generate
 		register5_i: Register5 port map(DataIn=>Tag, WrEn=>TagWrEnHandlerOut(i), Clk=>Clk, DataOut=>register5Out(i), Rst=>Rst);
 	end generate;
-	BusMux32_1: BusMultiplexer32 port map(Input=>register32Out, Sel=>ReadAddr1, Output=>DataOut1);
-	BusMux32_2: BusMultiplexer32 port map(Input=>register32Out, Sel=>ReadAddr2, Output=>DataOut2);
+	BusMux32_DataOut1: BusMultiplexer32 port map(Input=>register32Out, Sel=>ReadAddr1, Output=>DataOut1);
+	BusMux32x5_TagOut1: BusMultiplexer32x5 port map(Input=>register5Out, Sel=>ReadAddr1, Output=>TagOut1);
+	BusMux32_DataOut2: BusMultiplexer32 port map(Input=>register32Out, Sel=>ReadAddr2, Output=>DataOut2);
+	BusMux32x5_TagOut2: BusMultiplexer32x5 port map(Input=>register5Out, Sel=>ReadAddr2, Output=>TagOut2);
 	TagWrEnHandler_0: TagWrEnHandler port map(AddrW=>AddrW,WrEn=>WrEn,Output=>TagWrEnHandlerOut);
 	ComparatorsGenerators:
 	for i in 0 to 31 generate

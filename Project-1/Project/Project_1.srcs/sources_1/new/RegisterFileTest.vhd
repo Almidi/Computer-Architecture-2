@@ -16,7 +16,9 @@ architecture tb of tb_RegisterFile is
                Clk : in STD_LOGIC;
                Rst : in STD_LOGIC;
                DataOut1 : out STD_LOGIC_VECTOR (31 downto 0);
-               DataOut2 : out STD_LOGIC_VECTOR (31 downto 0));
+               TagOut1: out STD_LOGIC_VECTOR (4 downto 0);
+               DataOut2 : out STD_LOGIC_VECTOR (31 downto 0);
+               TagOut2: out STD_LOGIC_VECTOR (4 downto 0));
     end component;
 
     signal ReadAddr1 : std_logic_vector (4 downto 0);
@@ -29,7 +31,9 @@ architecture tb of tb_RegisterFile is
     signal Clk       : std_logic;
     signal Rst       : std_logic;
     signal DataOut1  : std_logic_vector (31 downto 0);
+    signal TagOut1   : std_logic_vector (4 downto 0);
     signal DataOut2  : std_logic_vector (31 downto 0);
+    signal TagOut2   : std_logic_vector (4 downto 0);
 
     constant TbPeriod : time := 10 ns; -- EDIT Put right period here
     signal TbClock : std_logic := '0';
@@ -48,7 +52,9 @@ begin
               Clk       => Clk,
               Rst       => Rst,
               DataOut1  => DataOut1,
-              DataOut2  => DataOut2);
+              TagOut1   => TagOut1,
+              DataOut2  => DataOut2,
+              TagOut2   => TagOut2);
 
     -- Clock generation
     TbClock <= not TbClock after TbPeriod/2 when TbSimEnded /= '1' else '0';
