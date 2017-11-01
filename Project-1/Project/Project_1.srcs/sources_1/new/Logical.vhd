@@ -2,7 +2,7 @@ library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;
 use IEEE.NUMERIC_STD.ALL;
 
-entity Arithmetic is
+entity Logical is
     Port ( RST : in STD_LOGIC;
            CLK : in STD_LOGIC;
            Issue : in STD_LOGIC;
@@ -18,11 +18,11 @@ entity Arithmetic is
            VOut : out STD_LOGIC_VECTOR (31 downto 0);
            QOut : out STD_LOGIC_VECTOR (4 downto 0);
            RequestOut : out STD_LOGIC);
-end Arithmetic;
+end Logical;
 
-architecture Behavioral of Arithmetic is
+architecture Behavioral of Logical is
 
-component ArithmeticFunctionalUnit is
+component LogicalFunctionalUnit is
     Port ( Clk : in STD_LOGIC;
            En : in STD_LOGIC;
            Rst : in STD_LOGIC;
@@ -56,8 +56,8 @@ component RS is
            CLK : in STD_LOGIC);                         -- Clock
 end component;
 
-component RSSelectArithmetic is
-    Port ( Executable : in STD_LOGIC_VECTOR (2 downto 0);
+component RSSelectLogical is
+    Port ( Executable : in STD_LOGIC_VECTOR (1 downto 0);
            Clk : in STD_LOGIC;
            Rst : in STD_LOGIC;
            Tag : out STD_LOGIC_VECTOR (2 downto 0));
@@ -82,15 +82,6 @@ end component;
     SIGNAL RS2Ex    : STD_LOGIC;
     SIGNAL RS2WrEn  : STD_LOGIC;
 
-  -- RS3
-    SIGNAL RS3VjOut : STD_LOGIC_VECTOR (31 downto 0);
-    SIGNAL RS3VkOut : STD_LOGIC_VECTOR (31 downto 0);
-    SIGNAL RS3OpOut : STD_LOGIC_VECTOR (1 downto 0);
-    SIGNAL RS3Ready : STD_LOGIC;
-    SIGNAL RS3Busy  : STD_LOGIC;
-    SIGNAL RS3Ex    : STD_LOGIC;
-    SIGNAL RS3WrEn  : STD_LOGIC;
-
 -- Arithmetic Unit Signals
 
   SIGNAL AUVj     : STD_LOGIC_VECTOR (31 downto 0);
@@ -113,10 +104,9 @@ end component;
 
 begin
 
-RSEXSELECT : RSSelectArithmetic Port Map( 
+RSEXSELECT : RSSelectLogical Port Map( 
            Executable(0) => RS1Ready,
            Executable(1) => RS2Ready,
-           Executable(2) => RS3Ready,
            Clk => CLK,
            Rst => RST,
            Tag => ExTAG);
@@ -155,27 +145,9 @@ RS2 : RS Port Map(
            CDBV => CDBV,
            BusyOut => RS2Busy,
            RST => rst,
-           CLK => clk);    
+           CLK => clk);       
 
-RS3 : RS Port Map( 
-           WrEn => RS3WrEn,
-           Op => Op,
-           Vj => Vj,
-           Vk => Vk,
-           Qj => Qj,
-           Qk => Qk,
-           Ex => RS3Ex,
-           OpOut => RS3OpOut,
-           VjOut => RS3VjOut,
-           VkOut => RS3VkOut,
-           ReadyOut => RS3Ready,
-           CDBQ => CDBQ,
-           CDBV => CDBV,
-           BusyOut => RS3Busy,
-           RST => rst,
-           CLK => clk);    
-
-AU : ArithmeticFunctionalUnit Port Map ( 
+AU : LogicalFunctionalUnit Port Map ( 
            Clk => clk,
            En => AUEn,
            Rst => RST,
@@ -192,16 +164,15 @@ AU : ArithmeticFunctionalUnit Port Map (
 --Select Available RS
 IntAvailable(0) <= NOT RS1Busy ;
 IntAvailable(1) <= RS1Busy AND (NOT RS2Busy);
-IntAvailable(2) <= RS1Busy AND RS2Busy AND (NOT RS3Busy);
+IntAvailable(2) <= '0' ;
 Available <= IntAvailable ;
 
 --Enable RS Writing
 RS1WrEn <= IntAvailable(0) AND Issue ;
 RS2WrEn <= IntAvailable(1) AND Issue ;
-RS3WrEn <= IntAvailable(2) AND Issue ;
 
 -- Setup AU TAG
-AUTag <= "0" & GenericExcecution & ExTAG ;
+AUTag <= "00" & ExTAG ;
 
 --Select RS to excecute 
 with ExTAG Select
@@ -213,19 +184,16 @@ with ExTAG Select
 with ExTAG Select
   AUVj <=         RS1VjOut when "001",
                   RS2VjOut when "010",
-                  RS3VjOut when "011",
                   std_logic_vector(to_unsigned(0,32)) when others;
 
 with ExTAG Select
   AUVk <=         RS1VkOut when "001",
                   RS2VkOut when "010",
-                  RS3VkOut when "011",
                   std_logic_vector(to_unsigned(0,32)) when others;
 
 with ExTAG Select
   AUOp <=         RS1OpOut when "001",
                   RS2OpOut when "010",
-                  RS3OpOut when "011",
                   "00"     when others;                  
 
 --Generics
@@ -236,6 +204,5 @@ AUEn <= GenericExcecution ;
 
 RS1Ex <= GenericExcecution AND ExcecutionRS(0);
 RS2Ex <= GenericExcecution AND ExcecutionRS(1);
-RS3Ex <= GenericExcecution AND ExcecutionRS(2);
 
 end Behavioral;
