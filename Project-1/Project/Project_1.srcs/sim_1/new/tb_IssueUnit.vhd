@@ -92,9 +92,9 @@ begin
         -- Reset generation
         -- EDIT: Check that Rst is really your reset signal
         Rst <= '1';
-        wait for 100 ns;
+        wait for 50 ns;
         Rst <= '0';
-        wait for 100 ns;
+        wait for 50 ns;
 
         -- EDIT Add stimuli here
 		IssueIn<='1';
@@ -105,7 +105,40 @@ begin
 		Rk<="00011";
 		ArithmeticAvailable<="001";
 		LogicalAvailable<="001";
-		wait for 100 ns;
+		wait for 5*TbPeriod;
+		
+		IssueIn<='1';
+		FUType<="00";
+		Fop<="01";
+		Ri<="00001";
+		Rj<="00010";
+		Rk<="00011";
+		ArithmeticAvailable<="001";
+		LogicalAvailable<="001";
+		wait for 5*TbPeriod;
+		
+		IssueIn<='1';
+		FUType<="01";
+		Fop<="00";
+		Ri<="00001";
+		Rj<="00010";
+		Rk<="00011";
+		ArithmeticAvailable<="001";
+		LogicalAvailable<="001";
+		wait for 5*TbPeriod;
+		
+		IssueIn<='1';
+		FUType<="01";
+		Fop<="01";
+		Ri<="00001";
+		Rj<="00010";
+		Rk<="00011";
+		ArithmeticAvailable<="001";
+		LogicalAvailable<="001";
+		wait for 5*TbPeriod;
+		
+		IssueIn<='0';
+		wait for 10*TbPeriod;
         -- Stop the clock and hence terminate the simulation
         TbSimEnded <= '1';
         wait;

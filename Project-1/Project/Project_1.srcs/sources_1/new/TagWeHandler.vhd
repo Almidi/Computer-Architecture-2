@@ -15,7 +15,7 @@ signal decoderOut: std_logic_vector(31 downto 0);
 begin
 	Decoder5to32_0: Decoder5to32 port map(Input=>AddrW, Output=>decoderOut); 
 
-	process(AddrW,WrEn)
+	process(AddrW,WrEn, decoderOut)
 	begin
 		if WrEn='1' then
 			Output<=decoderOut;

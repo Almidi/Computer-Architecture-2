@@ -82,14 +82,19 @@ begin
 
         -- EDIT Add stimuli here
         WrEn<='1';
-        for i in 0 to 31 loop
+        for i in 0 to 4 loop
        		AddrW<=std_logic_vector(to_unsigned(i,5));
        		Tag<=std_logic_vector(to_unsigned(i,5));
         	wait for 10 * TbPeriod;
 		end loop;
-		for i in 0 to 31 loop
+		for i in 0 to 4 loop
 			CDBQ<=std_logic_vector(to_unsigned(i,5));
 			CDBV<=std_logic_vector(to_unsigned(i,32));
+			wait for 10 * TbPeriod;
+		end loop;
+		for i in 0 to 4 loop
+			ReadAddr1<=std_logic_vector(to_unsigned(i,5));
+			ReadAddr2<=std_logic_vector(to_unsigned(i,5));
 			wait for 10 * TbPeriod;
 		end loop;
         -- Stop the clock and hence terminate the simulation

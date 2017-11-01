@@ -7,8 +7,9 @@ entity Decoder5to32 is
 end Decoder5to32;
 architecture Structural of Decoder5to32 is
 begin
+	Output(0)<='0';
 	Generator:
-	for i in 0 to 31 generate
+	for i in 1 to 31 generate
 		with Input
 			select Output(i) <= '1' when std_logic_vector(to_unsigned(i,5)),
 								'0' when others;
