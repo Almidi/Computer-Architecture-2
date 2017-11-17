@@ -1,25 +1,24 @@
-
-
 library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;
 
-
-
 entity TOP is
 Port ( 
-		IssueIn 	: in STD_LOGIC;
-		FUType 		: in STD_LOGIC_VECTOR (1 downto 0);
-		Fop 		: in STD_LOGIC_VECTOR (1 downto 0);
-		Ri 			: in STD_LOGIC_VECTOR (4 downto 0);
-		Rj 			: in STD_LOGIC_VECTOR (4 downto 0);
-		Rk 			: in STD_LOGIC_VECTOR (4 downto 0);
-		Accepted 	: out STD_LOGIC;
-		Clk 		: in STD_LOGIC;
-		Rst 		: in STD_LOGIC);  
+		IssueIn 			: in STD_LOGIC;
+		FUType 				: in STD_LOGIC_VECTOR (1 downto 0);
+		Fop 				: in STD_LOGIC_VECTOR (1 downto 0);
+		Ri 					: in STD_LOGIC_VECTOR (4 downto 0);
+		Rj 					: in STD_LOGIC_VECTOR (4 downto 0);
+		Rk 					: in STD_LOGIC_VECTOR (4 downto 0);
+		BufferAvailable 	: in STD_LOGIC_VECTOR (2 downto 0);
+		CDB_QBuffer			: in STD_LOGIC_VECTOR (4 downto 0);
+		CDB_VBuffer 		: in STD_LOGIC_VECTOR (31 downto 0);
+		CDB_BufferRequest 	: in STD_LOGIC;
+		Accepted 			: out STD_LOGIC;
+		Clk 				: in STD_LOGIC;
+		Rst 				: in STD_LOGIC);  
 end TOP;
 
 architecture Behavioral of TOP is
-
 component IssueUnit is
 	Port ( 
 		IssueIn 			: in STD_LOGIC;
@@ -39,6 +38,8 @@ component IssueUnit is
 		ArithmeticIssue 	: out STD_LOGIC;
 		LogicalAvailable 	: in STD_LOGIC_VECTOR (2 downto 0);
 		LogicalIssue 		: out STD_LOGIC;
+		BufferAvailable 	: in STD_LOGIC_VECTOR (2 downto 0);
+		BufferIssue 		: out STD_LOGIC;
 		Clk 				: in STD_LOGIC;
 		Rst 				: in STD_LOGIC);   
 end component;
@@ -126,6 +127,7 @@ SIGNAL IssueUnit_Accepted			:STD_LOGIC;
 SIGNAL IssueUnit_OpOut 				:STD_LOGIC_VECTOR (1 downto 0);
 SIGNAL IssueUnit_ArithmeticIssue 	:STD_LOGIC;
 SIGNAL IssueUnit_LogicalIssue 		:STD_LOGIC;
+SIGNAL IssueUnit_BufferIssue 		:STD_LOGIC;
 
 --Arithmetic Signals
 SIGNAL Arithmetic_Available 		:STD_LOGIC_VECTOR(2 downto 0);
@@ -154,9 +156,10 @@ SIGNAL CDB_GrantLogical				:STD_LOGIC;
 SIGNAL CDB_GrantBuffer				:STD_LOGIC;
 
 -- Temps
-SIGNAL CDB_BufferRequest 				:STD_LOGIC;
-SIGNAL CDB_QBuffer 						:STD_LOGIC_VECTOR (4 downto 0);
-SIGNAL CDB_VBuffer 						:STD_LOGIC_VECTOR (31 downto 0);
+SIGNAL Buffer_Available 			:STD_LOGIC_VECTOR(2 downto 0);
+--SIGNAL CDB_QBuffer 					:STD_LOGIC_VECTOR (4 downto 0);
+--SIGNAL CDB_VBuffer 					:STD_LOGIC_VECTOR (31 downto 0);
+--SIGNAL CDB_BufferRequest 			:STD_LOGIC;
 
 begin
 
@@ -178,6 +181,8 @@ begin
 		ArithmeticIssue 	=> IssueUnit_ArithmeticIssue,
 		LogicalAvailable 	=> Logical_Available,
 		LogicalIssue 		=> IssueUnit_LogicalIssue,
+		BufferAvailable 	=> Buffer_Available,
+		BufferIssue 		=> IssueUnit_BufferIssue,
 		Clk 				=> CLK,
 		Rst 				=> RST);   
 
@@ -252,9 +257,7 @@ CDBC : CDB port map (
            GrantLogical			=> CDB_GrantLogical,
            GrantBuffer			=> CDB_GrantBuffer);
 
-CDB_QBuffer <= "00000";
-CDB_VBuffer <= "00000000000000000000000000000000";
-CDB_BufferRequest <= '0';
-
-
+--CDB_QBuffer <= "00000";
+--CDB_VBuffer <= "00000000000000000000000000000000";
+--CDB_BufferRequest <= '0';
 end Behavioral;

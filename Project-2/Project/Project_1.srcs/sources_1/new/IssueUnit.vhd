@@ -42,7 +42,7 @@ begin
 			Accepted<='0';
 		elsif rising_edge(Clk) then
 			if IssueIn='1' then
-				if FUType="00" then 
+				if FUType="00" then -- Logical Functions
 					if LogicalAvailable/="000" then 
 						LogicalIssue<='1';
 						RFTag<=FUType & LogicalAvailable;
@@ -56,7 +56,7 @@ begin
 						RFWrEn<='0';
 						Accepted<='0';
 					end if;
-				elsif FUType="01" then
+				elsif FUType="01" then -- Arithmetic Functions
 					if ArithmeticAvailable/="000" then 
 						ArithmeticIssue<='1';
 						RFTag<=FUType & ArithmeticAvailable;
@@ -70,9 +70,9 @@ begin
 						RFWrEn<='0';
 						Accepted<='0';
 					end if;
-				elsif FUType="01" then
-						ArithmeticIssue<='1';
-						RFTag<=FUType & ArithmeticAvailable;
+				elsif FUType="01" then -- Load Functions
+						BufferIssue<='1';
+						RFTag<=FUType & BufferAvailable;
 						RFAddrW<=Ri;
 						RFWrEn<='1';
 						Accepted<='1';
