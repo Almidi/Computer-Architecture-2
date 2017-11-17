@@ -147,7 +147,7 @@ RS2 : RS Port Map(
            RST => rst,
            CLK => clk);       
 
-AU : LogicalFunctionalUnit Port Map ( 
+LU : LogicalFunctionalUnit Port Map ( 
            Clk => clk,
            En => AUEn,
            Rst => RST,

@@ -20,6 +20,8 @@ entity IssueUnit is
 		ArithmeticIssue : out STD_LOGIC;
 		LogicalAvailable : in STD_LOGIC_VECTOR (2 downto 0);
 		LogicalIssue : out STD_LOGIC;
+		BufferAvailable : in STD_LOGIC_VECTOR (2 downto 0);
+		BufferIssue : out STD_LOGIC;
 		Clk: in STD_LOGIC;
 		Rst: in STD_LOGIC);   
 end IssueUnit;
@@ -68,6 +70,12 @@ begin
 						RFWrEn<='0';
 						Accepted<='0';
 					end if;
+				elsif FUType="01" then
+						ArithmeticIssue<='1';
+						RFTag<=FUType & ArithmeticAvailable;
+						RFAddrW<=Ri;
+						RFWrEn<='1';
+						Accepted<='1';
 				else
 					ArithmeticIssue<='0';
 					LogicalIssue<='0';
