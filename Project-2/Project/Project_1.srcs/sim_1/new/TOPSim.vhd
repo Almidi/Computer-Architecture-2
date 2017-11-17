@@ -141,16 +141,9 @@ begin
         CDB_BufferRequest <= '0';
 
         ----------------------------------------------------------------------------
-
-        BufferAvailable <= (others => '0');
-        CDB_QBuffer <= (others => '0');
-        CDB_VBuffer <= (others => '0');
-        CDB_BufferRequest <= '0';
-
         ----------------------------------------------------------------------------
         -- 2 + 7 = 9  on register 3-------------------------------------------------
 
-        -- Set Buffer Tag
         IssueIn <= '1'; 			-- Issue
         FUType <= "01"; 			-- Arithmetical Unit 
         Fop <= "00";                -- Operatio 00 = Add
@@ -160,16 +153,32 @@ begin
 
         wait for TbPeriod ;
 
+        		-- Dont Mind Me.. Im just setting things straight.
+		        BufferAvailable <= (others => '0');
+		        CDB_QBuffer <= (others => '0');
+		        CDB_VBuffer <= (others => '0');
+		        CDB_BufferRequest <= '0';
+		        --------------------------------------------------
+
         -- Stop Issue
         IssueIn <= '0';
 
         wait for TbPeriod ;
         ----------------------------------------------------------------------------
+        ----------------------------------------------------------------------------
+        -- 2 OR 9 = 11  on register 4 ----------------------------------------------
 
+        IssueIn <= '1'; 			-- Issue
+        FUType <= "00"; 			-- Arithmetical Unit 
+        Fop <= "00";                -- Operatio 00 = AND
+        Rk <= "00010";              -- Source 2
+        Rj <= "00011";              -- Source 3
+        Ri <= "00100"; 				-- Destination Register
 
+        wait for TbPeriod ;
+        -- Stop Issue
+        IssueIn <= '0';
 
-
-        -- EDIT Add stimuli here
         wait for 100 * TbPeriod;
 
         -- Stop the clock and hence terminate the simulation

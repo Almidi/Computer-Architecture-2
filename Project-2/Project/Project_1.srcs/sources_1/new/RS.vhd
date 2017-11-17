@@ -86,6 +86,11 @@ SIGNAL QkWrEN : STD_LOGIC;
 SIGNAL Comp1Out : STD_LOGIC;
 SIGNAL Comp2Out : STD_LOGIC;
 SIGNAL Comp3Out : STD_LOGIC;
+SIGNAL Comp4Out : STD_LOGIC;
+SIGNAL Comp5Out : STD_LOGIC;
+
+Signal CDBjMul : STD_LOGIC;
+Signal CDBkMul : STD_LOGIC;
 
 SIGNAL BusyRegIn : STD_LOGIC;
 SIGNAL BusyRegWrEn : STD_LOGIC;
@@ -156,6 +161,18 @@ Comp3 : CompareModule Port Map(
          In0 =>CDBQ,
          In1 =>"00000",
          DOUT =>Comp3Out );
+-- CDBQ == pre-Qj
+Comp4 : CompareModule Port Map( 
+         In0 =>CDBQ,
+         In1 =>Qj,
+         DOUT =>Comp4Out );
+-- CDBQ == pre-Qk
+Comp5 : CompareModule Port Map( 
+         In0 =>CDBQ,
+         In1 =>Qk,
+         DOUT =>Comp5Out );
+
+
 
 -- Busy Signal Register
 BusyRegWrEn <= WrEn OR Ex ;
@@ -174,24 +191,24 @@ with QkInternal select
 ReadyOut <= (Qj0 NOR Qk0) AND IntBusyOut;
 
 -- Mask Q Register Input when CDBV Arrived
-QjInput(0) <= Qj(0) AND (NOT Comp1Out);
-QjInput(1) <= Qj(1) AND (NOT Comp1Out);
-QjInput(2) <= Qj(2) AND (NOT Comp1Out);
-QjInput(3) <= Qj(3) AND (NOT Comp1Out);
-QjInput(4) <= Qj(4) AND (NOT Comp1Out);
+QjInput(0) <= Qj(0) AND (NOT CDBjMul);
+QjInput(1) <= Qj(1) AND (NOT CDBjMul);
+QjInput(2) <= Qj(2) AND (NOT CDBjMul);
+QjInput(3) <= Qj(3) AND (NOT CDBjMul);
+QjInput(4) <= Qj(4) AND (NOT CDBjMul);
 
-QkInput(0) <= Qk(0) AND (NOT Comp2Out);
-QkInput(1) <= Qk(1) AND (NOT Comp2Out);
-QkInput(2) <= Qk(2) AND (NOT Comp2Out);
-QkInput(3) <= Qk(3) AND (NOT Comp2Out);
-QkInput(4) <= Qk(4) AND (NOT Comp2Out);
+QkInput(0) <= Qk(0) AND (NOT CDBkMul);
+QkInput(1) <= Qk(1) AND (NOT CDBkMul);
+QkInput(2) <= Qk(2) AND (NOT CDBkMul);
+QkInput(3) <= Qk(3) AND (NOT CDBkMul);
+QkInput(4) <= Qk(4) AND (NOT CDBkMul);
 
 -- Multiplex V Inputs
-with Comp1Out select
+with CDBjMul select
 	VjInput <=      Vj when '0',
 					        CDBV when others ;
 
-with Comp2Out select
+with CDBkMul select
 	VkInput <=      Vk when '0',
 					        CDBV when others ;
 
@@ -202,5 +219,13 @@ VkWrEN <= WrEn OR (Comp2Out AND (NOT Comp3Out)) ;
 
 QjWrEN <= WrEn OR (Comp1Out AND (NOT Comp3Out)) ;
 QkWrEN <= WrEn OR (Comp2Out AND (NOT Comp3Out)) ;
+
+
+--Input Multiplexitng
+
+CDBjMul <= (Comp4Out AND WrEn) OR Comp1Out ;
+CDBkMul <= (Comp5Out AND WrEn) OR Comp2Out;
+
+--
 
 end Behavioral;
