@@ -55,7 +55,7 @@ architecture Structural of RegisterFile is
 	
 	signal register32Out : Bus32;
 	signal register5Out: Bus32x5;
-	signal TagWrEnHandlerOut, ComparatorsOut, Register32WrEnSignal: std_logic_vector(31 downto 0);
+	signal TagWrEnHandlerOut, ComparatorsOut, Register32WrEnSignal, TagRst: std_logic_vector(31 downto 0);
 	signal isZero: std_logic;
 begin
 	register32_0: Register32 port map(DataIn=>CDBV, WrEn=>'0', Clk=>Clk, DataOut=>register32Out(0), Rst=>Rst);
@@ -63,9 +63,13 @@ begin
 	for i in 1 to 31 generate
 		register32_i: Register32 port map(DataIn=>CDBV, WrEn=>Register32WrEnSignal(i), Clk=>Clk, DataOut=>register32Out(i), Rst=>Rst);
 	end generate;
+	TagRstGenerator:
+	for i in 0 to 31 generate
+		TagRst(i)<=Rst or Register32WrEnSignal(i);
+	end generate;
 	Register5Generator:
 	for i in 0 to 31 generate
-		register5_i: Register5 port map(DataIn=>Tag, WrEn=>TagWrEnHandlerOut(i), Clk=>Clk, DataOut=>register5Out(i), Rst=>Rst);
+		register5_i: Register5 port map(DataIn=>Tag, WrEn=>TagWrEnHandlerOut(i), Clk=>Clk, DataOut=>register5Out(i), Rst=>TagRst(i));
 	end generate;
 	BusMux32_DataOut1: BusMultiplexer32 port map(Input=>register32Out, Sel=>ReadAddr1, Output=>DataOut1);
 	BusMux32x5_TagOut1: BusMultiplexer32x5 port map(Input=>register5Out, Sel=>ReadAddr1, Output=>TagOut1);
