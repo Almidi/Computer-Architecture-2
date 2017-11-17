@@ -187,6 +187,7 @@ begin
 		Rst 				=> RST);   
 
 Accepted <= IssueUnit_Accepted ;
+Buffer_Available <= BufferAvailable ;
 
  A : Arithmetic Port Map (
     	   RST 			=> RST,

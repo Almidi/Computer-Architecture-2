@@ -70,7 +70,7 @@ begin
 						RFWrEn<='0';
 						Accepted<='0';
 					end if;
-				elsif FUType="01" then -- Load Functions
+				elsif FUType="10" then -- Load Functions
 						BufferIssue<='1';
 						RFTag<=FUType & BufferAvailable;
 						RFAddrW<=Ri;

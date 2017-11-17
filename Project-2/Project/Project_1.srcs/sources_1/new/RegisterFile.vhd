@@ -58,8 +58,9 @@ architecture Structural of RegisterFile is
 	signal TagWrEnHandlerOut, ComparatorsOut, Register32WrEnSignal: std_logic_vector(31 downto 0);
 	signal isZero: std_logic;
 begin
+	register32_0: Register32 port map(DataIn=>CDBV, WrEn=>'0', Clk=>Clk, DataOut=>register32Out(0), Rst=>Rst);
 	Register32Generator:
-	for i in 0 to 31 generate
+	for i in 1 to 31 generate
 		register32_i: Register32 port map(DataIn=>CDBV, WrEn=>Register32WrEnSignal(i), Clk=>Clk, DataOut=>register32Out(i), Rst=>Rst);
 	end generate;
 	Register5Generator:
