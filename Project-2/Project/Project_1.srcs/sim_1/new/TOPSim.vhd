@@ -90,10 +90,10 @@ begin
         -- 7 on register 1 ---------------------------------------------------------
 
         -- Set Buffer Tag
-        IssueIn <= '1';
-        FUType <= "10";
-        Ri <= "00001";
-        BufferAvailable <= "001";
+        IssueIn <= '1'; -- Issue
+        FUType <= "10"; -- Load Buffer
+        Ri <= "00001"; -- Destination Register
+        BufferAvailable <= "001"; --Simulated buffer id
 
         wait for TbPeriod ;
 
@@ -114,8 +114,59 @@ begin
         CDB_BufferRequest <= '0';
 
 
+        -- 2 on register 2 ---------------------------------------------------------
+
+        -- Set Buffer Tag
+        IssueIn <= '1'; -- Issue
+        FUType <= "10"; -- Load Buffer
+        Ri <= "00010"; -- Destination Register
+        BufferAvailable <= "001"; --Simulated buffer id
+
+        wait for TbPeriod ;
+
+        -- Stop Issue
+        IssueIn <= '0';
+
+        wait for TbPeriod ;
+
+        -- Request CDB
+        CDB_BufferRequest <= '1';
+
+        -- Load Data to RF through cdb
+        CDB_QBuffer <= "10001";
+        CDB_VBuffer <= std_logic_vector(to_unsigned(2,32));
+
+        wait for TbPeriod ;
+
+        CDB_BufferRequest <= '0';
 
         ----------------------------------------------------------------------------
+
+        BufferAvailable <= (others => '0');
+        CDB_QBuffer <= (others => '0');
+        CDB_VBuffer <= (others => '0');
+        CDB_BufferRequest <= '0';
+
+        ----------------------------------------------------------------------------
+        -- 2 + 7 = 9  on register 3-------------------------------------------------
+
+        -- Set Buffer Tag
+        IssueIn <= '1'; 			-- Issue
+        FUType <= "01"; 			-- Arithmetical Unit 
+        Fop <= "00";                -- Operatio 00 = Add
+        Rk <= "00001";              -- Source 1
+        Rj <= "00010";              -- Source 2
+        Ri <= "00011"; 				-- Destination Register
+
+        wait for TbPeriod ;
+
+        -- Stop Issue
+        IssueIn <= '0';
+
+        wait for TbPeriod ;
+        ----------------------------------------------------------------------------
+
+
 
 
         -- EDIT Add stimuli here
