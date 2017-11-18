@@ -44,7 +44,7 @@ component RS is
            Vk : in STD_LOGIC_VECTOR (31 downto 0);      -- Vk Input
            Qj : in STD_LOGIC_VECTOR (4 downto 0);       -- Qj Input
            Qk : in STD_LOGIC_VECTOR (4 downto 0);       -- Qk Input
-           Ex : in STD_LOGIC;                           -- RS Executed
+           ID : in STD_LOGIC_VECTOR (4 downto 0);       -- RS ID
            OpOut : out STD_LOGIC_VECTOR (1 downto 0);   -- Operation Output
            VjOut : out STD_LOGIC_VECTOR (31 downto 0);  -- Vj Output 
            VkOut : out STD_LOGIC_VECTOR (31 downto 0);  -- Vk Output
@@ -128,7 +128,7 @@ RS1 : RS Port Map(
            Vk => Vk,
            Qj => Qj,
            Qk => Qk,
-           Ex => RS1Ex,
+           ID => "01001",
            OpOut => RS1OpOut,
            VjOut => RS1VjOut,
            VkOut => RS1VkOut,
@@ -146,7 +146,7 @@ RS2 : RS Port Map(
            Vk => Vk,
            Qj => Qj,
            Qk => Qk,
-           Ex => RS2Ex,
+           ID => "01010",
            OpOut => RS2OpOut,
            VjOut => RS2VjOut,
            VkOut => RS2VkOut,
@@ -164,7 +164,7 @@ RS3 : RS Port Map(
            Vk => Vk,
            Qj => Qj,
            Qk => Qk,
-           Ex => RS3Ex,
+           ID => "01100",
            OpOut => RS3OpOut,
            VjOut => RS3VjOut,
            VkOut => RS3VkOut,

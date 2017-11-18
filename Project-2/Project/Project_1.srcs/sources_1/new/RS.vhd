@@ -13,7 +13,7 @@ entity RS is
            Vk : in STD_LOGIC_VECTOR (31 downto 0);      -- Vk Input
            Qj : in STD_LOGIC_VECTOR (4 downto 0);       -- Qj Input
            Qk : in STD_LOGIC_VECTOR (4 downto 0);       -- Qk Input
-           Ex : in STD_LOGIC;                           -- RS Executed
+           ID : in STD_LOGIC_VECTOR (4 downto 0);       -- RS ID
            OpOut : out STD_LOGIC_VECTOR (1 downto 0);   -- Operation Output
            VjOut : out STD_LOGIC_VECTOR (31 downto 0);  -- Vj Output 
            VkOut : out STD_LOGIC_VECTOR (31 downto 0);  -- Vk Output
@@ -96,6 +96,8 @@ SIGNAL BusyRegIn : STD_LOGIC;
 SIGNAL BusyRegWrEn : STD_LOGIC;
 SIGNAL IntBusyOut : STD_LOGIC;
 
+SIGNAL Ex : STD_LOGIC ;
+
 begin
 -- Busy Register
 BREG : Register1 Port Map (
@@ -172,6 +174,11 @@ Comp5 : CompareModule Port Map(
          In1 =>Qk,
          DOUT =>Comp5Out );
 
+-- CDBQ == ID 
+Comp6 : CompareModule Port Map( 
+         In0 =>CDBQ,
+         In1 =>ID,
+         DOUT =>Ex );
 
 
 -- Busy Signal Register
@@ -225,7 +232,5 @@ QkWrEN <= WrEn OR (Comp2Out AND (NOT Comp3Out)) ;
 
 CDBjMul <= (Comp4Out AND WrEn) OR Comp1Out ;
 CDBkMul <= (Comp5Out AND WrEn) OR Comp2Out;
-
---
 
 end Behavioral;

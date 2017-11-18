@@ -44,7 +44,7 @@ component RS is
            Vk : in STD_LOGIC_VECTOR (31 downto 0);      -- Vk Input
            Qj : in STD_LOGIC_VECTOR (4 downto 0);       -- Qj Input
            Qk : in STD_LOGIC_VECTOR (4 downto 0);       -- Qk Input
-           Ex : in STD_LOGIC;                           -- RS Executed
+           ID : in STD_LOGIC_VECTOR (4 downto 0);       -- RS ID
            OpOut : out STD_LOGIC_VECTOR (1 downto 0);   -- Operation Output
            VjOut : out STD_LOGIC_VECTOR (31 downto 0);  -- Vj Output 
            VkOut : out STD_LOGIC_VECTOR (31 downto 0);  -- Vk Output
@@ -99,7 +99,6 @@ end component;
   SIGNAL IntAvailable : STD_LOGIC_VECTOR (2 downto 0);
 
 -- Gerenics
-  SIGNAL GenericAvailable : STD_LOGIC ;
   SIGNAL GenericExcecution : STD_LOGIC ;
 
 begin
@@ -118,7 +117,7 @@ RS1 : RS Port Map(
            Vk => Vk,
            Qj => Qj,
            Qk => Qk,
-           Ex => RS1Ex,
+           ID => "00001",
            OpOut => RS1OpOut,
            VjOut => RS1VjOut,
            VkOut => RS1VkOut,
@@ -136,7 +135,7 @@ RS2 : RS Port Map(
            Vk => Vk,
            Qj => Qj,
            Qk => Qk,
-           Ex => RS2Ex,
+           ID => "00010",
            OpOut => RS2OpOut,
            VjOut => RS2VjOut,
            VkOut => RS2VkOut,
