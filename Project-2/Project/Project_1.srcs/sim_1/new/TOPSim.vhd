@@ -59,8 +59,15 @@ begin
               Rst               => Rst);
 
     -- Clock generation
-    TbClock <= not TbClock after TbPeriod/2 when TbSimEnded /= '1' else '0';
-
+    -- TbClock <= not TbClock after TbPeriod/2 when TbSimEnded /= '1' else '0';
+    clk_process :process
+    begin
+        TbClock <= '1';
+        wait for TbPeriod/2;
+        TbClock <= '0';
+        wait for TbPeriod/2;
+    end process;
+    
     -- EDIT: Check that Clk is really your main clock signal
     Clk <= TbClock;
 
@@ -83,24 +90,21 @@ begin
         Rst <= '1';
         wait for 100 ns;
         Rst <= '0';
-        wait for 100 ns;  
+--        wait for 100 ns;
 
         -- Injecting Data On Registers Through Simulated Buffer --------------------
         
         -- 7 on register 1 ---------------------------------------------------------
-
         -- Set Buffer Tag
         IssueIn <= '1'; -- Issue
         FUType <= "10"; -- Load Buffer
         Ri <= "00001"; -- Destination Register
         BufferAvailable <= "001"; --Simulated buffer id
-
-        wait for TbPeriod ;
+        wait for TbPeriod;
 
         -- Stop Issue
         IssueIn <= '0';
-
-        wait for TbPeriod ;
+        wait for TbPeriod;
 
         -- Request CDB
         CDB_BufferRequest <= '1';
@@ -108,26 +112,20 @@ begin
         -- Load Data to RF through cdb
         CDB_QBuffer <= "10001";
         CDB_VBuffer <= std_logic_vector(to_unsigned(7,32));
-
-        wait for TbPeriod ;
-
+        wait for TbPeriod;
         CDB_BufferRequest <= '0';
 
-
         -- 2 on register 2 ---------------------------------------------------------
-
         -- Set Buffer Tag
         IssueIn <= '1'; -- Issue
         FUType <= "10"; -- Load Buffer
         Ri <= "00010"; -- Destination Register
         BufferAvailable <= "001"; --Simulated buffer id
-
-        wait for TbPeriod ;
+        wait for TbPeriod;
 
         -- Stop Issue
         IssueIn <= '0';
-
-        wait for TbPeriod ;
+        wait for TbPeriod;
 
         -- Request CDB
         CDB_BufferRequest <= '1';
@@ -135,56 +133,73 @@ begin
         -- Load Data to RF through cdb
         CDB_QBuffer <= "10001";
         CDB_VBuffer <= std_logic_vector(to_unsigned(2,32));
-
-        wait for TbPeriod ;
-
+        wait for TbPeriod;
         CDB_BufferRequest <= '0';
-
-        ----------------------------------------------------------------------------
-        ----------------------------------------------------------------------------
+        wait for TbPeriod;
+        
+        -- Dont Mind Me.. Im just setting things straight.
+        IssueIn <= '0'; 			-- Issue
+        BufferAvailable <= (others => '0');
+        CDB_QBuffer <= (others => '0');
+        CDB_VBuffer <= (others => '0');
+        CDB_BufferRequest <= '0';
+        wait for TbPeriod*3;
+        
         -- 2 + 7 = 9  on register 3-------------------------------------------------
-
         IssueIn <= '1'; 			-- Issue
         FUType <= "01"; 			-- Arithmetical Unit 
-        Fop <= "00";                -- Operatio 00 = Add
-        Rk <= "00001";              -- Source 1
+        Fop <= "00";                -- Operation 00 = Add
+        Ri <= "00011"; 				-- Destination Register 3
         Rj <= "00010";              -- Source 2
-        Ri <= "00011"; 				-- Destination Register
+        Rk <= "00001";              -- Source 1
+        wait for TbPeriod;
 
-        wait for TbPeriod ;
-
-        		-- Dont Mind Me.. Im just setting things straight.
-		        BufferAvailable <= (others => '0');
-		        CDB_QBuffer <= (others => '0');
-		        CDB_VBuffer <= (others => '0');
-		        CDB_BufferRequest <= '0';
-		        --------------------------------------------------
-
-        -- Stop Issue
-        IssueIn <= '0';
-
-        wait for TbPeriod ;
-        ----------------------------------------------------------------------------
-        ----------------------------------------------------------------------------
-        -- 2 OR 9 = 11  on register 4 ----------------------------------------------
-
+        -- 2 - 9 = -7  on register 4 ----------------------------------------------
         IssueIn <= '1'; 			-- Issue
-        FUType <= "00"; 			-- Arithmetical Unit 
-        Fop <= "00";                -- Operatio 00 = AND
-        Rk <= "00010";              -- Source 2
-        Rj <= "00011";              -- Source 3
-        Ri <= "00100"; 				-- Destination Register
+        FUType <= "01"; 			-- Arithmetical Unit 
+        Fop <= "01";                -- Operation 01 = Sub
+        Ri <= "00100"; 				-- Destination Register 4
+        Rj <= "00010";              -- Source 2
+        Rk <= "00011";              -- Source 3
+        wait for TbPeriod*1;
+        
+		-- 2 << 1 = 4  on register 5 ----------------------------------------------
+		IssueIn <= '1'; 			-- Issue
+		FUType <= "01";     		-- Arithmetical Unit 
+		Fop <= "10";                -- Operation 10 = Shift Left
+		Ri <= "00101"; 				-- Destination Register 5
+		Rj <= "00010";              -- Source 2
+		Rk <= "00011";              -- Source 3
+		wait for TbPeriod*1;
+		
+        -- 2 OR 9 = 11  on register 6 ----------------------------------------------
+        IssueIn <= '1'; 			-- Issue
+        FUType <= "00"; 			-- Logical Unit 
+        Fop <= "00";                -- Operation 00 = OR
+        Ri <= "00110"; 				-- Destination Register 6
+        Rj <= "00010";              -- Source 2
+        Rk <= "00011";              -- Source 3
+        wait for TbPeriod*1;
+                
+        -- 2 AND 9 = 0  on register 7 ----------------------------------------------
+        IssueIn <= '1'; 			-- Issue
+        FUType <= "00";             -- Logical Unit 
+        Fop <= "01";                -- Operation 01 = AND
+        Ri <= "00111";              -- Destination Register 7
+        Rj <= "00010";              -- Source 2
+        Rk <= "00011";              -- Source 3
+        wait for TbPeriod*1;
+               
+        -- NOT 2 = 4294967293(Unsigned) -3(Signed)  on register 8 -------------------
+        IssueIn <= '1'; 			-- Issue
+        FUType <= "00";             -- Logical Unit 
+        Fop <= "10";                -- Operation 10 = NOT
+        Ri <= "01000";              -- Destination Register 8
+        Rj <= "00010";              -- Source 2
+        Rk <= "00011";              -- Source 3
+        wait for TbPeriod*1;
 
-        wait for TbPeriod ;
-        -- Stop Issue
         IssueIn <= '0';
-
-        wait for 100 * TbPeriod;
-
-        -- Stop the clock and hence terminate the simulation
-        TbSimEnded <= '1';
         wait;
     end process;
-
 end tb;
-

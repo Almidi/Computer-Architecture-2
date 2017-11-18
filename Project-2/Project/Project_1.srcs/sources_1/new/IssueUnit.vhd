@@ -35,63 +35,46 @@ begin
 	begin
 		if Rst='1' then
 			ArithmeticIssue<='0';
-			LogicalIssue<='0';
-			RFTag<=std_logic_vector(to_unsigned(0,5));
-			RFAddrW<=std_logic_vector(to_unsigned(0,5));
-			RFWrEn<='0';
-			Accepted<='0';
+            LogicalIssue<='0';
+            BufferIssue<='0';
+            RFTag<=std_logic_vector(to_unsigned(0,5));
+            RFAddrW<=std_logic_vector(to_unsigned(0,5));
+            RFWrEn<='0';
+            Accepted<='0';
 		elsif rising_edge(Clk) then
-			if IssueIn='1' then
-				if FUType="00" then -- Logical Functions
-					if LogicalAvailable/="000" then 
-						LogicalIssue<='1';
-						RFTag<=FUType & LogicalAvailable;
-						RFAddrW<=Ri;
-						RFWrEn<='1';
-						Accepted<='1';
-					else
-						LogicalIssue<='0';
-						RFTag<=std_logic_vector(to_unsigned(0,5));
-						RFAddrW<=std_logic_vector(to_unsigned(0,5));
-						RFWrEn<='0';
-						Accepted<='0';
-					end if;
-				elsif FUType="01" then -- Arithmetic Functions
-					if ArithmeticAvailable/="000" then 
-						ArithmeticIssue<='1';
-						RFTag<=FUType & ArithmeticAvailable;
-						RFAddrW<=Ri;
-						RFWrEn<='1';
-						Accepted<='1';
-					else
-						ArithmeticIssue<='0';
-						RFTag<=std_logic_vector(to_unsigned(0,5));
-						RFAddrW<=std_logic_vector(to_unsigned(0,5));
-						RFWrEn<='0';
-						Accepted<='0';
-					end if;
-				elsif FUType="10" then -- Load Functions
-						BufferIssue<='1';
-						RFTag<=FUType & BufferAvailable;
-						RFAddrW<=Ri;
-						RFWrEn<='1';
-						Accepted<='1';
-				else
-					ArithmeticIssue<='0';
-					LogicalIssue<='0';
-					RFTag<=std_logic_vector(to_unsigned(0,5));
-					RFAddrW<=std_logic_vector(to_unsigned(0,5));
-					RFWrEn<='0';
-					Accepted<='0';
-				end if;
-			else
-				ArithmeticIssue<='0';
-				LogicalIssue<='0';
-				RFTag<=std_logic_vector(to_unsigned(0,5));
-				RFAddrW<=std_logic_vector(to_unsigned(0,5));
-				RFWrEn<='0';
-				Accepted<='0';
-			end if;
+            if IssueIn='1' and FUType="00" and LogicalAvailable/="000" then -- Logical Functions
+                LogicalIssue<='1';
+                ArithmeticIssue<='0';
+                BufferIssue<='0';
+                RFTag<=FUType & LogicalAvailable;
+                RFAddrW<=Ri;
+                RFWrEn<='1';
+                Accepted<='1';
+            elsif IssueIn='1' and FUType="01" and ArithmeticAvailable/="000" then -- Arithmetic Functions
+                LogicalIssue<='0';
+                ArithmeticIssue<='1';
+                BufferIssue<='0';
+                RFTag<=FUType & ArithmeticAvailable;
+                RFAddrW<=Ri;
+                RFWrEn<='1';
+                Accepted<='1';
+            elsif IssueIn='1' and FUType="10" then -- Load Functions
+                LogicalIssue<='0';
+                ArithmeticIssue<='0';
+                BufferIssue<='1';
+                RFTag<=FUType & BufferAvailable;
+                RFAddrW<=Ri;
+                RFWrEn<='1';
+                Accepted<='1';
+            else
+                ArithmeticIssue<='0';
+                LogicalIssue<='0';
+                BufferIssue<='0';
+                RFTag<=std_logic_vector(to_unsigned(0,5));
+                RFAddrW<=std_logic_vector(to_unsigned(0,5));
+                RFWrEn<='0';
+                Accepted<='0';
+            end if;
 		end if;
 	end process;
 end Behavioral;
