@@ -19,22 +19,24 @@ begin
 		else 
 			if priority='1' then
 				if Executable(0)='1' then
+					priority<='1';
 					Tag<="001";
 				elsif Executable(1)='1' then
+					priority<='1';
 					Tag<="010";
 				else
 					Tag<="000";
 				end if;
-				priority<='1';
 			else
 				if Executable(1)='1' then
+					priority<='0';
 					Tag<="010";
 				elsif Executable(0)='1' then
+					priority<='0';
 					Tag<="001";
 				else
 					Tag<="000";
 				end if;
-				priority<='0';
 			end if;
 		end if;
 	end process;

@@ -6,7 +6,7 @@ library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;
 use IEEE.NUMERIC_STD.ALL;
 
-entity RS is
+entity RS is --TODO: USE Ex AND 1b Register to Stop double executions
     Port ( WrEn : in STD_LOGIC;
            Op : in STD_LOGIC_VECTOR (1 downto 0);       -- Operation input
            Vj : in STD_LOGIC_VECTOR (31 downto 0);      -- Vj Input
@@ -14,6 +14,7 @@ entity RS is
            Qj : in STD_LOGIC_VECTOR (4 downto 0);       -- Qj Input
            Qk : in STD_LOGIC_VECTOR (4 downto 0);       -- Qk Input
            ID : in STD_LOGIC_VECTOR (4 downto 0);       -- RS ID
+           Ex : in STD_LOGIC ;                          -- RS Executed
            OpOut : out STD_LOGIC_VECTOR (1 downto 0);   -- Operation Output
            VjOut : out STD_LOGIC_VECTOR (31 downto 0);  -- Vj Output 
            VkOut : out STD_LOGIC_VECTOR (31 downto 0);  -- Vk Output
@@ -95,8 +96,14 @@ Signal CDBkMul : STD_LOGIC;
 SIGNAL BusyRegIn : STD_LOGIC;
 SIGNAL BusyRegWrEn : STD_LOGIC;
 SIGNAL IntBusyOut : STD_LOGIC;
+SIGNAL BusyRst : STD_LOGIC;
 
-SIGNAL Ex : STD_LOGIC ;
+-- Register Used Only to Disable Ready Signal After Excecution
+SIGNAL rEnOut : STD_LOGIC;
+SIGNAL rEnWren : STD_LOGIC;
+
+SIGNAL MyDataOnCDB : STD_LOGIC ;
+
 
 begin
 -- Busy Register
@@ -105,6 +112,14 @@ BREG : Register1 Port Map (
          WrEn =>BusyRegWrEn,
          Clk =>CLK,
          DataOut =>IntBusyOut,
+         Rst =>BusyRst);
+
+-- Ready Register
+RREG : Register1 Port Map (
+         DataIn =>Wren,
+         WrEn =>rEnWren,
+         Clk =>CLK,
+         DataOut =>rEnOut,
          Rst =>RST);
 
 -- V Registers
@@ -178,13 +193,15 @@ Comp5 : CompareModule Port Map(
 Comp6 : CompareModule Port Map( 
          In0 =>CDBQ,
          In1 =>ID,
-         DOUT =>Ex );
+         DOUT =>MyDataOnCDB );
 
 
 -- Busy Signal Register
-BusyRegWrEn <= WrEn OR Ex ;
-BusyRegIn <= WrEn ;
-BusyOut <= IntBusyOut;
+BusyRst <= RST OR MyDataOnCDB ;  --Reset Busy When Data are exported from CDB
+BusyRegWrEn <= WrEn ; --Busy = 1 when WrEn 
+BusyRegIn <= WrEn ;   --Busy = 1 when WrEn
+BusyOut <= IntBusyOut ;
+
 
 -- Ready Signal (Ready to be excecuted)
 with QjInternal select
@@ -195,7 +212,9 @@ with QkInternal select
 	Qk0 <=      '0' when std_logic_vector(to_unsigned(0,5)),
 				      '1' when others ;
 
-ReadyOut <= (Qj0 NOR Qk0) AND IntBusyOut;
+ReadyOut <= (Qj0 NOR Qk0) AND rEnOut ;
+
+rEnWren <= WrEn OR Ex ;
 
 -- Mask Q Register Input when CDBV Arrived
 QjInput(0) <= Qj(0) AND (NOT CDBjMul);

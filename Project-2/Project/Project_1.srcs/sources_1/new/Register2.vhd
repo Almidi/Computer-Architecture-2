@@ -15,6 +15,7 @@ begin
     if Rst='1' then
         DataOut<=std_logic_vector(to_unsigned(0,2));
     elsif rising_edge(Clk) then
+    --elsif Clk = '1' then
       if WrEn='1' then
         DataOut<=DataIn;
       end if;

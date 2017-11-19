@@ -45,6 +45,7 @@ component RS is
            Qj : in STD_LOGIC_VECTOR (4 downto 0);       -- Qj Input
            Qk : in STD_LOGIC_VECTOR (4 downto 0);       -- Qk Input
            ID : in STD_LOGIC_VECTOR (4 downto 0);       -- RS ID
+           Ex : in STD_LOGIC ;                          -- RS Executed
            OpOut : out STD_LOGIC_VECTOR (1 downto 0);   -- Operation Output
            VjOut : out STD_LOGIC_VECTOR (31 downto 0);  -- Vj Output 
            VkOut : out STD_LOGIC_VECTOR (31 downto 0);  -- Vk Output
@@ -61,6 +62,14 @@ component RSSelectLogical is
            Clk : in STD_LOGIC;
            Rst : in STD_LOGIC;
            Tag : out STD_LOGIC_VECTOR (2 downto 0));
+end component;
+
+component Register2 is
+    Port ( DataIn : in STD_LOGIC_VECTOR (1 downto 0);
+           WrEn : in STD_LOGIC;
+           Rst : in STD_LOGIC;
+           Clk : in STD_LOGIC;
+           DataOut : out STD_LOGIC_VECTOR (1 downto 0));
 end component;
 
 -- RS Signals --
@@ -101,6 +110,7 @@ end component;
 -- Gerenics
   SIGNAL GenericExcecution : STD_LOGIC ;
 
+  SIGNAL OpDelayOut : STD_LOGIC_VECTOR(1 downto 0);
 begin
 
 RSEXSELECT : RSSelectLogical Port Map( 
@@ -110,14 +120,22 @@ RSEXSELECT : RSSelectLogical Port Map(
            Rst => RST,
            Tag => ExTAG);
 
+OpDelay : Register2 Port Map (
+         DataIn =>Op,
+         WrEn =>'1',
+         Clk =>CLK,
+         DataOut =>OpDelayOut,
+         Rst =>RST);
+
 RS1 : RS Port Map( 
            WrEn => RS1WrEn,
-           Op => Op,
+           Op => OpDelayOut,
            Vj => Vj,
            Vk => Vk,
            Qj => Qj,
            Qk => Qk,
            ID => "00001",
+           Ex =>RS1Ex,
            OpOut => RS1OpOut,
            VjOut => RS1VjOut,
            VkOut => RS1VkOut,
@@ -130,12 +148,13 @@ RS1 : RS Port Map(
 
 RS2 : RS Port Map( 
            WrEn => RS2WrEn,
-           Op => Op,
+           Op => OpDelayOut,
            Vj => Vj,
            Vk => Vk,
            Qj => Qj,
            Qk => Qk,
            ID => "00010",
+           Ex =>RS2Ex,
            OpOut => RS2OpOut,
            VjOut => RS2VjOut,
            VkOut => RS2VkOut,
@@ -164,6 +183,7 @@ LU : LogicalFunctionalUnit Port Map (
 IntAvailable(0) <= NOT RS1Busy ;
 IntAvailable(1) <= RS1Busy AND (NOT RS2Busy);
 IntAvailable(2) <= '0' ;
+
 Available <= IntAvailable ;
 
 --Enable RS Writing

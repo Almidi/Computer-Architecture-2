@@ -37,7 +37,7 @@ component ArithmeticFunctionalUnit is
            TagOut : out STD_LOGIC_VECTOR (4 downto 0));
 end component;
 
-component RS is
+component RS is 
     Port ( WrEn : in STD_LOGIC;
            Op : in STD_LOGIC_VECTOR (1 downto 0);       -- Operation input
            Vj : in STD_LOGIC_VECTOR (31 downto 0);      -- Vj Input
@@ -45,6 +45,7 @@ component RS is
            Qj : in STD_LOGIC_VECTOR (4 downto 0);       -- Qj Input
            Qk : in STD_LOGIC_VECTOR (4 downto 0);       -- Qk Input
            ID : in STD_LOGIC_VECTOR (4 downto 0);       -- RS ID
+           Ex : in STD_LOGIC ;                          -- RS Executed
            OpOut : out STD_LOGIC_VECTOR (1 downto 0);   -- Operation Output
            VjOut : out STD_LOGIC_VECTOR (31 downto 0);  -- Vj Output 
            VkOut : out STD_LOGIC_VECTOR (31 downto 0);  -- Vk Output
@@ -61,6 +62,14 @@ component RSSelectArithmetic is
            Clk : in STD_LOGIC;
            Rst : in STD_LOGIC;
            Tag : out STD_LOGIC_VECTOR (2 downto 0));
+end component;
+
+component Register2 is
+    Port ( DataIn : in STD_LOGIC_VECTOR (1 downto 0);
+           WrEn : in STD_LOGIC;
+           Rst : in STD_LOGIC;
+           Clk : in STD_LOGIC;
+           DataOut : out STD_LOGIC_VECTOR (1 downto 0));
 end component;
 
 -- RS Signals --
@@ -108,9 +117,10 @@ end component;
   SIGNAL IntAvailable : STD_LOGIC_VECTOR (2 downto 0);
 
 -- Gerenics
-  SIGNAL GenericAvailable : STD_LOGIC ;
+  --SIGNAL GenericAvailable : STD_LOGIC ;
   SIGNAL GenericExcecution : STD_LOGIC ;
 
+  SIGNAL OpDelayOut : STD_LOGIC_VECTOR(1 downto 0);
 begin
 
 RSEXSELECT : RSSelectArithmetic Port Map( 
@@ -121,14 +131,22 @@ RSEXSELECT : RSSelectArithmetic Port Map(
            Rst => RST,
            Tag => ExTAG);
 
+OpDelay : Register2 Port Map (
+         DataIn =>Op,
+         WrEn =>'1',
+         Clk =>CLK,
+         DataOut =>OpDelayOut,
+         Rst =>RST);
+
 RS1 : RS Port Map( 
            WrEn => RS1WrEn,
-           Op => Op,
+           Op => OpDelayOut,
            Vj => Vj,
            Vk => Vk,
            Qj => Qj,
            Qk => Qk,
            ID => "01001",
+           Ex =>RS1Ex,
            OpOut => RS1OpOut,
            VjOut => RS1VjOut,
            VkOut => RS1VkOut,
@@ -141,12 +159,13 @@ RS1 : RS Port Map(
 
 RS2 : RS Port Map( 
            WrEn => RS2WrEn,
-           Op => Op,
+           Op => OpDelayOut,
            Vj => Vj,
            Vk => Vk,
            Qj => Qj,
            Qk => Qk,
            ID => "01010",
+           Ex =>RS2Ex,
            OpOut => RS2OpOut,
            VjOut => RS2VjOut,
            VkOut => RS2VkOut,
@@ -159,12 +178,13 @@ RS2 : RS Port Map(
 
 RS3 : RS Port Map( 
            WrEn => RS3WrEn,
-           Op => Op,
+           Op => OpDelayOut,
            Vj => Vj,
            Vk => Vk,
            Qj => Qj,
            Qk => Qk,
-           ID => "01100",
+           ID => "01011",
+           Ex =>RS3Ex,
            OpOut => RS3OpOut,
            VjOut => RS3VjOut,
            VkOut => RS3VkOut,
@@ -193,7 +213,14 @@ AU : ArithmeticFunctionalUnit Port Map (
 IntAvailable(0) <= NOT RS1Busy ;
 IntAvailable(1) <= RS1Busy AND (NOT RS2Busy);
 IntAvailable(2) <= RS1Busy AND RS2Busy AND (NOT RS3Busy);
-Available <= IntAvailable ;
+
+--Available <= IntAvailable ;
+------------------------------------------I THINK I NEED THIS ?!?
+with IntAvailable Select
+Available <= "001" when "001",
+             "010" when "010",
+             "011" when "100",
+             "000" when others ;
 
 --Enable RS Writing
 RS1WrEn <= IntAvailable(0) AND Issue ;

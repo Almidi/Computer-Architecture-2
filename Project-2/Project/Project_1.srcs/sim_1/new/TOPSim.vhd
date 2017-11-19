@@ -181,23 +181,64 @@ begin
         Rk <= "00011";              -- Source 3
         wait for TbPeriod*1;
                 
-        -- 2 AND 9 = 0  on register 7 ----------------------------------------------
+        -- 7 AND 9 = 1  on register 7 ----------------------------------------------
         IssueIn <= '1'; 			-- Issue
         FUType <= "00";             -- Logical Unit 
         Fop <= "01";                -- Operation 01 = AND
         Ri <= "00111";              -- Destination Register 7
-        Rj <= "00010";              -- Source 2
+        Rj <= "00001";              -- Source 1
         Rk <= "00011";              -- Source 3
         wait for TbPeriod*1;
                
-        -- NOT 2 = 4294967293(Unsigned) -3(Signed)  on register 8 -------------------
+        -- NOT 2 = 4294967293(Unsigned) -3(Signed)  on register 8 ------------------
         IssueIn <= '1'; 			-- Issue
         FUType <= "00";             -- Logical Unit 
         Fop <= "10";                -- Operation 10 = NOT
         Ri <= "01000";              -- Destination Register 8
         Rj <= "00010";              -- Source 2
         Rk <= "00011";              -- Source 3
-        wait for TbPeriod*1;
+        wait for TbPeriod*3;
+
+        IssueIn <= '0';             -- Issue
+        wait for TbPeriod*3;
+
+        -- 2 + 0 = 2  on register 9-------------------------------------------------
+        IssueIn <= '1';             -- Issue
+        FUType <= "01";             -- Arithmetical Unit 
+        Fop <= "00";                -- Operation 00 = Add
+        Ri <= "01001";              -- Destination Register 9
+        Rj <= "00010";              -- Source 2
+        Rk <= "00000";              -- Source 0
+        wait for TbPeriod *1;
+
+        -- 2 + 0 = 2  on register 10------------------------------------------------
+        IssueIn <= '1';             -- Issue
+        FUType <= "01";             -- Arithmetical Unit 
+        Fop <= "00";                -- Operation 00 = Add
+        Ri <= "01010";              -- Destination Register 10
+        Rj <= "00010";              -- Source 2
+        Rk <= "00000";              -- Source 0
+        wait for TbPeriod *1;
+
+        -- 2 + 2 = 4  on register 9-------------------------------------------------
+        IssueIn <= '1';             -- Issue
+        FUType <= "01";             -- Arithmetical Unit 
+        Fop <= "00";                -- Operation 00 = Add
+        Ri <= "01001";              -- Destination Register 9
+        Rj <= "01001";              -- Source 9
+        Rk <= "01010";              -- Source 10
+        wait for TbPeriod *1;
+
+        -- 4 + 2 = 6  on register 10------------------------------------------------
+        IssueIn <= '1';             -- Issue
+        FUType <= "01";             -- Arithmetical Unit 
+        Fop <= "00";                -- Operation 00 = Add
+        Ri <= "01010";              -- Destination Register 10
+        Rj <= "01001";              -- Source 9
+        Rk <= "01010";              -- Source 10
+        wait for TbPeriod *3;
+
+
 
         IssueIn <= '0';
         wait;

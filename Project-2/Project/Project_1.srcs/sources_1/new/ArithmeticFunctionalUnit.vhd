@@ -135,7 +135,7 @@ with TagReg2Input select
 	Reg1Nop		<= '1' when "00000",
 				   '0' when others;
 
---  Register Enabers
+--  Register Enablers
 
 Reg0En <= Grant OR Reg1Nop OR Reg0Nop ;
 Reg1En <= Grant OR Reg1Nop ;
