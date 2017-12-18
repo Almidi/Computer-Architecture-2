@@ -1,23 +1,23 @@
 library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;
-use IEEE.NUMERIC_STD.ALL;
 entity Register5 is
-    Port ( DataIn : in STD_LOGIC_VECTOR (4 downto 0);
+    Port ( DataIn : in STD_LOGIC_VECTOR(4 downto 0);
            WrEn : in STD_LOGIC;
            Rst : in STD_LOGIC;
            Clk : in STD_LOGIC;
-           DataOut : out STD_LOGIC_VECTOR (4 downto 0));
+           DataOut : out STD_LOGIC_VECTOR(4 downto 0));
 end Register5;
-architecture Behavioral of Register5 is
+architecture Structural of Register5 is
+	component Register1 is
+	    Port ( DataIn : in STD_LOGIC;
+		   WrEn : in STD_LOGIC;
+		   Rst : in STD_LOGIC;
+		   Clk : in STD_LOGIC;
+		   DataOut : out STD_LOGIC);
+	end component;
 begin
-process(Rst,Clk)
-begin
-    if Rst='1' then
-        DataOut<=std_logic_vector(to_unsigned(0,5));
-    elsif rising_edge(Clk) then
-    	if WrEn='1' then
-    		DataOut<=DataIn;
-    	end if;
-    end if;
-end process;
-end Behavioral;
+	register1Generator:
+	for i in 0 to 4 generate
+		register1_i: Register1 port map(DataIn=>DataIn(i), WrEn=>WrEn, Rst=>Rst, Clk=>Clk, DataOut=>DataOut(i));
+	end generate register1Generator;
+end Structural;

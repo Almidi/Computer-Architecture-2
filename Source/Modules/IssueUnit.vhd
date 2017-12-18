@@ -41,9 +41,9 @@ begin
             RFAddrW<=std_logic_vector(to_unsigned(0,5));
             RFWrEn<='0';
             Accepted<='0';
-		--elsif rising_edge(Clk) then
-        --elsif Clk='1' then
-        else
+--		elsif rising_edge(Clk) then
+        elsif Clk='1' then
+--        else
             if IssueIn='1' and FUType="00" and LogicalAvailable/="000" then -- Logical Functions
                 LogicalIssue<='1';
                 ArithmeticIssue<='0';

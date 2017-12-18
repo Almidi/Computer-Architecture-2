@@ -22,8 +22,9 @@ end CDB;
 architecture Behavioral of CDB is
 	signal priority, selected: std_logic_vector(1 downto 0);
 begin
-	process(Clk, Rst, ArithmeticRequest, LogicalRequest, BufferRequest,
-		VArithmetic, VLogical, VBuffer, QArithmetic, QLogical, QBuffer)
+--	process(Clk, Rst, ArithmeticRequest, LogicalRequest, BufferRequest,
+--		VArithmetic, VLogical, VBuffer, QArithmetic, QLogical, QBuffer)
+	process(Clk, Rst)
 	begin
 		if Rst='1' then
 			Qout<=std_logic_vector(to_unsigned(0,5));
@@ -33,9 +34,9 @@ begin
 			GrantLogical<='0';
    			GrantBuffer<='0';
    			selected<="00";
-		--elsif rising_edge(clk) then
-		elsif clk = '1' then
-		else
+		elsif rising_edge(clk) then
+--		elsif clk = '1' then
+--		else
 			if selected="01" then
 				Qout<=QArithmetic;
 				Vout<=VArithmetic;

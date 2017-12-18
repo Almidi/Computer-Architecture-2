@@ -88,9 +88,9 @@ begin
         -- Reset generation
         -- EDIT: Check that Rst is really your reset signal
         Rst <= '1';
-        wait for 100 ns;
+        wait for 100 ns - TbPeriod;
         Rst <= '0';
---        wait for 100 ns;
+        wait for TbPeriod;
 
         -- Injecting Data On Registers Through Simulated Buffer --------------------
         
