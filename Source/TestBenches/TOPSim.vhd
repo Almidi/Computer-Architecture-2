@@ -181,8 +181,6 @@ begin
         Rk <= "00011";              -- Source 3
 
         wait for TbPeriod*1;
-        IssueIn <= '0';             -- Issue
-        wait for TbPeriod*20;
                 
         -- 7 AND 9 = 1  on register 7 ----------------------------------------------
         IssueIn <= '1'; 			-- Issue
@@ -194,7 +192,7 @@ begin
 
         wait for TbPeriod*1;
         IssueIn <= '0';             -- Issue-----------------Not Accepted
-        wait for TbPeriod*6;
+        wait for TbPeriod*8;
                
         -- NOT 2 = 4294967293(Unsigned) -3(Signed)  on register 8 ------------------
         IssueIn <= '1'; 			-- Issue
@@ -206,7 +204,7 @@ begin
         wait for TbPeriod*1;
 
         IssueIn <= '0';             -- Issue
-        wait for TbPeriod*20;
+        wait for TbPeriod*10;
 
         -- 2 + 0 = 2  on register 9-------------------------------------------------
         IssueIn <= '1';             -- Issue
@@ -236,7 +234,7 @@ begin
 
         wait for TbPeriod*1;
         IssueIn <= '0';             -- Issue
-        wait for TbPeriod*6;
+        wait for TbPeriod*3 ;
 
         -- 4 + 2 = 6  on register 10------------------------------------------------
         IssueIn <= '1';             -- Issue
