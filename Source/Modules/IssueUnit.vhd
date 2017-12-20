@@ -26,12 +26,14 @@ entity IssueUnit is
 		Rst: in STD_LOGIC);   
 end IssueUnit;
 architecture Behavioral of IssueUnit is
+
 begin
-	OpOut<=Fop;
-	RFReadAddr1<=Rj;
-	RFReadAddr2<=Rk;
+    OpOut<=Fop;
+    RFReadAddr1<=Rj;
+    RFReadAddr2<=Rk;
+
 	
-	process(Clk, Rst, ArithmeticAvailable, LogicalAvailable)
+	process(Clk, IssueIn, FUType, Rst, Fop, Ri, Rj, Rk, ArithmeticAvailable, LogicalAvailable, BufferAvailable)
 	begin
 		if Rst='1' then
 			ArithmeticIssue<='0';
@@ -41,11 +43,10 @@ begin
             RFAddrW<=std_logic_vector(to_unsigned(0,5));
             RFWrEn<='0';
             Accepted<='0';
---		elsif rising_edge(Clk) then
-        elsif Clk='1' then
---        else
+
+        else
             if IssueIn='1' and FUType="00" and LogicalAvailable/="000" then -- Logical Functions
-                LogicalIssue<='1';
+                LogicalIssue<='1' ;
                 ArithmeticIssue<='0';
                 BufferIssue<='0';
                 RFTag<=FUType & LogicalAvailable;

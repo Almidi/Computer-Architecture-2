@@ -13,7 +13,8 @@ begin
 		if reset='1' then
 			Q<='0';
 		elsif rising_edge(clk) then
-			Q<=D after 1 ns;
+			--Q<=D after 1 ns;
+			Q<=D;
 		end if;
 	end process;
 end Behavioral;

@@ -152,7 +152,7 @@ begin
         Ri <= "00011"; 				-- Destination Register 3
         Rj <= "00010";              -- Source 2
         Rk <= "00001";              -- Source 1
-        wait for TbPeriod;
+        wait for TbPeriod*1;
 
         -- 2 - 9 = -7  on register 4 ----------------------------------------------
         IssueIn <= '1'; 			-- Issue
@@ -179,7 +179,10 @@ begin
         Ri <= "00110"; 				-- Destination Register 6
         Rj <= "00010";              -- Source 2
         Rk <= "00011";              -- Source 3
+
         wait for TbPeriod*1;
+        IssueIn <= '0';             -- Issue
+        wait for TbPeriod*20;
                 
         -- 7 AND 9 = 1  on register 7 ----------------------------------------------
         IssueIn <= '1'; 			-- Issue
@@ -188,7 +191,10 @@ begin
         Ri <= "00111";              -- Destination Register 7
         Rj <= "00001";              -- Source 1
         Rk <= "00011";              -- Source 3
+
         wait for TbPeriod*1;
+        IssueIn <= '0';             -- Issue-----------------Not Accepted
+        wait for TbPeriod*6;
                
         -- NOT 2 = 4294967293(Unsigned) -3(Signed)  on register 8 ------------------
         IssueIn <= '1'; 			-- Issue
@@ -197,10 +203,10 @@ begin
         Ri <= "01000";              -- Destination Register 8
         Rj <= "00010";              -- Source 2
         Rk <= "00011";              -- Source 3
-        wait for TbPeriod*3;
+        wait for TbPeriod*1;
 
         IssueIn <= '0';             -- Issue
-        wait for TbPeriod*3;
+        wait for TbPeriod*20;
 
         -- 2 + 0 = 2  on register 9-------------------------------------------------
         IssueIn <= '1';             -- Issue
@@ -227,7 +233,10 @@ begin
         Ri <= "01001";              -- Destination Register 9
         Rj <= "01001";              -- Source 9
         Rk <= "01010";              -- Source 10
-        wait for TbPeriod *1;
+
+        wait for TbPeriod*1;
+        IssueIn <= '0';             -- Issue
+        wait for TbPeriod*6;
 
         -- 4 + 2 = 6  on register 10------------------------------------------------
         IssueIn <= '1';             -- Issue
@@ -236,10 +245,7 @@ begin
         Ri <= "01010";              -- Destination Register 10
         Rj <= "01001";              -- Source 9
         Rk <= "01010";              -- Source 10
-        wait for TbPeriod *3;
-
-
-
+        wait for TbPeriod *1;
         IssueIn <= '0';
         wait;
     end process;

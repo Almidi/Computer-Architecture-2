@@ -140,7 +140,7 @@ OpDelay : Register2 Port Map (
 
 RS1 : RS Port Map( 
            WrEn => RS1WrEn,
-           Op => OpDelayOut,
+           Op => Op,
            Vj => Vj,
            Vk => Vk,
            Qj => Qj,
@@ -159,7 +159,7 @@ RS1 : RS Port Map(
 
 RS2 : RS Port Map( 
            WrEn => RS2WrEn,
-           Op => OpDelayOut,
+           Op => Op,
            Vj => Vj,
            Vk => Vk,
            Qj => Qj,
@@ -178,7 +178,7 @@ RS2 : RS Port Map(
 
 RS3 : RS Port Map( 
            WrEn => RS3WrEn,
-           Op => OpDelayOut,
+           Op => Op,
            Vj => Vj,
            Vk => Vk,
            Qj => Qj,
