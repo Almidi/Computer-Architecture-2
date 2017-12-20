@@ -17,7 +17,7 @@ entity ReorderBufferBlock is
 		ValueOut: out std_logic_vector(31 downto 0);
 		PCOut: out std_logic_vector(31 downto 0);
 		ReadyOut: out std_logic;
-		ExceptionOut: out std_logic;
+		ExceptionOut: out std_logic
 		);
 end ReorderBufferBlock;
 architecture Structural of ReorderBufferBlock is
@@ -60,6 +60,9 @@ architecture Structural of ReorderBufferBlock is
 	      end component;
 
 	signal ComparatorOut: std_logic;
+	signal Comparator1Out: std_logic;
+	signal ValueWrite: std_logic;
+	signal IntReadyOut: std_logic;
 	signal tagSignal: std_logic_vector(4 downto 0);
 
 begin
@@ -84,11 +87,15 @@ begin
 
 	comparator: CompareModule port map(In0=>CDBQ,In1=>tagSignal,DOUT=>ComparatorOut);
 
+	comparator1: CompareModule port map(In0=>CDBQ,In1=>TagIn,DOUT=>Comparator1Out);
+
 	ValueREG : Register32 Port Map (     DataIn =>CDBV,
-							WrEn =>ComparatorOut,
+							WrEn =>ValueWrite,
 							Clk =>Clk,
 							DataOut =>ValueOut,
 							Rst =>Rst);
+
+	ValueWrite <= (ComparatorOut AND (NOT IntReadyOut))OR(WrEn AND Comparator1Out);
 
 	PCREG : Register32 Port Map ( DataIn =>PCIn,
 						WrEn =>WrEn,
@@ -97,11 +104,13 @@ begin
 						Rst =>Rst);
 
 	ReadyREG : Register1 Port Map (    DataIn =>'1',
-							WrEn =>ComparatorOut,
+							WrEn =>ValueWrite,
 							Clk =>Clk,
-							DataOut =>ReadyOut,
+							DataOut =>IntReadyOut,
 							Rst =>Rst);
 	
+	ReadyOut <= IntReadyOut ;
+
 	ExceptionREG : Register1 Port Map (    	   DataIn =>'1',
 								WrEn =>ExceptionIn,
 								Clk =>Clk,
