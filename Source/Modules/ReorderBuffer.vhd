@@ -41,6 +41,7 @@ architecture Structural of ReorderBuffer is
 			CDBQ: in std_logic_vector(4 downto 0);
 			CDBV: in std_logic_vector(31 downto 0);		
 			WrEn: in std_logic;
+			GlobalWrEn: in std_logic;
 			Clear: in std_logic;
 			Clk: in std_logic;
 			Rst: in std_logic;
@@ -50,7 +51,8 @@ architecture Structural of ReorderBuffer is
 			ValueOut: out std_logic_vector(31 downto 0);
 			PCOut: out std_logic_vector(31 downto 0);
 			ReadyOut: out std_logic;
-			ExceptionOut: out std_logic);
+			ExceptionOut: out std_logic;
+			NewestOut: out std_logic);
 	end component;
 
 	component Counter4 port(
@@ -66,6 +68,12 @@ architecture Structural of ReorderBuffer is
 		Port ( In0 : in  STD_LOGIC_VECTOR (4 downto 0);
 		       In1 : in  STD_LOGIC_VECTOR (4 downto 0);
 		       DOUT : out  STD_LOGIC);
+	end component;
+
+	component Demux1to16 is
+    Port (input : in  STD_LOGIC;
+	  output : out  STD_LOGIC_VECTOR (15 downto 0);
+	  control : in  STD_LOGIC_VECTOR (3 downto 0));
 	end component;
 	
 	signal HeadEnable,HeadLoad  : std_logic;                             -- Head
@@ -85,13 +93,13 @@ architecture Structural of ReorderBuffer is
 
 
 
-	signal WrEnSignal, ReadyOutSignal, ExceptionOutSignal: std_logic_vector(15 downto 0);
+	signal WrEnSignal, ReadyOutSignal, ExceptionOutSignal, NewestOutSignal: std_logic_vector(15 downto 0);
 	signal InstrTypeOutSignal: Bus16x2;
 	signal DestinationOutSignal, TagOutSignal: Bus16x5;
 	signal ValueOutSignal, PCOutSignal: Bus16x32;
 	signal EVERYONE : Bus16x78;
 	signal clear : STD_LOGIC_VECTOR (15 downto 0);
-
+	signal HeadClear : STD_LOGIC;
 
 	signal full, empty: std_logic;
 begin
@@ -106,7 +114,8 @@ begin
 			CDBQ=>CDBQ,
 			CDBV=>CDBV,
 			WrEn=>WrEnSignal(i),
-			Clear => clear(i),
+			GlobalWrEn=>WrEn,
+			Clear => clear(i) OR HeadException, -- clear everything when exception
 			Clk=>Clk,
 			Rst=>Rst,
 			InstrTypeOut=>InstrTypeOutSignal(i),
@@ -115,7 +124,8 @@ begin
 			ValueOut=>ValueOutSignal(i),
 			PCOut=>PCOutSignal(i),
 			ReadyOut=>ReadyOutSignal(i),
-			ExceptionOut=>ExceptionOutSignal(i));
+			ExceptionOut=>ExceptionOutSignal(i)
+			NewestOut=>NewestOutSignal(i));
 		EVERYONE(i) <= InstrTypeOutSignal(i) & DestinationOutSignal(i) & TagOutSignal(i) & ValueOutSignal(i) & PCOutSignal(i) & ReadyOutSignal(i) & ExceptionOutSignal(i);
 	end generate;
 
@@ -141,7 +151,8 @@ begin
 					Output=>TailOutput);
 
 	TailEnable <= WrEn AND(NOT full);
-
+	TailLoad <= HeadException;
+	TailDataIn <= HeadOutput;
 
 	HeadMux : Mux16x78 Port Map (
 					Input 	=> EVERYONE,
@@ -165,6 +176,22 @@ begin
 	RFAddr <= HeadDestination;
 	RFWrData <= HeadValue;
 
-	--
+	-- Demux Clear And WrEn For
+
+	WrEnDemux : Demux1to16 Port Map (
+		input 	=> WrEn,
+	  	output 	=> WrEnSignal,
+	  	control => TailOutput)
+
+	ClearDemux : Demux1to16 Port Map (
+		input 	=> HeadClear,
+	  	output 	=> Clear,
+	  	control => HeadOutput)
+
+	HeadClear <= HeadEnable ; --clear when moving head
+
+	-- 
+
+
 
 end Structural;

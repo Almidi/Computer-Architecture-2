@@ -9,6 +9,7 @@ entity ReorderBufferBlock is
 		CDBQ: in std_logic_vector(4 downto 0);
 		CDBV: in std_logic_vector(31 downto 0);		
 		WrEn: in std_logic;
+		GlobalWrEn: in std_logic;
 		Clear: in std_logic;
 		Clk: in std_logic;
 		Rst: in std_logic;
@@ -18,7 +19,8 @@ entity ReorderBufferBlock is
 		ValueOut: out std_logic_vector(31 downto 0);
 		PCOut: out std_logic_vector(31 downto 0);
 		ReadyOut: out std_logic;
-		ExceptionOut: out std_logic
+		ExceptionOut: out std_logic;
+		NewestOut: out std_logic
 		);
 end ReorderBufferBlock;
 architecture Structural of ReorderBufferBlock is
@@ -61,9 +63,11 @@ architecture Structural of ReorderBufferBlock is
 	      end component;
 
 	signal ComparatorOut: std_logic;
+	signal DstComparatorOut: std_logic;
 	signal ValueWrite: std_logic;
 	signal intReadyOut: std_logic;
-	signal tagSignal: std_logic_vector(4 downto 0);
+	signal tagOutSignal: std_logic_vector(4 downto 0);
+	signal tagInSignal: std_logic_vector(4 downto 0);
 
 begin
 	InstrTypeREG : Register2 Port Map (
@@ -81,14 +85,20 @@ begin
 								Rst =>Rst);
 
 	TagREG : Register5 Port Map ( 
-						DataIn =>TagIn,
-						WrEn =>WrEn,
+						DataIn =>TagInSignal,
+						WrEn =>WrEn Or ValueWrite,
 						Clk =>Clk,
-						DataOut =>tagSignal,
+						DataOut =>tagOutSignal,
 						Rst =>Rst);
-	TagOut<=tagSignal;
 
-	comparator: CompareModule port map(In0=>CDBQ,In1=>tagSignal,DOUT=>ComparatorOut);
+	with ValueWrite select
+	TagInSignal <= TagIn   when '0',
+				   "00000" when others;
+
+
+	TagOut<=tagOutSignal;
+
+	comparator: CompareModule port map(In0=>CDBQ,In1=>tagOutSignal,DOUT=>ComparatorOut);
 
 	ValueREG : Register32 Port Map (
 							DataIn =>CDBV,
@@ -120,5 +130,15 @@ begin
 								Clk =>Clk,
 								DataOut =>ExceptionOut,
 								Rst =>Rst);
+
+	DstComparator: CompareModule port map(In0=>DestinationOut,In1=>DestinationIn,DOUT=>DstComparatorOut);
+
+	NewestREG : Register1 Port Map (
+						DataIn => WrEn AND GlobalWrEn,
+						WrEn =>(DstComparatorOut and GlobalWrEn) or WrEn,
+						Clk =>Clk,
+						DataOut =>NewestOut,
+						Rst =>Rst);
+
 
 end Structural;
