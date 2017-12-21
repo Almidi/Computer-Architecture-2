@@ -1,5 +1,10 @@
 library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;
+use IEEE.STD_LOGIC_SIGNED.ALL;
+use ieee.std_logic_arith.all;
+use IEEE.NUMERIC_BIT;
+use IEEE.NUMERIC_STD.all; 
+
 entity ReorderBuffer is
 	Port (InstrTypeIn: in std_logic_vector(1 downto 0);
 		DestinationIn: in std_logic_vector(4 downto 0);
@@ -41,6 +46,12 @@ architecture Structural of ReorderBuffer is
 			Rst: in std_logic;
 			Output: out std_logic_vector(0 to 3));
 	end component;
+
+	component CompareModule is
+		Port ( In0 : in  STD_LOGIC_VECTOR (4 downto 0);
+		       In1 : in  STD_LOGIC_VECTOR (4 downto 0);
+		       DOUT : out  STD_LOGIC);
+	end component;
 	
 	signal HeadEnable, TailEnable, HeadLoad, TailLoad : std_logic;
 	signal HeadDataIn, TailDataIn, HeadOutput, TailOutput: std_logic_vector(3 downto 0);
@@ -52,6 +63,8 @@ architecture Structural of ReorderBuffer is
 	signal InstrTypeOutSignal: Bus16x2;
 	signal DestinationOutSignal, TagOutSignal: Bus16x5;
 	signal ValueOutSignal, PCOutSignal: Bus16x32;
+
+	signal full, empty: std_logic;
 begin
 	ReorderBufferBlockGenerator:
 	for i in 0 to 15 generate
@@ -88,4 +101,7 @@ begin
 					Clk=>Clk,
 					Rst=>Rst,
 					Output=>TailOutput);
+
+	emptyComparator: CompareModule port map(In0=>HeadOutput,In1=>TailOutput,DOUT=>empty);
+	fullComparator: CompareModule port map(In0=>HeadOutput,In1=>TailOutput+1,DOUT=>full);
 end Structural;
