@@ -27,8 +27,10 @@ entity ReorderBuffer is
 		FullOut:out std_logic;
 		DataOut1 : out STD_LOGIC_VECTOR (31 downto 0);
 		TagOut1: out STD_LOGIC_VECTOR (4 downto 0);
+		Available1: out std_logic;
 		DataOut2 : out STD_LOGIC_VECTOR (31 downto 0);
-		TagOut2: out STD_LOGIC_VECTOR (4 downto 0));
+		TagOut2: out STD_LOGIC_VECTOR (4 downto 0);
+		Available2: out std_logic);
 end ReorderBuffer;
 architecture Structural of ReorderBuffer is
 
@@ -88,6 +90,7 @@ architecture Structural of ReorderBuffer is
 			ValuesIn: in Bus16;
 			TagsIn: in Bus16x5;
 			Newest: in STD_LOGIC_VECTOR(15 downto 0);
+			Available : out STD_LOGIC;
 			Value: out STD_LOGIC_VECTOR (31 downto 0);
 			Tag: out STD_LOGIC_VECTOR(4 downto 0));
 	end component;
@@ -112,7 +115,7 @@ architecture Structural of ReorderBuffer is
 	signal WrEnSignal, ReadyOutSignal, ExceptionOutSignal, NewestOutSignal: std_logic_vector(15 downto 0);
 	signal InstrTypeOutSignal: Bus16x2;
 	signal DestinationOutSignal, TagOutSignal: Bus16x5;
-	signal ValueOutSignal, PCOutSignal: Bus16x32;
+	signal ValueOutSignal, PCOutSignal: Bus16;
 	signal EVERYONE : Bus16x78;
 	signal clear : STD_LOGIC_VECTOR (15 downto 0);
 	signal HeadClear : STD_LOGIC;
@@ -140,13 +143,14 @@ begin
 			ValueOut=>ValueOutSignal(i),
 			PCOut=>PCOutSignal(i),
 			ReadyOut=>ReadyOutSignal(i),
-			ExceptionOut=>ExceptionOutSignal(i)
+			ExceptionOut=>ExceptionOutSignal(i),
 			NewestOut=>NewestOutSignal(i));
 		EVERYONE(i) <= InstrTypeOutSignal(i) & DestinationOutSignal(i) & TagOutSignal(i) & ValueOutSignal(i) & PCOutSignal(i) & ReadyOutSignal(i) & ExceptionOutSignal(i);
 	end generate;
 
 	emptyComparator: CompareModule port map(In0=>'0' & HeadOutput,In1=>'0' & TailOutput,DOUT=>empty);
 	fullComparator: CompareModule port map(In0=>'0' & HeadOutput,In1=>'0' & (TailOutput+1),DOUT=>full);
+	FullOut <= full ;
 
 	Head: Counter4 port map (   Enable=>HeadEnable,
 						DataIn=>HeadDataIn,
@@ -186,6 +190,9 @@ begin
 	HeadReady 			<= HeadRAW( 76 );
 	HeadException 		<= HeadRAW( 77 );
 
+	InstrTypeOut <= HeadInstructionType;
+	PCOut		 <= HeadPC;
+
 	--RF Writing Logic
 
 	RFWrEn <= HeadEnable ;
@@ -197,12 +204,12 @@ begin
 	WrEnDemux : Demux1to16 Port Map (
 		input 	=> WrEn,
 	  	output 	=> WrEnSignal,
-	  	control => TailOutput)
+	  	control => TailOutput);
 
 	ClearDemux : Demux1to16 Port Map (
 		input 	=> HeadClear,
 	  	output 	=> Clear,
-	  	control => HeadOutput)
+	  	control => HeadOutput);
 
 	HeadClear <= HeadEnable ; --clear when moving head
 
@@ -211,6 +218,7 @@ begin
 							ValuesIn=>ValueOutSignal,
 							TagsIn=>TagOutSignal,
 							Newest=>NewestOutSignal,
+							Available => Available1,
 							Value =>DataOut1,
 							Tag=>TagOut1);
 	ReadPort2: ReadPort Port map(      ReadAddr =>ReadAddr2,
@@ -218,6 +226,10 @@ begin
 							ValuesIn=>ValueOutSignal,
 							TagsIn=>TagOutSignal,
 							Newest=>NewestOutSignal,
+							Available =>Available2,
 							Value =>DataOut2,
 							Tag=>TagOut2);
+
+
+
 end Structural;
