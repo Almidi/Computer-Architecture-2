@@ -9,6 +9,7 @@ entity ReorderBufferBlock is
 		CDBQ: in std_logic_vector(4 downto 0);
 		CDBV: in std_logic_vector(31 downto 0);		
 		WrEn: in std_logic;
+		Clear: in std_logic;
 		Clk: in std_logic;
 		Rst: in std_logic;
 		InstrTypeOut: out std_logic_vector(1 downto 0);
@@ -60,26 +61,27 @@ architecture Structural of ReorderBufferBlock is
 	      end component;
 
 	signal ComparatorOut: std_logic;
-	signal Comparator1Out: std_logic;
 	signal ValueWrite: std_logic;
-	signal IntReadyOut: std_logic;
+	signal intReadyOut: std_logic;
 	signal tagSignal: std_logic_vector(4 downto 0);
-	signal intValueOut: std_logic_vector(31 downto 0);
 
 begin
-	InstrTypeREG : Register2 Port Map ( DataIn =>InstrTypeIn,
+	InstrTypeREG : Register2 Port Map (
+							DataIn =>InstrTypeIn,
 							WrEn =>WrEn,
 							Clk =>Clk,
 							DataOut =>InstrTypeOut,
 							Rst =>Rst);
 
-	DestinationREG : Register5 Port Map ( 	  DataIn =>DestinationIn,
+	DestinationREG : Register5 Port Map (
+								DataIn =>DestinationIn,
 								WrEn =>WrEn,
 								Clk =>Clk,
 								DataOut =>DestinationOut,
 								Rst =>Rst);
 
-	TagREG : Register5 Port Map ( DataIn =>TagIn,
+	TagREG : Register5 Port Map ( 
+						DataIn =>TagIn,
 						WrEn =>WrEn,
 						Clk =>Clk,
 						DataOut =>tagSignal,
@@ -88,15 +90,16 @@ begin
 
 	comparator: CompareModule port map(In0=>CDBQ,In1=>tagSignal,DOUT=>ComparatorOut);
 
-	comparator1: CompareModule port map(In0=>CDBQ,In1=>TagIn,DOUT=>Comparator1Out);
-
-	ValueREG : Register32 Port Map (     DataIn =>CDBV,
+	ValueREG : Register32 Port Map (
+							DataIn =>CDBV,
 							WrEn =>ValueWrite,
 							Clk =>Clk,
-							DataOut =>intValueOut,
+							DataOut =>ValueOut,
 							Rst =>Rst);
 
-	ValueWrite <= (ComparatorOut AND (NOT IntReadyOut))OR(WrEn AND Comparator1Out);
+	ReadyOut <= intReadyOut ;
+
+	ValueWrite <= ComparatorOut AND (NOT intReadyOut);
 
 	PCREG : Register32 Port Map ( DataIn =>PCIn,
 						WrEn =>WrEn,
@@ -104,24 +107,18 @@ begin
 						DataOut =>PCOut,
 						Rst =>Rst);
 
-	ReadyREG : Register1 Port Map (    DataIn =>'1',
-							WrEn =>ValueWrite,
-							Clk =>Clk,
-							DataOut =>IntReadyOut,
+	ReadyREG : Register1 Port Map (
+							DataIn => Clear NOR WrEn,
+							WrEn => ValueWrite OR WrEn Or Clear,
+							Clk => Clk,
+							DataOut =>intReadyOut,
 							Rst =>Rst);
 	
-	ReadyOut <= IntReadyOut OR ValueWrite;
-
-	ExceptionREG : Register1 Port Map (    	   DataIn =>'1',
-								WrEn =>ExceptionIn,
+	ExceptionREG : Register1 Port Map (
+								DataIn => ExceptionIn And (NOT Clear),
+								WrEn =>WrEn OR Clear OR ExceptionIn,
 								Clk =>Clk,
 								DataOut =>ExceptionOut,
 								Rst =>Rst);
-
-	with ValueWrite select
-		ValueOut <=	intValueOut when '0',
-					CDBV		when others;
-
-
 
 end Structural;
