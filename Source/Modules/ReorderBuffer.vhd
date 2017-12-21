@@ -15,6 +15,8 @@ entity ReorderBuffer is
 		CDBQ: in std_logic_vector(4 downto 0);
 		CDBV: in std_logic_vector(31 downto 0);		
 		WrEn: in std_logic;
+		ReadAddr1: in std_logic_vector(4 downto 0);
+		ReadAddr2: in std_logic_vector(4 downto 0);
 		Clk: in std_logic;
 		Rst: in std_logic;
 		RFWrEn: out std_logic;
@@ -22,7 +24,11 @@ entity ReorderBuffer is
 		RFWrData: out std_logic_vector(31 downto 0);
 		InstrTypeOut: out std_logic_vector(1 downto 0);
 		PCOut: out std_logic_vector(31 downto 0);
-		FullOut:out std_logic);
+		FullOut:out std_logic;
+		DataOut1 : out STD_LOGIC_VECTOR (31 downto 0);
+		TagOut1: out STD_LOGIC_VECTOR (4 downto 0);
+		DataOut2 : out STD_LOGIC_VECTOR (31 downto 0);
+		TagOut2: out STD_LOGIC_VECTOR (4 downto 0));
 end ReorderBuffer;
 architecture Structural of ReorderBuffer is
 
@@ -71,9 +77,19 @@ architecture Structural of ReorderBuffer is
 	end component;
 
 	component Demux1to16 is
-    Port (input : in  STD_LOGIC;
-	  output : out  STD_LOGIC_VECTOR (15 downto 0);
-	  control : in  STD_LOGIC_VECTOR (3 downto 0));
+		Port (input : in  STD_LOGIC;
+			output : out  STD_LOGIC_VECTOR (15 downto 0);
+			control : in  STD_LOGIC_VECTOR (3 downto 0));
+	end component;
+
+	component ReadPort is
+		Port ( ReadAddr : in STD_LOGIC_VECTOR (4 downto 0);
+			DestinationsIn: in Bus16x5;
+			ValuesIn: in Bus16;
+			TagsIn: in Bus16x5;
+			Newest: in STD_LOGIC_VECTOR(15 downto 0);
+			Value: out STD_LOGIC_VECTOR (31 downto 0);
+			Tag: out STD_LOGIC_VECTOR(4 downto 0));
 	end component;
 	
 	signal HeadEnable,HeadLoad  : std_logic;                             -- Head
@@ -190,8 +206,18 @@ begin
 
 	HeadClear <= HeadEnable ; --clear when moving head
 
-	-- 
-
-
-
+	ReadPort1: ReadPort Port map(      ReadAddr =>ReadAddr1,
+							DestinationsIn=>DestinationOutSignal,
+							ValuesIn=>ValueOutSignal,
+							TagsIn=>TagOutSignal,
+							Newest=>NewestOutSignal,
+							Value =>DataOut1,
+							Tag=>TagOut1);
+	ReadPort2: ReadPort Port map(      ReadAddr =>ReadAddr2,
+							DestinationsIn=>DestinationOutSignal,
+							ValuesIn=>ValueOutSignal,
+							TagsIn=>TagOutSignal,
+							Newest=>NewestOutSignal,
+							Value =>DataOut2,
+							Tag=>TagOut2);
 end Structural;

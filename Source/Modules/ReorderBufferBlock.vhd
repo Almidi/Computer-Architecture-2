@@ -139,6 +139,4 @@ begin
 						Clk =>Clk,
 						DataOut =>NewestOut,
 						Rst =>Rst);
-
-
 end Structural;
