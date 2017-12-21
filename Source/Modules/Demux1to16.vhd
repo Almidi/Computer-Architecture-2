@@ -8,27 +8,20 @@ end Demux1to16;
 architecture Structural of Demux1to16 is
 	signal temp: std_logic_vector(15 downto 0);
 begin
-	process(input,control)
-	begin
-		case control is
-			when "0000" =>temp(0)<=input;
-			when "0001" =>temp(1)<=input;
-			when "0010" =>temp(2)<=input;
-			when "0011" =>temp(3)<=input;
-			when "0100" =>temp(4)<=input;
-			when "0101" =>temp(5)<=input;
-			when "0110" =>temp(6)<=input;
-			when "0111" =>temp(7)<=input;
-			when "1000" =>temp(8)<=input;
-			when "1001" =>temp(9)<=input;
-			when "1010" =>temp(10)<=input;
-			when "1011" =>temp(11)<=input;
-			when "1100" =>temp(12)<=input;
-			when "1101" =>temp(13)<=input;
-			when "1110" =>temp(14)<=input;
-			when others=>temp(15)<=input;
-		end case;
-	end process;
-	
-	output<=std_logic_vector(0, 16) or temp;
+	output(0)<=input when control="0000"else'0';
+	output(1)<=input when control="0001"else'0';
+	output(2)<=input when control="0010"else'0';
+	output(3)<=input when control="0011"else'0';
+	output(4)<=input when control="0100"else'0';
+	output(5)<=input when control="0101"else'0';
+	output(6)<=input when control="0110"else'0';
+	output(7)<=input when control="0111"else'0';
+	output(8)<=input when control="1000"else'0';
+	output(9)<=input when control="1001"else'0';
+	output(10)<=input when control="1010"else'0';
+	output(11)<=input when control="1011"else'0';
+	output(12)<=input when control="1100"else'0';
+	output(13)<=input when control="1101"else'0';
+	output(14)<=input when control="1110"else'0';
+	output(15)<=input when control="1111"else'0';
 end Structural;
