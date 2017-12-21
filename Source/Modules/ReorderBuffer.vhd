@@ -55,37 +55,37 @@ architecture Structural of ReorderBuffer is
 begin
 	ReorderBufferBlockGenerator:
 	for i in 0 to 15 generate
-		ReorderBufferBlock_i: CompareModule port map(
-			InstrTypeIn<=InstrTypeIn,
-			DestinationIn<=DestinationIn,
-			TagIn<=TagIn,
-			PCIn<=PCIn,
-			ExceptionIn<=ExceptionIn,
-			CDBQ<=CDBQ,
-			CDBV<=CDBV,
-			WrEn<=WrEnSignal(i),
-			Clk<=Clk,
-			Rst<=Rst,
-			InstrTypeOut<=InstrTypeOutSignal(i),
-			DestinationOut<=DestinationOutSignal(i),
-			TagOut<=TagOutSignal(i),
-			ValueOut<=ValueOutSignal(i),
-			PCOut<=PCOutSignal(i),
-			ReadyOut<=ReadyOutSignal(i),
-			ExceptionOut<=ExceptionOutSignal(i));
+		ReorderBufferBlock_i: ReorderBufferBlock port map(
+			InstrTypeIn=>InstrTypeIn,
+			DestinationIn=>DestinationIn,
+			TagIn=>TagIn,
+			PCIn=>PCIn,
+			ExceptionIn=>ExceptionIn,
+			CDBQ=>CDBQ,
+			CDBV=>CDBV,
+			WrEn=>WrEnSignal(i),
+			Clk=>Clk,
+			Rst=>Rst,
+			InstrTypeOut=>InstrTypeOutSignal(i),
+			DestinationOut=>DestinationOutSignal(i),
+			TagOut=>TagOutSignal(i),
+			ValueOut=>ValueOutSignal(i),
+			PCOut=>PCOutSignal(i),
+			ReadyOut=>ReadyOutSignal(i),
+			ExceptionOut=>ExceptionOutSignal(i));
 	end generate;
 
-	Head: Counter4 port map (   Enable<=HeadEnable,
-						DataIn<=HeadDataIn,
-						Load<=HeadLoad,
-						Clk<=Clk,
-						Rst<=Rst,
-						Output<=HeadOutput);
+	Head: Counter4 port map (   Enable=>HeadEnable,
+						DataIn=>HeadDataIn,
+						Load=>HeadLoad,
+						Clk=>Clk,
+						Rst=>Rst,
+						Output=>HeadOutput);
 
-	Tail: Counter4 port map (   	  Enable<=TailEnable,
-						DataIn<=TailDataIn,
-						Load<=TailLoad,
-						Clk<=Clk,
-						Rst<=Rst,
-						Output<=TailOutput);
+	Tail: Counter4 port map(Enable=>TailEnable,
+					DataIn=>TailDataIn,
+					Load=>TailLoad,
+					Clk=>Clk,
+					Rst=>Rst,
+					Output=>TailOutput);
 end Structural;
