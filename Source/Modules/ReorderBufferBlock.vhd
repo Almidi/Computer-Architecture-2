@@ -68,6 +68,7 @@ architecture Structural of ReorderBufferBlock is
 	signal intReadyOut: std_logic;
 	signal tagOutSignal: std_logic_vector(4 downto 0);
 	signal tagInSignal: std_logic_vector(4 downto 0);
+	signal intDestinationOut: std_logic_vector(4 downto 0);
 
 begin
 	InstrTypeREG : Register2 Port Map (
@@ -81,7 +82,7 @@ begin
 								DataIn =>DestinationIn,
 								WrEn =>WrEn,
 								Clk =>Clk,
-								DataOut =>DestinationOut,
+								DataOut =>intDestinationOut,
 								Rst =>Rst);
 
 	TagREG : Register5 Port Map ( 
@@ -131,10 +132,12 @@ begin
 								DataOut =>ExceptionOut,
 								Rst =>Rst);
 
-	DstComparator: CompareModule port map(In0=>DestinationOut,In1=>DestinationIn,DOUT=>DstComparatorOut);
+	DstComparator: CompareModule port map(In0=>intDestinationOut,In1=>DestinationIn,DOUT=>DstComparatorOut);
+
+	DestinationOut <= intDestinationOut;
 
 	NewestREG : Register1 Port Map (
-						DataIn => WrEn AND GlobalWrEn,
+						DataIn => WrEn,
 						WrEn =>(DstComparatorOut and GlobalWrEn) or WrEn,
 						Clk =>Clk,
 						DataOut =>NewestOut,
