@@ -60,7 +60,7 @@ component Register1 is
            DataOut : out STD_LOGIC);
 end component;
 
-component CompareModule is
+component CompareModuleNonZero is
     Port ( In0 : in  STD_LOGIC_VECTOR (4 downto 0);
            In1 : in  STD_LOGIC_VECTOR (4 downto 0);
            DOUT : out  STD_LOGIC);
@@ -164,33 +164,33 @@ OpREG : Register2 Port Map (
 -- Comparator
 
 -- CDBQ == Qj
-Comp1 : CompareModule Port Map( 
+Comp1 : CompareModuleNonZero Port Map( 
          In0 =>CDBQ,
          In1 =>QjInternal,
          DOUT =>Comp1Out );
 -- CDBQ == Qk
-Comp2 : CompareModule Port Map( 
+Comp2 : CompareModuleNonZero Port Map( 
          In0 =>CDBQ,
          In1 =>QkInternal,
          DOUT =>Comp2Out );
 -- CDBQ == 00000
-Comp3 : CompareModule Port Map( 
+Comp3 : CompareModuleNonZero Port Map( 
          In0 =>CDBQ,
          In1 =>"00000",
          DOUT =>Comp3Out );
 -- CDBQ == pre-Qj
-Comp4 : CompareModule Port Map( 
+Comp4 : CompareModuleNonZero Port Map( 
          In0 =>CDBQ,
          In1 =>Qj,
          DOUT =>Comp4Out );
 -- CDBQ == pre-Qk
-Comp5 : CompareModule Port Map( 
+Comp5 : CompareModuleNonZero Port Map( 
          In0 =>CDBQ,
          In1 =>Qk,
          DOUT =>Comp5Out );
 
 -- CDBQ == ID 
-Comp6 : CompareModule Port Map( 
+Comp6 : CompareModuleNonZero Port Map( 
          In0 =>CDBQ,
          In1 =>ID,
          DOUT =>MyDataOnCDB );

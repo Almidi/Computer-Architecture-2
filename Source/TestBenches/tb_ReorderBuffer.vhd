@@ -4,6 +4,7 @@
 
 library ieee;
 use ieee.std_logic_1164.all;
+use ieee.numeric_std.all;
 
 entity tb_ReorderBuffer is
 end tb_ReorderBuffer;
@@ -121,13 +122,49 @@ begin
         wait for 100 ns;
         Rst <= '0';
         wait for 100 ns;
+        
+        InstrTypeIn   <= "01";
+        DestinationIn <= "00011";
+        TagIn         <= "01001";
+        PCIn          <= std_logic_vector(to_unsigned(4,32));
+        ExceptionIn   <= '0';
+        WrEn          <= '1';
+        ReadAddr1     <= "00000";
+        ReadAddr2     <= "00000";
+
+        wait for  17*TbPeriod ;
+
+        InstrTypeIn <= (others => '0');
+        DestinationIn <= (others => '0');
+        TagIn <= (others => '0');
+        PCIn <= (others => '0');
+        ExceptionIn <= '0';
+        WrEn <= '0';
+        ReadAddr1 <= (others => '0');
+        ReadAddr2 <= (others => '0');
+
+        wait for  5*TbPeriod ;
+        CDBQ          <= "01001";
+        CDBV          <= std_logic_vector(to_unsigned(3,32));
+
+        wait for  1*TbPeriod ;
+        InstrTypeIn   <= "01";
+        DestinationIn <= "00011";
+        TagIn         <= "01001";
+        PCIn          <= std_logic_vector(to_unsigned(4,32));
+        ExceptionIn   <= '0';
+        WrEn          <= '1';
+        ReadAddr1     <= "00000";
+        ReadAddr2     <= "00000";
+        wait for  2*TbPeriod ;
 
         -- EDIT Add stimuli here
         wait for 100 * TbPeriod;
-
         -- Stop the clock and hence terminate the simulation
         TbSimEnded <= '1';
         wait;
+
+
     end process;
 
 end tb;

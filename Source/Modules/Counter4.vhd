@@ -22,11 +22,7 @@ begin
 				temp<=DataIn;
 			else 
 				if Enable='1' then
-					if temp="1001" then
-						temp<="0000";
-					else
-						temp <= temp + 1;
-					end if;
+					temp <= temp + 1;
 				end if;
 			end if;
 		end if;
