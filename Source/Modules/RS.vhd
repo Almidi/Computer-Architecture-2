@@ -216,18 +216,15 @@ ReadyOut <= (Qj0 NOR Qk0) AND rEnOut ;
 
 rEnWren <= WrEn OR Ex ;
 
--- Mask Q Register Input when CDBV Arrived
-QjInput(0) <= Qj(0) AND (NOT CDBjMul);
-QjInput(1) <= Qj(1) AND (NOT CDBjMul);
-QjInput(2) <= Qj(2) AND (NOT CDBjMul);
-QjInput(3) <= Qj(3) AND (NOT CDBjMul);
-QjInput(4) <= Qj(4) AND (NOT CDBjMul);
+-- Multiplex Q Inputs
 
-QkInput(0) <= Qk(0) AND (NOT CDBkMul);
-QkInput(1) <= Qk(1) AND (NOT CDBkMul);
-QkInput(2) <= Qk(2) AND (NOT CDBkMul);
-QkInput(3) <= Qk(3) AND (NOT CDBkMul);
-QkInput(4) <= Qk(4) AND (NOT CDBkMul);
+with CDBjMul select 
+  QjInput <= Qj when '0',
+             "00000" when others;
+
+with CDBkMul select 
+  QkInput <= Qk when '0',
+             "00000" when others;
 
 -- Multiplex V Inputs
 with CDBjMul select
