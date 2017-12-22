@@ -182,25 +182,23 @@ begin
 
 	-- Unpack Mux
 
-	HeadInstructionType <= HeadRAW( 1  downto 0 );
-	HeadDestination 	<= HeadRAW( 6  downto 2 );
-	HeadTag 			<= HeadRAW( 11 downto 7 );
-	HeadValue 			<= HeadRAW( 43 downto 12 );
-	HeadPC 				<= HeadRAW( 75 downto 44 );
-	HeadReady 			<= HeadRAW( 76 );
-	HeadException 		<= HeadRAW( 77 );
+	HeadInstructionType<= HeadRAW( 1  downto 0 );
+	HeadDestination<= HeadRAW( 6  downto 2 );
+	HeadTag<= HeadRAW( 11 downto 7 );
+	HeadValue<= HeadRAW( 43 downto 12 );
+	HeadPC<= HeadRAW( 75 downto 44 );
+	HeadReady <= HeadRAW( 76 );
+	HeadException<= HeadRAW( 77 );
 
 	InstrTypeOut <= HeadInstructionType;
-	PCOut		 <= HeadPC;
+	PCOut<= HeadPC;
 
 	--RF Writing Logic
-
 	RFWrEn <= HeadEnable ;
 	RFAddr <= HeadDestination;
 	RFWrData <= HeadValue;
 
 	-- Demux Clear And WrEn For
-
 	WrEnDemux : Demux1to16 Port Map (
 		input 	=> WrEn,
 	  	output 	=> WrEnSignal,
@@ -229,7 +227,4 @@ begin
 							Available =>Available2,
 							Value =>DataOut2,
 							Tag=>TagOut2);
-
-
-
 end Structural;
