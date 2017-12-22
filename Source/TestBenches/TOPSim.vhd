@@ -20,7 +20,10 @@ architecture tb of TOPSim is
               CDB_BufferRequest : in std_logic;
               Accepted          : out std_logic;
               Clk               : in std_logic;
-              Rst               : in std_logic);
+              Rst               : in std_logic;
+              InstrTypeOut      : out STD_LOGIC_VECTOR(1 downto 0);
+              PCOut             : out STD_LOGIC_VECTOR(31 downto 0);
+              Exception         : out STD_LOGIC);
     end component;
 
     signal IssueIn           : std_logic;
@@ -36,6 +39,9 @@ architecture tb of TOPSim is
     signal Accepted          : std_logic;
     signal Clk               : std_logic;
     signal Rst               : std_logic;
+    signal InstrTypeOut      : STD_LOGIC_VECTOR(1 downto 0);
+    signal PCOut             : STD_LOGIC_VECTOR(31 downto 0);
+    signal Exception         : STD_LOGIC;
 
     constant TbPeriod : time := 10 ns; -- EDIT Put right period here
     signal TbClock : std_logic := '0';
@@ -56,7 +62,11 @@ begin
               CDB_BufferRequest => CDB_BufferRequest,
               Accepted          => Accepted,
               Clk               => Clk,
-              Rst               => Rst);
+              Rst               => Rst,
+              InstrTypeOut      => InstrTypeOut,
+              PCOut             => PCOut,
+              Exception         => Exception
+              );
 
     -- Clock generation
     -- TbClock <= not TbClock after TbPeriod/2 when TbSimEnded /= '1' else '0';

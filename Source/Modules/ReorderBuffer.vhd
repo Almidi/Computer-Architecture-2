@@ -22,6 +22,7 @@ entity ReorderBuffer is
             RFAddr          : out std_logic_vector(4 downto 0);
             RFWrData        : out std_logic_vector(31 downto 0);
             RFWrEn          : out std_logic;
+         	Exc 			: out std_logic;
             InstrTypeOut    : out std_logic_vector(1 downto 0);
             PCOut           : out std_logic_vector(31 downto 0);
             FullOut         : out std_logic;
@@ -195,8 +196,8 @@ begin
 	HeadException 		<= HeadRAW(0);
 
 	InstrTypeOut <= HeadInstructionType;
-	PCOut<= HeadPC;
-
+	PCOut 		 <= HeadPC;
+	Exc  		 <= HeadException;
 	--RF Writing Logic
 	RFWrEn 		<= HeadEnable ;
 	RFAddr 		<= HeadDestination;

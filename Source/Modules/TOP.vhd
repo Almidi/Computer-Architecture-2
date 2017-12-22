@@ -19,7 +19,8 @@ entity TOP is Port (
     Rst                 : in STD_LOGIC;
     Accepted            : out STD_LOGIC;
     InstrTypeOut        : out STD_LOGIC_VECTOR(1 downto 0);
-    PCOut               : out STD_LOGIC_VECTOR(31 downto 0));
+    PCOut               : out STD_LOGIC_VECTOR(31 downto 0);
+    Exception           : out STD_LOGIC);
 end TOP;
 
 architecture Behavioral of TOP is
@@ -131,6 +132,7 @@ architecture Behavioral of TOP is
         RFAddr          : out std_logic_vector(4 downto 0);
         RFWrData        : out std_logic_vector(31 downto 0);
         RFWrEn          : out std_logic;
+        Exc             : out std_logic;
         InstrTypeOut    : out std_logic_vector(1 downto 0);
         PCOut           : out std_logic_vector(31 downto 0);
         FullOut         : out std_logic;
@@ -312,6 +314,7 @@ begin
         RFAddr          => ROB_RFAddr,
         RFWrData        => ROB_RFWrData,
         RFWrEn          => ROB_RFWrEn,
+        Exc             => Exception,
         InstrTypeOut    => InstrTypeOut,
         PCOut           => PCOut,    
         FullOut         => ROB_FullOut,
