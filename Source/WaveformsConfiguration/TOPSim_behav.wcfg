@@ -13,7 +13,7 @@
    <zoom_setting>
       <ZoomStartTime time="0fs"></ZoomStartTime>
       <ZoomEndTime time="1349000001fs"></ZoomEndTime>
-      <Cursor1Time time="1000000000fs"></Cursor1Time>
+      <Cursor1Time time="475000000fs"></Cursor1Time>
    </zoom_setting>
    <column_width_setting>
       <NameColumnWidth column_width="209"></NameColumnWidth>
@@ -641,113 +641,9 @@
          <obj_property name="UseCustomSignalColor">true</obj_property>
          <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
       </wvobject>
-      <wvobject type="array" fp_name="/TOPSim/dut/RF/register32Out">
-         <obj_property name="ElementShortName">register32Out[31:0][31:0]</obj_property>
-         <obj_property name="ObjectShortName">register32Out[31:0][31:0]</obj_property>
-         <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
-         <obj_property name="CustomSignalColor">#FF00FF</obj_property>
-         <obj_property name="UseCustomSignalColor">true</obj_property>
-         <obj_property name="isExpanded"></obj_property>
-         <wvobject type="array" fp_name="/TOPSim/dut/RF/register32Out[31]">
-            <obj_property name="ElementShortName">[31][31:0]</obj_property>
-            <obj_property name="ObjectShortName">[31][31:0]</obj_property>
-            <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
-         </wvobject>
-         <wvobject type="array" fp_name="/TOPSim/dut/RF/register32Out[30]">
-            <obj_property name="ElementShortName">[30][31:0]</obj_property>
-            <obj_property name="ObjectShortName">[30][31:0]</obj_property>
-            <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
-         </wvobject>
-         <wvobject type="array" fp_name="/TOPSim/dut/RF/register32Out[29]">
-            <obj_property name="ElementShortName">[29][31:0]</obj_property>
-            <obj_property name="ObjectShortName">[29][31:0]</obj_property>
-            <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
-         </wvobject>
-         <wvobject type="array" fp_name="/TOPSim/dut/RF/register32Out[28]">
-            <obj_property name="ElementShortName">[28][31:0]</obj_property>
-            <obj_property name="ObjectShortName">[28][31:0]</obj_property>
-            <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
-         </wvobject>
-         <wvobject type="array" fp_name="/TOPSim/dut/RF/register32Out[27]">
-            <obj_property name="ElementShortName">[27][31:0]</obj_property>
-            <obj_property name="ObjectShortName">[27][31:0]</obj_property>
-            <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
-         </wvobject>
-         <wvobject type="array" fp_name="/TOPSim/dut/RF/register32Out[26]">
-            <obj_property name="ElementShortName">[26][31:0]</obj_property>
-            <obj_property name="ObjectShortName">[26][31:0]</obj_property>
-            <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
-         </wvobject>
-         <wvobject type="array" fp_name="/TOPSim/dut/RF/register32Out[25]">
-            <obj_property name="ElementShortName">[25][31:0]</obj_property>
-            <obj_property name="ObjectShortName">[25][31:0]</obj_property>
-            <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
-         </wvobject>
-         <wvobject type="array" fp_name="/TOPSim/dut/RF/register32Out[24]">
-            <obj_property name="ElementShortName">[24][31:0]</obj_property>
-            <obj_property name="ObjectShortName">[24][31:0]</obj_property>
-            <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
-         </wvobject>
-         <wvobject type="array" fp_name="/TOPSim/dut/RF/register32Out[23]">
-            <obj_property name="ElementShortName">[23][31:0]</obj_property>
-            <obj_property name="ObjectShortName">[23][31:0]</obj_property>
-            <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
-         </wvobject>
-         <wvobject type="array" fp_name="/TOPSim/dut/RF/register32Out[22]">
-            <obj_property name="ElementShortName">[22][31:0]</obj_property>
-            <obj_property name="ObjectShortName">[22][31:0]</obj_property>
-            <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
-         </wvobject>
-         <wvobject type="array" fp_name="/TOPSim/dut/RF/register32Out[21]">
-            <obj_property name="ElementShortName">[21][31:0]</obj_property>
-            <obj_property name="ObjectShortName">[21][31:0]</obj_property>
-            <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
-         </wvobject>
-         <wvobject type="array" fp_name="/TOPSim/dut/RF/register32Out[20]">
-            <obj_property name="ElementShortName">[20][31:0]</obj_property>
-            <obj_property name="ObjectShortName">[20][31:0]</obj_property>
-            <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
-         </wvobject>
-         <wvobject type="array" fp_name="/TOPSim/dut/RF/register32Out[19]">
-            <obj_property name="ElementShortName">[19][31:0]</obj_property>
-            <obj_property name="ObjectShortName">[19][31:0]</obj_property>
-            <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
-         </wvobject>
-         <wvobject type="array" fp_name="/TOPSim/dut/RF/register32Out[18]">
-            <obj_property name="ElementShortName">[18][31:0]</obj_property>
-            <obj_property name="ObjectShortName">[18][31:0]</obj_property>
-            <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
-         </wvobject>
-         <wvobject type="array" fp_name="/TOPSim/dut/RF/register32Out[17]">
-            <obj_property name="ElementShortName">[17][31:0]</obj_property>
-            <obj_property name="ObjectShortName">[17][31:0]</obj_property>
-            <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
-         </wvobject>
-         <wvobject type="array" fp_name="/TOPSim/dut/RF/register32Out[16]">
-            <obj_property name="ElementShortName">[16][31:0]</obj_property>
-            <obj_property name="ObjectShortName">[16][31:0]</obj_property>
-            <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
-         </wvobject>
-         <wvobject type="array" fp_name="/TOPSim/dut/RF/register32Out[15]">
-            <obj_property name="ElementShortName">[15][31:0]</obj_property>
-            <obj_property name="ObjectShortName">[15][31:0]</obj_property>
-            <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
-         </wvobject>
-         <wvobject type="array" fp_name="/TOPSim/dut/RF/register32Out[14]">
-            <obj_property name="ElementShortName">[14][31:0]</obj_property>
-            <obj_property name="ObjectShortName">[14][31:0]</obj_property>
-            <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
-         </wvobject>
-         <wvobject type="array" fp_name="/TOPSim/dut/RF/register32Out[13]">
-            <obj_property name="ElementShortName">[13][31:0]</obj_property>
-            <obj_property name="ObjectShortName">[13][31:0]</obj_property>
-            <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
-         </wvobject>
-         <wvobject type="array" fp_name="/TOPSim/dut/RF/register32Out[12]">
-            <obj_property name="ElementShortName">[12][31:0]</obj_property>
-            <obj_property name="ObjectShortName">[12][31:0]</obj_property>
-            <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
-         </wvobject>
+      <wvobject type="group" fp_name="group498">
+         <obj_property name="label">RegisterOut[11:0]</obj_property>
+         <obj_property name="DisplayName">label</obj_property>
          <wvobject type="array" fp_name="/TOPSim/dut/RF/register32Out[11]">
             <obj_property name="ElementShortName">[11][31:0]</obj_property>
             <obj_property name="ObjectShortName">[11][31:0]</obj_property>
@@ -814,98 +710,6 @@
             <obj_property name="ObjectShortName">[0][31:0]</obj_property>
             <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
          </wvobject>
-      </wvobject>
-   </wvobject>
-   <wvobject type="group" fp_name="group494">
-      <obj_property name="label">CDB</obj_property>
-      <obj_property name="DisplayName">label</obj_property>
-      <wvobject type="array" fp_name="/TOPSim/dut/CDBC/QArithmetic">
-         <obj_property name="ElementShortName">QArithmetic[4:0]</obj_property>
-         <obj_property name="ObjectShortName">QArithmetic[4:0]</obj_property>
-         <obj_property name="Radix">BINARYRADIX</obj_property>
-      </wvobject>
-      <wvobject type="array" fp_name="/TOPSim/dut/CDBC/VArithmetic">
-         <obj_property name="ElementShortName">VArithmetic[31:0]</obj_property>
-         <obj_property name="ObjectShortName">VArithmetic[31:0]</obj_property>
-         <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
-      </wvobject>
-      <wvobject type="array" fp_name="/TOPSim/dut/CDBC/QLogical">
-         <obj_property name="ElementShortName">QLogical[4:0]</obj_property>
-         <obj_property name="ObjectShortName">QLogical[4:0]</obj_property>
-         <obj_property name="Radix">BINARYRADIX</obj_property>
-      </wvobject>
-      <wvobject type="array" fp_name="/TOPSim/dut/CDBC/VLogical">
-         <obj_property name="ElementShortName">VLogical[31:0]</obj_property>
-         <obj_property name="ObjectShortName">VLogical[31:0]</obj_property>
-         <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
-      </wvobject>
-      <wvobject type="array" fp_name="/TOPSim/dut/CDBC/QBuffer">
-         <obj_property name="ElementShortName">QBuffer[4:0]</obj_property>
-         <obj_property name="ObjectShortName">QBuffer[4:0]</obj_property>
-         <obj_property name="Radix">BINARYRADIX</obj_property>
-      </wvobject>
-      <wvobject type="array" fp_name="/TOPSim/dut/CDBC/VBuffer">
-         <obj_property name="ElementShortName">VBuffer[31:0]</obj_property>
-         <obj_property name="ObjectShortName">VBuffer[31:0]</obj_property>
-         <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
-      </wvobject>
-      <wvobject type="logic" fp_name="/TOPSim/dut/CDBC/ArithmeticRequest">
-         <obj_property name="ElementShortName">ArithmeticRequest</obj_property>
-         <obj_property name="ObjectShortName">ArithmeticRequest</obj_property>
-      </wvobject>
-      <wvobject type="logic" fp_name="/TOPSim/dut/CDBC/LogicalRequest">
-         <obj_property name="ElementShortName">LogicalRequest</obj_property>
-         <obj_property name="ObjectShortName">LogicalRequest</obj_property>
-      </wvobject>
-      <wvobject type="logic" fp_name="/TOPSim/dut/CDBC/BufferRequest">
-         <obj_property name="ElementShortName">BufferRequest</obj_property>
-         <obj_property name="ObjectShortName">BufferRequest</obj_property>
-      </wvobject>
-      <wvobject type="array" fp_name="/TOPSim/dut/CDBC/Qout">
-         <obj_property name="ElementShortName">Qout[4:0]</obj_property>
-         <obj_property name="ObjectShortName">Qout[4:0]</obj_property>
-         <obj_property name="Radix">BINARYRADIX</obj_property>
-         <obj_property name="CustomSignalColor">#FFFF00</obj_property>
-         <obj_property name="UseCustomSignalColor">true</obj_property>
-      </wvobject>
-      <wvobject type="array" fp_name="/TOPSim/dut/CDBC/Vout">
-         <obj_property name="ElementShortName">Vout[31:0]</obj_property>
-         <obj_property name="ObjectShortName">Vout[31:0]</obj_property>
-         <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
-         <obj_property name="CustomSignalColor">#FFFF00</obj_property>
-         <obj_property name="UseCustomSignalColor">true</obj_property>
-      </wvobject>
-      <wvobject type="logic" fp_name="/TOPSim/dut/CDBC/GrantArithmetic">
-         <obj_property name="ElementShortName">GrantArithmetic</obj_property>
-         <obj_property name="ObjectShortName">GrantArithmetic</obj_property>
-         <obj_property name="CustomSignalColor">#FFFF00</obj_property>
-         <obj_property name="UseCustomSignalColor">true</obj_property>
-      </wvobject>
-      <wvobject type="logic" fp_name="/TOPSim/dut/CDBC/GrantLogical">
-         <obj_property name="ElementShortName">GrantLogical</obj_property>
-         <obj_property name="ObjectShortName">GrantLogical</obj_property>
-         <obj_property name="CustomSignalColor">#FFFF00</obj_property>
-         <obj_property name="UseCustomSignalColor">true</obj_property>
-      </wvobject>
-      <wvobject type="logic" fp_name="/TOPSim/dut/CDBC/GrantBuffer">
-         <obj_property name="ElementShortName">GrantBuffer</obj_property>
-         <obj_property name="ObjectShortName">GrantBuffer</obj_property>
-         <obj_property name="CustomSignalColor">#FFFF00</obj_property>
-         <obj_property name="UseCustomSignalColor">true</obj_property>
-      </wvobject>
-      <wvobject type="array" fp_name="/TOPSim/dut/CDBC/priority">
-         <obj_property name="ElementShortName">priority[1:0]</obj_property>
-         <obj_property name="ObjectShortName">priority[1:0]</obj_property>
-         <obj_property name="CustomSignalColor">#FF00FF</obj_property>
-         <obj_property name="UseCustomSignalColor">true</obj_property>
-      </wvobject>
-      <wvobject type="array" fp_name="/TOPSim/dut/CDBC/currentSelected">
-         <obj_property name="ElementShortName">currentSelected[1:0]</obj_property>
-         <obj_property name="ObjectShortName">currentSelected[1:0]</obj_property>
-      </wvobject>
-      <wvobject type="array" fp_name="/TOPSim/dut/CDBC/nextSelected">
-         <obj_property name="ElementShortName">nextSelected[1:0]</obj_property>
-         <obj_property name="ObjectShortName">nextSelected[1:0]</obj_property>
       </wvobject>
    </wvobject>
    <wvobject type="logic" fp_name="/TOPSim/ExceptionIn">
@@ -1106,7 +910,6 @@
       <wvobject type="group" fp_name="group383">
          <obj_property name="label">RoBB</obj_property>
          <obj_property name="DisplayName">label</obj_property>
-         <obj_property name="isExpanded"></obj_property>
          <wvobject type="array" fp_name="/TOPSim/dut/ROB/PCOutSignal">
             <obj_property name="ElementShortName">PCOutSignal[15:0][31:0]</obj_property>
             <obj_property name="ObjectShortName">PCOutSignal[15:0][31:0]</obj_property>
@@ -1237,6 +1040,98 @@
       <wvobject type="logic" fp_name="/TOPSim/dut/ROB/empty">
          <obj_property name="ElementShortName">empty</obj_property>
          <obj_property name="ObjectShortName">empty</obj_property>
+      </wvobject>
+   </wvobject>
+   <wvobject type="group" fp_name="group494">
+      <obj_property name="label">CDB</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+      <wvobject type="array" fp_name="/TOPSim/dut/CDBC/QArithmetic">
+         <obj_property name="ElementShortName">QArithmetic[4:0]</obj_property>
+         <obj_property name="ObjectShortName">QArithmetic[4:0]</obj_property>
+         <obj_property name="Radix">BINARYRADIX</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/TOPSim/dut/CDBC/VArithmetic">
+         <obj_property name="ElementShortName">VArithmetic[31:0]</obj_property>
+         <obj_property name="ObjectShortName">VArithmetic[31:0]</obj_property>
+         <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/TOPSim/dut/CDBC/QLogical">
+         <obj_property name="ElementShortName">QLogical[4:0]</obj_property>
+         <obj_property name="ObjectShortName">QLogical[4:0]</obj_property>
+         <obj_property name="Radix">BINARYRADIX</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/TOPSim/dut/CDBC/VLogical">
+         <obj_property name="ElementShortName">VLogical[31:0]</obj_property>
+         <obj_property name="ObjectShortName">VLogical[31:0]</obj_property>
+         <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/TOPSim/dut/CDBC/QBuffer">
+         <obj_property name="ElementShortName">QBuffer[4:0]</obj_property>
+         <obj_property name="ObjectShortName">QBuffer[4:0]</obj_property>
+         <obj_property name="Radix">BINARYRADIX</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/TOPSim/dut/CDBC/VBuffer">
+         <obj_property name="ElementShortName">VBuffer[31:0]</obj_property>
+         <obj_property name="ObjectShortName">VBuffer[31:0]</obj_property>
+         <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/TOPSim/dut/CDBC/ArithmeticRequest">
+         <obj_property name="ElementShortName">ArithmeticRequest</obj_property>
+         <obj_property name="ObjectShortName">ArithmeticRequest</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/TOPSim/dut/CDBC/LogicalRequest">
+         <obj_property name="ElementShortName">LogicalRequest</obj_property>
+         <obj_property name="ObjectShortName">LogicalRequest</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/TOPSim/dut/CDBC/BufferRequest">
+         <obj_property name="ElementShortName">BufferRequest</obj_property>
+         <obj_property name="ObjectShortName">BufferRequest</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/TOPSim/dut/CDBC/Qout">
+         <obj_property name="ElementShortName">Qout[4:0]</obj_property>
+         <obj_property name="ObjectShortName">Qout[4:0]</obj_property>
+         <obj_property name="Radix">BINARYRADIX</obj_property>
+         <obj_property name="CustomSignalColor">#FFFF00</obj_property>
+         <obj_property name="UseCustomSignalColor">true</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/TOPSim/dut/CDBC/Vout">
+         <obj_property name="ElementShortName">Vout[31:0]</obj_property>
+         <obj_property name="ObjectShortName">Vout[31:0]</obj_property>
+         <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
+         <obj_property name="CustomSignalColor">#FFFF00</obj_property>
+         <obj_property name="UseCustomSignalColor">true</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/TOPSim/dut/CDBC/GrantArithmetic">
+         <obj_property name="ElementShortName">GrantArithmetic</obj_property>
+         <obj_property name="ObjectShortName">GrantArithmetic</obj_property>
+         <obj_property name="CustomSignalColor">#FFFF00</obj_property>
+         <obj_property name="UseCustomSignalColor">true</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/TOPSim/dut/CDBC/GrantLogical">
+         <obj_property name="ElementShortName">GrantLogical</obj_property>
+         <obj_property name="ObjectShortName">GrantLogical</obj_property>
+         <obj_property name="CustomSignalColor">#FFFF00</obj_property>
+         <obj_property name="UseCustomSignalColor">true</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/TOPSim/dut/CDBC/GrantBuffer">
+         <obj_property name="ElementShortName">GrantBuffer</obj_property>
+         <obj_property name="ObjectShortName">GrantBuffer</obj_property>
+         <obj_property name="CustomSignalColor">#FFFF00</obj_property>
+         <obj_property name="UseCustomSignalColor">true</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/TOPSim/dut/CDBC/priority">
+         <obj_property name="ElementShortName">priority[1:0]</obj_property>
+         <obj_property name="ObjectShortName">priority[1:0]</obj_property>
+         <obj_property name="CustomSignalColor">#FF00FF</obj_property>
+         <obj_property name="UseCustomSignalColor">true</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/TOPSim/dut/CDBC/currentSelected">
+         <obj_property name="ElementShortName">currentSelected[1:0]</obj_property>
+         <obj_property name="ObjectShortName">currentSelected[1:0]</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/TOPSim/dut/CDBC/nextSelected">
+         <obj_property name="ElementShortName">nextSelected[1:0]</obj_property>
+         <obj_property name="ObjectShortName">nextSelected[1:0]</obj_property>
       </wvobject>
    </wvobject>
 </wave_config>
