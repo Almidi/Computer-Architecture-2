@@ -22,6 +22,7 @@ entity IssueUnit is
 		LogicalIssue : out STD_LOGIC;
 		BufferAvailable : in STD_LOGIC_VECTOR (2 downto 0);
 		BufferIssue : out STD_LOGIC;
+        RoBFull : in STD_LOGIC; 
 		Clk: in STD_LOGIC;
 		Rst: in STD_LOGIC);   
 end IssueUnit;
@@ -45,7 +46,7 @@ begin
             Accepted<='0';
 
         else
-            if IssueIn='1' and FUType="00" and LogicalAvailable/="000" then -- Logical Functions
+            if IssueIn='1' and FUType="00" and LogicalAvailable/="000" and RoBFull ='0' then -- Logical Functions
                 LogicalIssue<='1' ;
                 ArithmeticIssue<='0';
                 BufferIssue<='0';
@@ -53,7 +54,7 @@ begin
                 RFAddrW<=Ri;
                 RFWrEn<='1';
                 Accepted<='1';
-            elsif IssueIn='1' and FUType="01" and ArithmeticAvailable/="000" then -- Arithmetic Functions
+            elsif IssueIn='1' and FUType="01" and ArithmeticAvailable/="000" and RoBFull ='0' then -- Arithmetic Functions
                 LogicalIssue<='0';
                 ArithmeticIssue<='1';
                 BufferIssue<='0';
@@ -61,7 +62,7 @@ begin
                 RFAddrW<=Ri;
                 RFWrEn<='1';
                 Accepted<='1';
-            elsif IssueIn='1' and FUType="10" then -- Load Functions
+            elsif IssueIn='1' and FUType="10" and RoBFull ='0' then -- Load Functions
                 LogicalIssue<='0';
                 ArithmeticIssue<='0';
                 BufferIssue<='1';

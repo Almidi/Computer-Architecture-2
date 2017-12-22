@@ -43,6 +43,7 @@ architecture Behavioral of TOP is
         LogicalIssue 		: out STD_LOGIC;
         BufferAvailable 	: in STD_LOGIC_VECTOR (2 downto 0);
         BufferIssue 		: out STD_LOGIC;
+        RoBFull     : in STD_LOGIC;
         Clk 				: in STD_LOGIC;
         Rst 				: in STD_LOGIC);   
     end component;
@@ -224,6 +225,7 @@ begin
         LogicalIssue 		=> IssueUnit_LogicalIssue,
         BufferAvailable 	=> Buffer_Available,
         BufferIssue 		=> IssueUnit_BufferIssue,
+        RoBFull => ROB_FullOut,
         Clk 				=> CLK,
         Rst 				=> RST);   
 
