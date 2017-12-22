@@ -72,6 +72,12 @@ architecture Structural of ReorderBuffer is
 			Output: out std_logic_vector(0 to 3));
 	end component;
 
+	component CompareModuleNonZero is
+		Port ( In0 : in  STD_LOGIC_VECTOR (4 downto 0);
+		       In1 : in  STD_LOGIC_VECTOR (4 downto 0);
+		       DOUT : out  STD_LOGIC);
+	end component;
+
 	component CompareModule is
 		Port ( In0 : in  STD_LOGIC_VECTOR (4 downto 0);
 		       In1 : in  STD_LOGIC_VECTOR (4 downto 0);
@@ -100,7 +106,6 @@ architecture Structural of ReorderBuffer is
 
 	signal HeadDataIn, TailDataIn, HeadOutput, TailOutput: std_logic_vector(3 downto 0);
 
-
 	signal HeadRAW				: STD_LOGIC_VECTOR(77 downto 0);
 	signal HeadInstructionType 	: STD_LOGIC_VECTOR(1 downto 0);
 	signal HeadDestination 		: STD_LOGIC_VECTOR(4 downto 0);
@@ -109,8 +114,6 @@ architecture Structural of ReorderBuffer is
 	signal HeadPC 				: STD_LOGIC_VECTOR(31 downto 0);
 	signal HeadReady 			: STD_LOGIC;
 	signal HeadException 		: STD_LOGIC;
-
-
 
 	signal WrEnSignal, ReadyOutSignal, ExceptionOutSignal, NewestOutSignal: std_logic_vector(15 downto 0);
 	signal InstrTypeOutSignal: Bus16x2;
@@ -182,13 +185,13 @@ begin
 
 	-- Unpack Mux
 
-	HeadInstructionType <= HeadRAW( 1  downto 0 );
-	HeadDestination 	<= HeadRAW( 6  downto 2 );
-	HeadTag 			<= HeadRAW( 11 downto 7 );
-	HeadValue 			<= HeadRAW( 43 downto 12 );
-	HeadPC 				<= HeadRAW( 75 downto 44 );
-	HeadReady 			<= HeadRAW( 76 );
-	HeadException 		<= HeadRAW( 77 );
+	HeadInstructionType <= HeadRAW(77 downto 76);
+	HeadDestination 	<= HeadRAW(75 downto 71);
+	HeadTag 			<= HeadRAW(70 downto 66);
+	HeadValue 			<= HeadRAW(65 downto 34);
+	HeadPC 				<= HeadRAW(33 downto 2);
+	HeadReady 			<= HeadRAW(1);
+	HeadException 		<= HeadRAW(0);
 
 	InstrTypeOut <= HeadInstructionType;
 	PCOut		 <= HeadPC;
@@ -213,7 +216,8 @@ begin
 
 	HeadClear <= HeadEnable ; --clear when moving head
 
-	ReadPort1: ReadPort Port map(      ReadAddr =>ReadAddr1,
+	ReadPort1: ReadPort Port map(      
+							ReadAddr =>ReadAddr1,
 							DestinationsIn=>DestinationOutSignal,
 							ValuesIn=>ValueOutSignal,
 							TagsIn=>TagOutSignal,
@@ -221,7 +225,8 @@ begin
 							Available => Available1,
 							Value =>DataOut1,
 							Tag=>TagOut1);
-	ReadPort2: ReadPort Port map(      ReadAddr =>ReadAddr2,
+	ReadPort2: ReadPort Port map(      
+							ReadAddr =>ReadAddr2,
 							DestinationsIn=>DestinationOutSignal,
 							ValuesIn=>ValueOutSignal,
 							TagsIn=>TagOutSignal,

@@ -1,5 +1,6 @@
 library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;
+use ieee.numeric_std.all;
 entity ReorderBufferBlock is
 	Port (InstrTypeIn: in std_logic_vector(1 downto 0);
 		DestinationIn: in std_logic_vector(4 downto 0);
@@ -56,13 +57,14 @@ architecture Structural of ReorderBufferBlock is
 		       DataOut : out STD_LOGIC);
 	      end component;
 
-	      component CompareModule is
+	      component CompareModuleNonZero is
 		Port ( In0 : in  STD_LOGIC_VECTOR (4 downto 0);
 		       In1 : in  STD_LOGIC_VECTOR (4 downto 0);
 		       DOUT : out  STD_LOGIC);
 	      end component;
 
 	signal ComparatorOut: std_logic;
+	signal Comparator2Out: std_logic;
 	signal DstComparatorOut: std_logic;
 	signal ValueWrite: std_logic;
 	signal intReadyOut: std_logic;
@@ -99,7 +101,15 @@ begin
 
 	TagOut<=tagOutSignal;
 
-	comparator: CompareModule port map(In0=>CDBQ,In1=>tagOutSignal,DOUT=>ComparatorOut);
+	comparator: CompareModuleNonZero port map(
+			In0		=>	CDBQ,
+			In1		=>	tagOutSignal,
+			DOUT	=>	ComparatorOut);
+
+	comparator2: CompareModuleNonZero port map(
+			In0		=>	CDBQ,
+			In1		=>	TagIn,
+			DOUT	=>	Comparator2Out);
 
 	ValueREG : Register32 Port Map (
 							DataIn =>CDBV,
@@ -132,7 +142,7 @@ begin
 								DataOut =>ExceptionOut,
 								Rst =>Rst);
 
-	DstComparator: CompareModule port map(In0=>intDestinationOut,In1=>DestinationIn,DOUT=>DstComparatorOut);
+	DstComparator: CompareModuleNonZero port map(In0=>intDestinationOut,In1=>DestinationIn,DOUT=>DstComparatorOut);
 
 	DestinationOut <= intDestinationOut;
 
@@ -142,4 +152,5 @@ begin
 						Clk =>Clk,
 						DataOut =>NewestOut,
 						Rst =>Rst);
+
 end Structural;

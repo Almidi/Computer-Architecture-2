@@ -47,7 +47,7 @@ architecture Structural of RegisterFile is
 					Sel : in  STD_LOGIC_VECTOR (4 downto 0);
 					Output : out  STD_LOGIC_VECTOR (4 downto 0));
 	end component;
-	component CompareModule is
+	component CompareModuleNonZero is
 	    Port ( In0 : in  STD_LOGIC_VECTOR (4 downto 0);
 	           In1 : in  STD_LOGIC_VECTOR (4 downto 0);
 	           DOUT : out  STD_LOGIC);
@@ -87,9 +87,9 @@ begin
 	TagWrEnHandler_0: TagWrEnHandler port map(AddrW=>AddrW,WrEn=>WrEn,Output=>TagWrEnHandlerOut);
 	ComparatorsGenerators:
 	for i in 0 to 31 generate
-		comparator_i: CompareModule port map(In0=>CDBQ,In1=>register5Out(i),DOUT=>ComparatorsOut(i));
+		comparator_i: CompareModuleNonZero port map(In0=>CDBQ,In1=>register5Out(i),DOUT=>ComparatorsOut(i));
 	end generate;
-	CompareToZero: CompareModule port map(In0=>CDBQ,In1=>std_logic_vector(to_unsigned(0,5)),DOUT=>isZero);
+	CompareToZero: CompareModuleNonZero port map(In0=>CDBQ,In1=>std_logic_vector(to_unsigned(0,5)),DOUT=>isZero);
 	Register32WrEnGenerator:
 	for i in 0 to 31 generate
 		Register32WrEnSignal(i)<=ComparatorsOut(i) and not isZero;
