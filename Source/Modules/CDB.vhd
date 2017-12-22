@@ -20,114 +20,114 @@ entity CDB is
            GrantBuffer: out STD_LOGIC);
 end CDB;
 architecture Behavioral of CDB is
-	signal priority, selected: std_logic_vector(1 downto 0);
+	Signal priority, currentSelected, nextSelected: std_logic_vector(1 downto 0);
 begin
---	process(Clk, Rst, ArithmeticRequest, LogicalRequest, BufferRequest,
---		VArithmetic, VLogical, VBuffer, QArithmetic, QLogical, QBuffer)
 	process(Clk, Rst)
 	begin
 		if Rst='1' then
-			Qout<=std_logic_vector(to_unsigned(0,5));
-			Vout<=std_logic_vector(to_unsigned(0,32));
 			priority<="00";
 			GrantArithmetic<='0';
 			GrantLogical<='0';
    			GrantBuffer<='0';
-   			selected<="00";
+   			nextSelected<="00";
 		elsif rising_edge(clk) then
---		elsif clk = '1' then
---		else
-			if selected="01" then
-				Qout<=QArithmetic;
-				Vout<=VArithmetic;
-			elsif selected="10" then
-				Qout<=QLogical;
-				Vout<=VLogical;
-			elsif selected="11" then
-				Qout<=QBuffer;
-				Vout<=VBuffer;
-			else
-				Qout<=std_logic_vector(to_unsigned(0,5));
-				Vout<=std_logic_vector(to_unsigned(0,32));
-			end if;
-			--if Clk='1' then
-				if priority="00" then
-					if ArithmeticRequest='1' then
-						selected<="01";
-						GrantArithmetic<='1';
-						GrantLogical<='0';
-						GrantBuffer<='0';
-						priority<="01";
-					elsif LogicalRequest='1' then
-						selected<="10";
-						GrantArithmetic<='0';
-						GrantLogical<='1';
-						GrantBuffer<='0';
-						priority<="01";
-					elsif BufferRequest='1' then
-						selected<="11";
-						GrantArithmetic<='0';
-						GrantLogical<='0';
-						GrantBuffer<='1';
-						priority<="01";
-					else
-						selected<="00";
-						GrantArithmetic<='0';
-						GrantLogical<='0';
-						GrantBuffer<='0';
-					end if;
-				elsif priority="01" then
-					if LogicalRequest='1' then
-						selected<="10";
-						GrantArithmetic<='0';
-						GrantLogical<='1';
-						GrantBuffer<='0';
-						priority<="10";
-					elsif BufferRequest='1' then
-						selected<="11";
-						GrantArithmetic<='0';
-						GrantLogical<='0';
-						GrantBuffer<='1';
-						priority<="10";
-					elsif ArithmeticRequest='1' then
-						selected<="01";
-						GrantArithmetic<='1';
-						GrantLogical<='0';
-						GrantBuffer<='0';
-						priority<="10";
-					else
-						selected<="00";
-						GrantArithmetic<='0';
-						GrantLogical<='0';
-						GrantBuffer<='0';
-					end if;
+			if priority="00" then
+				if ArithmeticRequest='1' then
+					nextSelected<="01";
+					GrantArithmetic<='1';
+					GrantLogical<='0';
+					GrantBuffer<='0';
+					priority<="01";
+				elsif LogicalRequest='1' then
+					nextSelected<="10";
+					GrantArithmetic<='0';
+					GrantLogical<='1';
+					GrantBuffer<='0';
+					priority<="01";
+				elsif BufferRequest='1' then
+					nextSelected<="11";
+					GrantArithmetic<='0';
+					GrantLogical<='0';
+					GrantBuffer<='1';
+					priority<="01";
 				else
-					if BufferRequest='1' then
-						selected<="11";
-						GrantArithmetic<='0';
-						GrantLogical<='0';
-						GrantBuffer<='1';
-						priority<="00";
-					elsif ArithmeticRequest='1' then
-						selected<="01";
-						GrantArithmetic<='1';
-						GrantLogical<='0';
-						GrantBuffer<='0';
-						priority<="00";
-					elsif LogicalRequest='1' then
-						selected<="10";
-						GrantArithmetic<='0';
-						GrantLogical<='1';
-						GrantBuffer<='0';
-						priority<="00";
-					else
-						selected<="00";
-						GrantArithmetic<='0';
-						GrantLogical<='0';
-						GrantBuffer<='0';
-					end if;
+					nextSelected<="00";
+					GrantArithmetic<='0';
+					GrantLogical<='0';
+					GrantBuffer<='0';
 				end if;
-			--end if;
+			elsif priority="01" then
+				if LogicalRequest='1' then
+					nextSelected<="10";
+					GrantArithmetic<='0';
+					GrantLogical<='1';
+					GrantBuffer<='0';
+					priority<="10";
+				elsif BufferRequest='1' then
+					nextSelected<="11";
+					GrantArithmetic<='0';
+					GrantLogical<='0';
+					GrantBuffer<='1';
+					priority<="10";
+				elsif ArithmeticRequest='1' then
+					nextSelected<="01";
+					GrantArithmetic<='1';
+					GrantLogical<='0';
+					GrantBuffer<='0';
+					priority<="10";
+				else
+					nextSelected<="00";
+					GrantArithmetic<='0';
+					GrantLogical<='0';
+					GrantBuffer<='0';
+				end if;
+			else
+				if BufferRequest='1' then
+					nextSelected<="11";
+					GrantArithmetic<='0';
+					GrantLogical<='0';
+					GrantBuffer<='1';
+					priority<="00";
+				elsif ArithmeticRequest='1' then
+					nextSelected<="01";
+					GrantArithmetic<='1';
+					GrantLogical<='0';
+					GrantBuffer<='0';
+					priority<="00";
+				elsif LogicalRequest='1' then
+					nextSelected<="10";
+					GrantArithmetic<='0';
+					GrantLogical<='1';
+					GrantBuffer<='0';
+					priority<="00";
+				else
+					nextSelected<="00";
+					GrantArithmetic<='0';
+					GrantLogical<='0';
+					GrantBuffer<='0';
+				end if;
+			end if;
 		end if;
 	end process;
+
+	process(Clk, Rst,currentSelected,nextSelected)
+	begin
+		if Rst='1' then
+			currentSelected<="00";
+		elsif rising_edge(Clk) then
+			currentSelected<=nextSelected;
+		end if;
+	end process;
+
+	with currentSelected select
+		Qout <= QArithmetic 						when "01",
+				QLogical 							when "10",
+				QBuffer 							when "11",
+				std_logic_vector(to_unsigned(0,5)) 	when others;
+	
+	with currentSelected select
+		Vout <= VArithmetic 						when "01",
+				VLogical 							when "10",
+				VBuffer 							when "11",
+				std_logic_vector(to_unsigned(0,32))	when others;
 end Behavioral;

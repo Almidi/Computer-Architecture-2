@@ -71,6 +71,7 @@ architecture Structural of ReorderBufferBlock is
 	signal tagOutSignal: std_logic_vector(4 downto 0);
 	signal tagInSignal: std_logic_vector(4 downto 0);
 	signal intDestinationOut: std_logic_vector(4 downto 0);
+	signal intValueOut : std_logic_vector(31 downto 0);
 
 begin
 	InstrTypeREG : Register2 Port Map (
@@ -106,19 +107,24 @@ begin
 			In1		=>	tagOutSignal,
 			DOUT	=>	ComparatorOut);
 
-	comparator2: CompareModuleNonZero port map(
+	comparator2: CompareModuleNonZero port map( --TODO Edit out the cdb passthrough mechanism
 			In0		=>	CDBQ,
 			In1		=>	TagIn,
 			DOUT	=>	Comparator2Out);
+
+	with Comparator2Out select 
+		ValueOut <= intValueOut when '0',
+					CDBV when others ;
+
 
 	ValueREG : Register32 Port Map (
 							DataIn =>CDBV,
 							WrEn =>ValueWrite,
 							Clk =>Clk,
-							DataOut =>ValueOut,
+							DataOut =>intValueOut,
 							Rst =>Rst);
 
-	ReadyOut <= intReadyOut ;
+	ReadyOut <= intReadyOut OR Comparator2Out ;
 
 	ValueWrite <= ComparatorOut AND (NOT intReadyOut);
 
