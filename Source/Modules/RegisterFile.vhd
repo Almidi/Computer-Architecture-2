@@ -26,21 +26,9 @@ architecture Structural of RegisterFile is
 			Sel : in  STD_LOGIC_VECTOR (4 downto 0);
 			Output : out  STD_LOGIC_VECTOR (31 downto 0));
 	end component;
-<<<<<<< HEAD
-	component BusMultiplexer32x5 is
-	    Port (		Input : in Bus32x5;
-					Sel : in  STD_LOGIC_VECTOR (4 downto 0);
-					Output : out  STD_LOGIC_VECTOR (4 downto 0));
-	end component;
-	component CompareModuleNonZero is
-	    Port ( In0 : in  STD_LOGIC_VECTOR (4 downto 0);
-	           In1 : in  STD_LOGIC_VECTOR (4 downto 0);
-	           DOUT : out  STD_LOGIC);
-=======
 	component Decoder5to32 is
 		Port ( Input : in STD_LOGIC_VECTOR (4 downto 0);
 		       Output : out STD_LOGIC_VECTOR (31 downto 0));
->>>>>>> 103104fd8e56fd9e31b7f5535a2bab9c10c30b8c
 	end component;
 	
 	signal register32Out : Bus32;
@@ -56,18 +44,4 @@ begin
 	end generate;
 	BusMux32_DataOut1: BusMultiplexer32 port map(Input=>register32Out, Sel=>ReadAddr1, Output=>DataOut1);
 	BusMux32_DataOut2: BusMultiplexer32 port map(Input=>register32Out, Sel=>ReadAddr2, Output=>DataOut2);
-<<<<<<< HEAD
-	BusMux32x5_TagOut2: BusMultiplexer32x5 port map(Input=>register5Out, Sel=>ReadAddr2, Output=>TagOut2);
-	TagWrEnHandler_0: TagWrEnHandler port map(AddrW=>AddrW,WrEn=>WrEn,Output=>TagWrEnHandlerOut);
-	ComparatorsGenerators:
-	for i in 0 to 31 generate
-		comparator_i: CompareModuleNonZero port map(In0=>CDBQ,In1=>register5Out(i),DOUT=>ComparatorsOut(i));
-	end generate;
-	CompareToZero: CompareModuleNonZero port map(In0=>CDBQ,In1=>std_logic_vector(to_unsigned(0,5)),DOUT=>isZero);
-	Register32WrEnGenerator:
-	for i in 0 to 31 generate
-		Register32WrEnSignal(i)<=ComparatorsOut(i) and not isZero;
-	end generate;
-=======
->>>>>>> 103104fd8e56fd9e31b7f5535a2bab9c10c30b8c
 end Structural;

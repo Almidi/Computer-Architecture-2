@@ -185,7 +185,6 @@ begin
 
 	-- Unpack Mux
 
-<<<<<<< HEAD
 	HeadInstructionType <= HeadRAW(77 downto 76);
 	HeadDestination 	<= HeadRAW(75 downto 71);
 	HeadTag 			<= HeadRAW(70 downto 66);
@@ -193,15 +192,6 @@ begin
 	HeadPC 				<= HeadRAW(33 downto 2);
 	HeadReady 			<= HeadRAW(1);
 	HeadException 		<= HeadRAW(0);
-=======
-	HeadInstructionType<= HeadRAW( 1  downto 0 );
-	HeadDestination<= HeadRAW( 6  downto 2 );
-	HeadTag<= HeadRAW( 11 downto 7 );
-	HeadValue<= HeadRAW( 43 downto 12 );
-	HeadPC<= HeadRAW( 75 downto 44 );
-	HeadReady <= HeadRAW( 76 );
-	HeadException<= HeadRAW( 77 );
->>>>>>> 103104fd8e56fd9e31b7f5535a2bab9c10c30b8c
 
 	InstrTypeOut <= HeadInstructionType;
 	PCOut<= HeadPC;
