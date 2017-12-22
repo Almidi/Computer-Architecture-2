@@ -72,12 +72,6 @@ architecture Structural of ReorderBuffer is
 		Output	: out std_logic_vector(0 to 3));
 	end component;
 
-<<<<<<< HEAD
-	component CompareModule Port(
-		In0 	: in  STD_LOGIC_VECTOR (4 downto 0);
-		In1 	: in  STD_LOGIC_VECTOR (4 downto 0);
-		DOUT 	: out  STD_LOGIC);
-=======
 	component CompareModuleNonZero is
 		Port ( In0 : in  STD_LOGIC_VECTOR (4 downto 0);
 		       In1 : in  STD_LOGIC_VECTOR (4 downto 0);
@@ -88,7 +82,6 @@ architecture Structural of ReorderBuffer is
 		Port ( In0 : in  STD_LOGIC_VECTOR (4 downto 0);
 		       In1 : in  STD_LOGIC_VECTOR (4 downto 0);
 		       DOUT : out  STD_LOGIC);
->>>>>>> 73f82d8e90c5f317a0276edfe0854d024babc4fc
 	end component;
 
 	component Demux1to16 Port(
@@ -192,15 +185,6 @@ begin
 		Output 	=> HeadRAW);
 
 	-- Unpack Mux
-<<<<<<< HEAD
-	HeadInstructionType	<= HeadRAW( 1  downto 0 );
-	HeadDestination		<= HeadRAW( 6  downto 2 );
-	HeadTag				<= HeadRAW( 11 downto 7 );
-	HeadValue			<= HeadRAW( 43 downto 12 );
-	HeadPC				<= HeadRAW( 75 downto 44 );
-	HeadReady 			<= HeadRAW( 76 );
-	HeadException		<= HeadRAW( 77 );
-=======
 
 	HeadInstructionType <= HeadRAW(77 downto 76);
 	HeadDestination 	<= HeadRAW(75 downto 71);
@@ -209,7 +193,6 @@ begin
 	HeadPC 				<= HeadRAW(33 downto 2);
 	HeadReady 			<= HeadRAW(1);
 	HeadException 		<= HeadRAW(0);
->>>>>>> 73f82d8e90c5f317a0276edfe0854d024babc4fc
 
 	InstrTypeOut <= HeadInstructionType;
 	PCOut<= HeadPC;
@@ -232,8 +215,7 @@ begin
 
 	HeadClear <= HeadEnable ; --clear when moving head
 
-<<<<<<< HEAD
-	ReadPort1: ReadPort Port map(
+	ReadPort1: ReadPort Port map(      
 		ReadAddr 		=> ReadAddr1,
 		DestinationsIn	=> DestinationOutSignal,
 		ValuesIn		=> ValueOutSignal,
@@ -242,7 +224,6 @@ begin
 		Available 		=> Available1,
 		Value 			=> DataOut1,
 		Tag				=> TagOut1);
-	
 	ReadPort2: ReadPort Port map(
 		ReadAddr 		=> ReadAddr2,
 		DestinationsIn	=> DestinationOutSignal,
@@ -250,26 +231,6 @@ begin
 		TagsIn			=> TagOutSignal,
 		Newest			=> NewestOutSignal,
 		Available 		=> Available2,
-		Value 			=> DataOut2,
+		Value			=> DataOut2,
 		Tag				=> TagOut2);
-=======
-	ReadPort1: ReadPort Port map(      
-							ReadAddr =>ReadAddr1,
-							DestinationsIn=>DestinationOutSignal,
-							ValuesIn=>ValueOutSignal,
-							TagsIn=>TagOutSignal,
-							Newest=>NewestOutSignal,
-							Available => Available1,
-							Value =>DataOut1,
-							Tag=>TagOut1);
-	ReadPort2: ReadPort Port map(      
-							ReadAddr =>ReadAddr2,
-							DestinationsIn=>DestinationOutSignal,
-							ValuesIn=>ValueOutSignal,
-							TagsIn=>TagOutSignal,
-							Newest=>NewestOutSignal,
-							Available =>Available2,
-							Value =>DataOut2,
-							Tag=>TagOut2);
->>>>>>> 73f82d8e90c5f317a0276edfe0854d024babc4fc
 end Structural;
