@@ -124,7 +124,7 @@ begin
 							DataOut =>intValueOut,
 							Rst =>Rst);
 
-	ReadyOut <= intReadyOut OR Comparator2Out ;
+	ReadyOut <= intReadyOut ;
 
 	ValueWrite <= ComparatorOut AND (NOT intReadyOut);
 
@@ -143,7 +143,7 @@ begin
 	
 	ExceptionREG : Register1 Port Map (
 								DataIn => ExceptionIn And (NOT Clear),
-								WrEn =>WrEn OR Clear OR ExceptionIn,
+								WrEn =>WrEn OR Clear ,--OR ExceptionIn,
 								Clk =>Clk,
 								DataOut =>ExceptionOut,
 								Rst =>Rst);

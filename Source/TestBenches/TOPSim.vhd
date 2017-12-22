@@ -192,7 +192,10 @@ begin
 		Ri <= "00101"; 				-- Destination Register 5
 		Rj <= "00010";              -- Source 2
 		Rk <= "00011";              -- Source 3
-		wait for TbPeriod*1;
+
+        wait for 1 ns;
+        ExceptionIn <= '1';         -- Is Exception
+		wait for TbPeriod*1-1 ns;
 		
         -- 2 OR 9 = 11  on register 6 ----------------------------------------------
         IssueIn <= '1'; 			-- Issue
@@ -202,7 +205,9 @@ begin
         Rj <= "00010";              -- Source 2
         Rk <= "00011";              -- Source 3
 
-        wait for TbPeriod*1;
+        wait for 1 ns;
+        ExceptionIn <= '0';       
+        wait for TbPeriod*1 - 1 ns;
                 
         -- 7 AND 9 = 1  on register 7 ----------------------------------------------
         IssueIn <= '1'; 			-- Issue

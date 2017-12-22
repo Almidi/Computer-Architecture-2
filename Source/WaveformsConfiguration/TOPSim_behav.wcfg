@@ -11,15 +11,15 @@
       </db_ref>
    </db_ref_list>
    <zoom_setting>
-      <ZoomStartTime time="281650000fs"></ZoomStartTime>
-      <ZoomEndTime time="1179785820fs"></ZoomEndTime>
-      <Cursor1Time time="642502000fs"></Cursor1Time>
+      <ZoomStartTime time="0fs"></ZoomStartTime>
+      <ZoomEndTime time="1349000001fs"></ZoomEndTime>
+      <Cursor1Time time="1000000000fs"></Cursor1Time>
    </zoom_setting>
    <column_width_setting>
       <NameColumnWidth column_width="209"></NameColumnWidth>
       <ValueColumnWidth column_width="75"></ValueColumnWidth>
    </column_width_setting>
-   <WVObjectSize size="8" />
+   <WVObjectSize size="9" />
    <wvobject type="logic" fp_name="/TOPSim/Clk">
       <obj_property name="ElementShortName">Clk</obj_property>
       <obj_property name="ObjectShortName">Clk</obj_property>
@@ -31,7 +31,6 @@
    <wvobject type="group" fp_name="group361">
       <obj_property name="label">IU</obj_property>
       <obj_property name="DisplayName">label</obj_property>
-      <obj_property name="isExpanded"></obj_property>
       <wvobject type="logic" fp_name="/TOPSim/dut/IU/IssueIn">
          <obj_property name="ElementShortName">IssueIn</obj_property>
          <obj_property name="ObjectShortName">IssueIn</obj_property>
@@ -208,137 +207,168 @@
          <obj_property name="CustomSignalColor">#FFFF00</obj_property>
          <obj_property name="UseCustomSignalColor">true</obj_property>
       </wvobject>
-      <wvobject type="array" fp_name="/TOPSim/dut/A/RS1VjOut">
-         <obj_property name="ElementShortName">RS1VjOut[31:0]</obj_property>
-         <obj_property name="ObjectShortName">RS1VjOut[31:0]</obj_property>
-         <obj_property name="CustomSignalColor">#FF00FF</obj_property>
-         <obj_property name="UseCustomSignalColor">true</obj_property>
-         <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
+      <wvobject type="group" fp_name="group444">
+         <obj_property name="label">RS1</obj_property>
+         <obj_property name="DisplayName">label</obj_property>
+         <wvobject type="array" fp_name="/TOPSim/dut/A/RS1VjOut">
+            <obj_property name="ElementShortName">RS1VjOut[31:0]</obj_property>
+            <obj_property name="ObjectShortName">RS1VjOut[31:0]</obj_property>
+            <obj_property name="CustomSignalColor">#FF00FF</obj_property>
+            <obj_property name="UseCustomSignalColor">true</obj_property>
+            <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
+         </wvobject>
+         <wvobject type="array" fp_name="/TOPSim/dut/A/RS1VkOut">
+            <obj_property name="ElementShortName">RS1VkOut[31:0]</obj_property>
+            <obj_property name="ObjectShortName">RS1VkOut[31:0]</obj_property>
+            <obj_property name="CustomSignalColor">#FF00FF</obj_property>
+            <obj_property name="UseCustomSignalColor">true</obj_property>
+            <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
+         </wvobject>
+         <wvobject type="array" fp_name="/TOPSim/dut/A/RS1OpOut">
+            <obj_property name="ElementShortName">RS1OpOut[1:0]</obj_property>
+            <obj_property name="ObjectShortName">RS1OpOut[1:0]</obj_property>
+            <obj_property name="CustomSignalColor">#FF00FF</obj_property>
+            <obj_property name="UseCustomSignalColor">true</obj_property>
+         </wvobject>
+         <wvobject type="logic" fp_name="/TOPSim/dut/A/RS1Ready">
+            <obj_property name="ElementShortName">RS1Ready</obj_property>
+            <obj_property name="ObjectShortName">RS1Ready</obj_property>
+            <obj_property name="CustomSignalColor">#FF00FF</obj_property>
+            <obj_property name="UseCustomSignalColor">true</obj_property>
+         </wvobject>
+         <wvobject type="logic" fp_name="/TOPSim/dut/A/RS1Busy">
+            <obj_property name="ElementShortName">RS1Busy</obj_property>
+            <obj_property name="ObjectShortName">RS1Busy</obj_property>
+            <obj_property name="CustomSignalColor">#FF00FF</obj_property>
+            <obj_property name="UseCustomSignalColor">true</obj_property>
+         </wvobject>
+         <wvobject type="logic" fp_name="/TOPSim/dut/A/RS1Ex">
+            <obj_property name="ElementShortName">RS1Ex</obj_property>
+            <obj_property name="ObjectShortName">RS1Ex</obj_property>
+            <obj_property name="CustomSignalColor">#FF00FF</obj_property>
+            <obj_property name="UseCustomSignalColor">true</obj_property>
+         </wvobject>
+         <wvobject type="logic" fp_name="/TOPSim/dut/A/RS1WrEn">
+            <obj_property name="ElementShortName">RS1WrEn</obj_property>
+            <obj_property name="ObjectShortName">RS1WrEn</obj_property>
+            <obj_property name="CustomSignalColor">#FF00FF</obj_property>
+            <obj_property name="UseCustomSignalColor">true</obj_property>
+         </wvobject>
       </wvobject>
-      <wvobject type="array" fp_name="/TOPSim/dut/A/RS1VkOut">
-         <obj_property name="ElementShortName">RS1VkOut[31:0]</obj_property>
-         <obj_property name="ObjectShortName">RS1VkOut[31:0]</obj_property>
-         <obj_property name="CustomSignalColor">#FF00FF</obj_property>
-         <obj_property name="UseCustomSignalColor">true</obj_property>
-         <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
+      <wvobject type="group" fp_name="group443">
+         <obj_property name="label">RS2</obj_property>
+         <obj_property name="DisplayName">label</obj_property>
+         <wvobject type="array" fp_name="/TOPSim/dut/A/RS2VjOut">
+            <obj_property name="ElementShortName">RS2VjOut[31:0]</obj_property>
+            <obj_property name="ObjectShortName">RS2VjOut[31:0]</obj_property>
+            <obj_property name="CustomSignalColor">#FF00FF</obj_property>
+            <obj_property name="UseCustomSignalColor">true</obj_property>
+            <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
+         </wvobject>
+         <wvobject type="array" fp_name="/TOPSim/dut/A/RS2VkOut">
+            <obj_property name="ElementShortName">RS2VkOut[31:0]</obj_property>
+            <obj_property name="ObjectShortName">RS2VkOut[31:0]</obj_property>
+            <obj_property name="CustomSignalColor">#FF00FF</obj_property>
+            <obj_property name="UseCustomSignalColor">true</obj_property>
+            <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
+         </wvobject>
+         <wvobject type="array" fp_name="/TOPSim/dut/A/RS2OpOut">
+            <obj_property name="ElementShortName">RS2OpOut[1:0]</obj_property>
+            <obj_property name="ObjectShortName">RS2OpOut[1:0]</obj_property>
+            <obj_property name="CustomSignalColor">#FF00FF</obj_property>
+            <obj_property name="UseCustomSignalColor">true</obj_property>
+         </wvobject>
+         <wvobject type="logic" fp_name="/TOPSim/dut/A/RS2Ready">
+            <obj_property name="ElementShortName">RS2Ready</obj_property>
+            <obj_property name="ObjectShortName">RS2Ready</obj_property>
+            <obj_property name="CustomSignalColor">#FF00FF</obj_property>
+            <obj_property name="UseCustomSignalColor">true</obj_property>
+         </wvobject>
+         <wvobject type="logic" fp_name="/TOPSim/dut/A/RS2Busy">
+            <obj_property name="ElementShortName">RS2Busy</obj_property>
+            <obj_property name="ObjectShortName">RS2Busy</obj_property>
+            <obj_property name="CustomSignalColor">#FF00FF</obj_property>
+            <obj_property name="UseCustomSignalColor">true</obj_property>
+         </wvobject>
+         <wvobject type="logic" fp_name="/TOPSim/dut/A/RS2Ex">
+            <obj_property name="ElementShortName">RS2Ex</obj_property>
+            <obj_property name="ObjectShortName">RS2Ex</obj_property>
+            <obj_property name="CustomSignalColor">#FF00FF</obj_property>
+            <obj_property name="UseCustomSignalColor">true</obj_property>
+         </wvobject>
+         <wvobject type="logic" fp_name="/TOPSim/dut/A/RS2WrEn">
+            <obj_property name="ElementShortName">RS2WrEn</obj_property>
+            <obj_property name="ObjectShortName">RS2WrEn</obj_property>
+            <obj_property name="CustomSignalColor">#FF00FF</obj_property>
+            <obj_property name="UseCustomSignalColor">true</obj_property>
+         </wvobject>
       </wvobject>
-      <wvobject type="array" fp_name="/TOPSim/dut/A/RS1OpOut">
-         <obj_property name="ElementShortName">RS1OpOut[1:0]</obj_property>
-         <obj_property name="ObjectShortName">RS1OpOut[1:0]</obj_property>
-         <obj_property name="CustomSignalColor">#FF00FF</obj_property>
-         <obj_property name="UseCustomSignalColor">true</obj_property>
-      </wvobject>
-      <wvobject type="logic" fp_name="/TOPSim/dut/A/RS1Ready">
-         <obj_property name="ElementShortName">RS1Ready</obj_property>
-         <obj_property name="ObjectShortName">RS1Ready</obj_property>
-         <obj_property name="CustomSignalColor">#FF00FF</obj_property>
-         <obj_property name="UseCustomSignalColor">true</obj_property>
-      </wvobject>
-      <wvobject type="logic" fp_name="/TOPSim/dut/A/RS1Busy">
-         <obj_property name="ElementShortName">RS1Busy</obj_property>
-         <obj_property name="ObjectShortName">RS1Busy</obj_property>
-         <obj_property name="CustomSignalColor">#FF00FF</obj_property>
-         <obj_property name="UseCustomSignalColor">true</obj_property>
-      </wvobject>
-      <wvobject type="logic" fp_name="/TOPSim/dut/A/RS1Ex">
-         <obj_property name="ElementShortName">RS1Ex</obj_property>
-         <obj_property name="ObjectShortName">RS1Ex</obj_property>
-         <obj_property name="CustomSignalColor">#FF00FF</obj_property>
-         <obj_property name="UseCustomSignalColor">true</obj_property>
-      </wvobject>
-      <wvobject type="logic" fp_name="/TOPSim/dut/A/RS1WrEn">
-         <obj_property name="ElementShortName">RS1WrEn</obj_property>
-         <obj_property name="ObjectShortName">RS1WrEn</obj_property>
-         <obj_property name="CustomSignalColor">#FF00FF</obj_property>
-         <obj_property name="UseCustomSignalColor">true</obj_property>
-      </wvobject>
-      <wvobject type="array" fp_name="/TOPSim/dut/A/RS2VjOut">
-         <obj_property name="ElementShortName">RS2VjOut[31:0]</obj_property>
-         <obj_property name="ObjectShortName">RS2VjOut[31:0]</obj_property>
-         <obj_property name="CustomSignalColor">#FF00FF</obj_property>
-         <obj_property name="UseCustomSignalColor">true</obj_property>
-         <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
-      </wvobject>
-      <wvobject type="array" fp_name="/TOPSim/dut/A/RS2VkOut">
-         <obj_property name="ElementShortName">RS2VkOut[31:0]</obj_property>
-         <obj_property name="ObjectShortName">RS2VkOut[31:0]</obj_property>
-         <obj_property name="CustomSignalColor">#FF00FF</obj_property>
-         <obj_property name="UseCustomSignalColor">true</obj_property>
-         <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
-      </wvobject>
-      <wvobject type="array" fp_name="/TOPSim/dut/A/RS2OpOut">
-         <obj_property name="ElementShortName">RS2OpOut[1:0]</obj_property>
-         <obj_property name="ObjectShortName">RS2OpOut[1:0]</obj_property>
-         <obj_property name="CustomSignalColor">#FF00FF</obj_property>
-         <obj_property name="UseCustomSignalColor">true</obj_property>
-      </wvobject>
-      <wvobject type="logic" fp_name="/TOPSim/dut/A/RS2Ready">
-         <obj_property name="ElementShortName">RS2Ready</obj_property>
-         <obj_property name="ObjectShortName">RS2Ready</obj_property>
-         <obj_property name="CustomSignalColor">#FF00FF</obj_property>
-         <obj_property name="UseCustomSignalColor">true</obj_property>
-      </wvobject>
-      <wvobject type="logic" fp_name="/TOPSim/dut/A/RS2Busy">
-         <obj_property name="ElementShortName">RS2Busy</obj_property>
-         <obj_property name="ObjectShortName">RS2Busy</obj_property>
-         <obj_property name="CustomSignalColor">#FF00FF</obj_property>
-         <obj_property name="UseCustomSignalColor">true</obj_property>
-      </wvobject>
-      <wvobject type="logic" fp_name="/TOPSim/dut/A/RS2Ex">
-         <obj_property name="ElementShortName">RS2Ex</obj_property>
-         <obj_property name="ObjectShortName">RS2Ex</obj_property>
-         <obj_property name="CustomSignalColor">#FF00FF</obj_property>
-         <obj_property name="UseCustomSignalColor">true</obj_property>
-      </wvobject>
-      <wvobject type="logic" fp_name="/TOPSim/dut/A/RS2WrEn">
-         <obj_property name="ElementShortName">RS2WrEn</obj_property>
-         <obj_property name="ObjectShortName">RS2WrEn</obj_property>
-         <obj_property name="CustomSignalColor">#FF00FF</obj_property>
-         <obj_property name="UseCustomSignalColor">true</obj_property>
-      </wvobject>
-      <wvobject type="array" fp_name="/TOPSim/dut/A/RS3VjOut">
-         <obj_property name="ElementShortName">RS3VjOut[31:0]</obj_property>
-         <obj_property name="ObjectShortName">RS3VjOut[31:0]</obj_property>
-         <obj_property name="CustomSignalColor">#FF00FF</obj_property>
-         <obj_property name="UseCustomSignalColor">true</obj_property>
-         <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
-      </wvobject>
-      <wvobject type="array" fp_name="/TOPSim/dut/A/RS3VkOut">
-         <obj_property name="ElementShortName">RS3VkOut[31:0]</obj_property>
-         <obj_property name="ObjectShortName">RS3VkOut[31:0]</obj_property>
-         <obj_property name="CustomSignalColor">#FF00FF</obj_property>
-         <obj_property name="UseCustomSignalColor">true</obj_property>
-         <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
-      </wvobject>
-      <wvobject type="array" fp_name="/TOPSim/dut/A/RS3OpOut">
-         <obj_property name="ElementShortName">RS3OpOut[1:0]</obj_property>
-         <obj_property name="ObjectShortName">RS3OpOut[1:0]</obj_property>
-         <obj_property name="CustomSignalColor">#FF00FF</obj_property>
-         <obj_property name="UseCustomSignalColor">true</obj_property>
-      </wvobject>
-      <wvobject type="logic" fp_name="/TOPSim/dut/A/RS3Ready">
-         <obj_property name="ElementShortName">RS3Ready</obj_property>
-         <obj_property name="ObjectShortName">RS3Ready</obj_property>
-         <obj_property name="CustomSignalColor">#FF00FF</obj_property>
-         <obj_property name="UseCustomSignalColor">true</obj_property>
-      </wvobject>
-      <wvobject type="logic" fp_name="/TOPSim/dut/A/RS3Busy">
-         <obj_property name="ElementShortName">RS3Busy</obj_property>
-         <obj_property name="ObjectShortName">RS3Busy</obj_property>
-         <obj_property name="CustomSignalColor">#FF00FF</obj_property>
-         <obj_property name="UseCustomSignalColor">true</obj_property>
-      </wvobject>
-      <wvobject type="logic" fp_name="/TOPSim/dut/A/RS3Ex">
-         <obj_property name="ElementShortName">RS3Ex</obj_property>
-         <obj_property name="ObjectShortName">RS3Ex</obj_property>
-         <obj_property name="CustomSignalColor">#FF00FF</obj_property>
-         <obj_property name="UseCustomSignalColor">true</obj_property>
-      </wvobject>
-      <wvobject type="logic" fp_name="/TOPSim/dut/A/RS3WrEn">
-         <obj_property name="ElementShortName">RS3WrEn</obj_property>
-         <obj_property name="ObjectShortName">RS3WrEn</obj_property>
-         <obj_property name="CustomSignalColor">#FF00FF</obj_property>
-         <obj_property name="UseCustomSignalColor">true</obj_property>
+      <wvobject type="group" fp_name="group442">
+         <obj_property name="label">RS3</obj_property>
+         <obj_property name="DisplayName">label</obj_property>
+         <obj_property name="isExpanded"></obj_property>
+         <wvobject type="array" fp_name="/TOPSim/dut/A/RS3/QjREG/DataOut">
+            <obj_property name="DisplayName">label</obj_property>
+            <obj_property name="ElementShortName">DataOut[4:0]</obj_property>
+            <obj_property name="ObjectShortName">DataOut[4:0]</obj_property>
+            <obj_property name="label">QjOut[4:0]</obj_property>
+            <obj_property name="Radix">BINARYRADIX</obj_property>
+         </wvobject>
+         <wvobject type="array" fp_name="/TOPSim/dut/A/RS3/QkREG/DataOut">
+            <obj_property name="DisplayName">label</obj_property>
+            <obj_property name="ElementShortName">DataOut[4:0]</obj_property>
+            <obj_property name="ObjectShortName">DataOut[4:0]</obj_property>
+            <obj_property name="label">QkOut[4:0]</obj_property>
+            <obj_property name="Radix">BINARYRADIX</obj_property>
+         </wvobject>
+         <wvobject type="array" fp_name="/TOPSim/dut/A/RS3VjOut">
+            <obj_property name="ElementShortName">RS3VjOut[31:0]</obj_property>
+            <obj_property name="ObjectShortName">RS3VjOut[31:0]</obj_property>
+            <obj_property name="CustomSignalColor">#FF00FF</obj_property>
+            <obj_property name="UseCustomSignalColor">true</obj_property>
+            <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
+         </wvobject>
+         <wvobject type="array" fp_name="/TOPSim/dut/A/RS3VkOut">
+            <obj_property name="ElementShortName">RS3VkOut[31:0]</obj_property>
+            <obj_property name="ObjectShortName">RS3VkOut[31:0]</obj_property>
+            <obj_property name="CustomSignalColor">#FF00FF</obj_property>
+            <obj_property name="UseCustomSignalColor">true</obj_property>
+            <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
+         </wvobject>
+         <wvobject type="array" fp_name="/TOPSim/dut/A/RS3OpOut">
+            <obj_property name="ElementShortName">RS3OpOut[1:0]</obj_property>
+            <obj_property name="ObjectShortName">RS3OpOut[1:0]</obj_property>
+            <obj_property name="CustomSignalColor">#FF00FF</obj_property>
+            <obj_property name="UseCustomSignalColor">true</obj_property>
+         </wvobject>
+         <wvobject type="logic" fp_name="/TOPSim/dut/A/RS3Ready">
+            <obj_property name="ElementShortName">RS3Ready</obj_property>
+            <obj_property name="ObjectShortName">RS3Ready</obj_property>
+            <obj_property name="CustomSignalColor">#FF00FF</obj_property>
+            <obj_property name="UseCustomSignalColor">true</obj_property>
+         </wvobject>
+         <wvobject type="logic" fp_name="/TOPSim/dut/A/RS3Busy">
+            <obj_property name="ElementShortName">RS3Busy</obj_property>
+            <obj_property name="ObjectShortName">RS3Busy</obj_property>
+            <obj_property name="CustomSignalColor">#FF00FF</obj_property>
+            <obj_property name="UseCustomSignalColor">true</obj_property>
+         </wvobject>
+         <wvobject type="logic" fp_name="/TOPSim/dut/A/RS3Ex">
+            <obj_property name="ElementShortName">RS3Ex</obj_property>
+            <obj_property name="ObjectShortName">RS3Ex</obj_property>
+            <obj_property name="CustomSignalColor">#FF00FF</obj_property>
+            <obj_property name="UseCustomSignalColor">true</obj_property>
+         </wvobject>
+         <wvobject type="logic" fp_name="/TOPSim/dut/A/RS3WrEn">
+            <obj_property name="ElementShortName">RS3WrEn</obj_property>
+            <obj_property name="ObjectShortName">RS3WrEn</obj_property>
+            <obj_property name="CustomSignalColor">#FF00FF</obj_property>
+            <obj_property name="UseCustomSignalColor">true</obj_property>
+         </wvobject>
+         <wvobject type="logic" fp_name="/TOPSim/dut/A/RS3/MyDataOnCDB">
+            <obj_property name="ElementShortName">MyDataOnCDB</obj_property>
+            <obj_property name="ObjectShortName">MyDataOnCDB</obj_property>
+         </wvobject>
       </wvobject>
       <wvobject type="array" fp_name="/TOPSim/dut/A/AUVj">
          <obj_property name="ElementShortName">AUVj[31:0]</obj_property>
@@ -742,16 +772,22 @@
             <obj_property name="ElementShortName">[7][31:0]</obj_property>
             <obj_property name="ObjectShortName">[7][31:0]</obj_property>
             <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
+            <obj_property name="CustomSignalColor">#FF0000</obj_property>
+            <obj_property name="UseCustomSignalColor">true</obj_property>
          </wvobject>
          <wvobject type="array" fp_name="/TOPSim/dut/RF/register32Out[6]">
             <obj_property name="ElementShortName">[6][31:0]</obj_property>
             <obj_property name="ObjectShortName">[6][31:0]</obj_property>
             <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
+            <obj_property name="CustomSignalColor">#FF0000</obj_property>
+            <obj_property name="UseCustomSignalColor">true</obj_property>
          </wvobject>
          <wvobject type="array" fp_name="/TOPSim/dut/RF/register32Out[5]">
             <obj_property name="ElementShortName">[5][31:0]</obj_property>
             <obj_property name="ObjectShortName">[5][31:0]</obj_property>
             <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
+            <obj_property name="CustomSignalColor">#FF0000</obj_property>
+            <obj_property name="UseCustomSignalColor">true</obj_property>
          </wvobject>
          <wvobject type="array" fp_name="/TOPSim/dut/RF/register32Out[4]">
             <obj_property name="ElementShortName">[4][31:0]</obj_property>
@@ -863,12 +899,18 @@
          <obj_property name="CustomSignalColor">#FF00FF</obj_property>
          <obj_property name="UseCustomSignalColor">true</obj_property>
       </wvobject>
-      <wvobject type="array" fp_name="/TOPSim/dut/CDBC/selected">
-         <obj_property name="ElementShortName">selected[1:0]</obj_property>
-         <obj_property name="ObjectShortName">selected[1:0]</obj_property>
-         <obj_property name="CustomSignalColor">#FF00FF</obj_property>
-         <obj_property name="UseCustomSignalColor">true</obj_property>
+      <wvobject type="array" fp_name="/TOPSim/dut/CDBC/currentSelected">
+         <obj_property name="ElementShortName">currentSelected[1:0]</obj_property>
+         <obj_property name="ObjectShortName">currentSelected[1:0]</obj_property>
       </wvobject>
+      <wvobject type="array" fp_name="/TOPSim/dut/CDBC/nextSelected">
+         <obj_property name="ElementShortName">nextSelected[1:0]</obj_property>
+         <obj_property name="ObjectShortName">nextSelected[1:0]</obj_property>
+      </wvobject>
+   </wvobject>
+   <wvobject type="logic" fp_name="/TOPSim/ExceptionIn">
+      <obj_property name="ElementShortName">ExceptionIn</obj_property>
+      <obj_property name="ObjectShortName">ExceptionIn</obj_property>
    </wvobject>
    <wvobject type="group" fp_name="group311">
       <obj_property name="label">ROB</obj_property>
@@ -1064,6 +1106,7 @@
       <wvobject type="group" fp_name="group383">
          <obj_property name="label">RoBB</obj_property>
          <obj_property name="DisplayName">label</obj_property>
+         <obj_property name="isExpanded"></obj_property>
          <wvobject type="array" fp_name="/TOPSim/dut/ROB/PCOutSignal">
             <obj_property name="ElementShortName">PCOutSignal[15:0][31:0]</obj_property>
             <obj_property name="ObjectShortName">PCOutSignal[15:0][31:0]</obj_property>
@@ -1071,7 +1114,6 @@
          <wvobject type="array" fp_name="/TOPSim/dut/ROB/ValueOutSignal">
             <obj_property name="ElementShortName">ValueOutSignal[15:0][31:0]</obj_property>
             <obj_property name="ObjectShortName">ValueOutSignal[15:0][31:0]</obj_property>
-            <obj_property name="isExpanded"></obj_property>
             <wvobject type="array" fp_name="/TOPSim/dut/ROB/ValueOutSignal[15]">
                <obj_property name="ElementShortName">[15][31:0]</obj_property>
                <obj_property name="ObjectShortName">[15][31:0]</obj_property>
@@ -1172,10 +1214,12 @@
          <wvobject type="array" fp_name="/TOPSim/dut/ROB/ExceptionOutSignal">
             <obj_property name="ElementShortName">ExceptionOutSignal[15:0]</obj_property>
             <obj_property name="ObjectShortName">ExceptionOutSignal[15:0]</obj_property>
+            <obj_property name="isExpanded"></obj_property>
          </wvobject>
          <wvobject type="array" fp_name="/TOPSim/dut/ROB/ReadyOutSignal">
             <obj_property name="ElementShortName">ReadyOutSignal[15:0]</obj_property>
             <obj_property name="ObjectShortName">ReadyOutSignal[15:0]</obj_property>
+            <obj_property name="isExpanded"></obj_property>
          </wvobject>
       </wvobject>
       <wvobject type="array" fp_name="/TOPSim/dut/ROB/clear">
