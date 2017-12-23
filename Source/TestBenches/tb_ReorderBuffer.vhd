@@ -101,7 +101,7 @@ begin
     -- EDIT: Check that Clk is really your main clock signal
     Clk <= TbClock;
 
-    Test<= '0';
+    Test<= '1';
 
     stimuli : process
     begin
@@ -122,7 +122,7 @@ begin
     Rst <= '0';
     wait for 10 ns;
 
-    if Test = '1' then -------------------------------------------Simulation 0
+    if Test = '0' then -------------------------------------------Simulation 0
         --Set Instructions : 
         
         InstrTypeIn   <= "01";           --Instruction Type
