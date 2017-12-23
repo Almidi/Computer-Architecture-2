@@ -1,7 +1,3 @@
--- Testbench automatically generated online
--- at http://vhdl.lapinoo.net
--- Generation date : 21.12.2017 22:20:25 GMT
-
 library ieee;
 use ieee.std_logic_1164.all;
 use ieee.numeric_std.all;
@@ -12,19 +8,20 @@ end tb_ReorderBuffer;
 architecture tb of tb_ReorderBuffer is
 
     component ReorderBuffer
-        port (InstrTypeIn   : in std_logic_vector (1 downto 0);
-              DestinationIn : in std_logic_vector (4 downto 0);
-              TagIn         : in std_logic_vector (4 downto 0);
-              PCIn          : in std_logic_vector (31 downto 0);
-              ExceptionIn   : in std_logic;
-              CDBQ          : in std_logic_vector (4 downto 0);
-              CDBV          : in std_logic_vector (31 downto 0);
-              WrEn          : in std_logic;
-              ReadAddr1     : in std_logic_vector (4 downto 0);
-              ReadAddr2     : in std_logic_vector (4 downto 0);
-              Clk           : in std_logic;
-              Rst           : in std_logic;
+        port (InstrTypeIn   : in  std_logic_vector (1 downto 0);
+              DestinationIn : in  std_logic_vector (4 downto 0);
+              TagIn         : in  std_logic_vector (4 downto 0);
+              PCIn          : in  std_logic_vector (31 downto 0);
+              ExceptionIn   : in  std_logic;
+              CDBQ          : in  std_logic_vector (4 downto 0);
+              CDBV          : in  std_logic_vector (31 downto 0);
+              WrEn          : in  std_logic;
+              ReadAddr1     : in  std_logic_vector (4 downto 0);
+              ReadAddr2     : in  std_logic_vector (4 downto 0);
+              Clk           : in  std_logic;
+              Rst           : in  std_logic;
               RFWrEn        : out std_logic;
+              Exc           : out std_logic;
               RFAddr        : out std_logic_vector (4 downto 0);
               RFWrData      : out std_logic_vector (31 downto 0);
               InstrTypeOut  : out std_logic_vector (1 downto 0);
@@ -62,9 +59,12 @@ architecture tb of tb_ReorderBuffer is
     signal DataOut2      : std_logic_vector (31 downto 0);
     signal TagOut2       : std_logic_vector (4 downto 0);
     signal Available2    : std_logic;
+    signal Exc           : std_logic;
+
+    signal Test          : std_logic;
 
     constant TbPeriod : time := 10 ns; -- EDIT Put right period here
-    signal TbClock : std_logic := '0';
+    signal TbClock : std_logic := '1';
     signal TbSimEnded : std_logic := '0';
 
 begin
@@ -82,6 +82,7 @@ begin
               Clk           => Clk,
               Rst           => Rst,
               RFWrEn        => RFWrEn,
+              Exc           => Exc,
               RFAddr        => RFAddr,
               RFWrData      => RFWrData,
               InstrTypeOut  => InstrTypeOut,
@@ -100,70 +101,158 @@ begin
     -- EDIT: Check that Clk is really your main clock signal
     Clk <= TbClock;
 
+    Test<= '0';
+
     stimuli : process
     begin
 
-        wait for  TbPeriod/2 ;
-        -- EDIT Adapt initialization as needed
-        InstrTypeIn <= (others => '0');
-        DestinationIn <= (others => '0');
-        TagIn <= (others => '0');
-        PCIn <= (others => '0');
-        ExceptionIn <= '0';
-        CDBQ <= (others => '0');
-        CDBV <= (others => '0');
-        WrEn <= '0';
-        ReadAddr1 <= (others => '0');
-        ReadAddr2 <= (others => '0');
+    InstrTypeIn <= (others => '0');
+    DestinationIn <= (others => '0');
+    TagIn <= (others => '0');
+    PCIn <= (others => '0');
+    ExceptionIn <= '0';
+    CDBQ <= (others => '0');
+    CDBV <= (others => '0');
+    WrEn <= '0';
+    ReadAddr1     <= "00011";
+    ReadAddr2     <= "00100";
 
-        -- Reset generation
-        -- EDIT: Check that Rst is really your reset signal
-        Rst <= '1';
-        wait for 100 ns;
-        Rst <= '0';
-        wait for 100 ns;
+    Rst <= '1';
+    wait for 20 ns;
+    Rst <= '0';
+    wait for 10 ns;
+
+    if Test = '1' then -------------------------------------------Simulation 0
+        --Set Instructions : 
         
-        InstrTypeIn   <= "01";
-        DestinationIn <= "00011";
-        TagIn         <= "01001";
+        InstrTypeIn   <= "01";           --Instruction Type
+        DestinationIn <= "00011";        --Destination
+        TagIn         <= "01001";        --Tag
         PCIn          <= std_logic_vector(to_unsigned(4,32));
-        ExceptionIn   <= '0';
+        ExceptionIn   <= '0';            --Exception
         WrEn          <= '1';
-        ReadAddr1     <= "00000";
-        ReadAddr2     <= "00000";
 
-        wait for  17*TbPeriod ;
+        wait for  3*TbPeriod ;
 
-        InstrTypeIn <= (others => '0');
-        DestinationIn <= (others => '0');
-        TagIn <= (others => '0');
-        PCIn <= (others => '0');
-        ExceptionIn <= '0';
-        WrEn <= '0';
-        ReadAddr1 <= (others => '0');
-        ReadAddr2 <= (others => '0');
+        InstrTypeIn   <= "01";           --Instruction Type
+        DestinationIn <= "00100";        --Destination
+        TagIn         <= "01010";        --Tag
+        PCIn          <= std_logic_vector(to_unsigned(4,32));
+        ExceptionIn   <= '0';            --Exception
+        WrEn          <= '1';
 
-        wait for  5*TbPeriod ;
-        CDBQ          <= "01001";
+        wait for 1*TbPeriod;
+
+        InstrTypeIn   <= "01";           --Instruction Type
+        DestinationIn <= "00011";        --Destination
+        TagIn         <= "01001";        --Tag
+        PCIn          <= std_logic_vector(to_unsigned(4,32));
+        ExceptionIn   <= '0';            --Exception
+        WrEn          <= '1';
+
+        CDBQ          <= "01010";
         CDBV          <= std_logic_vector(to_unsigned(3,32));
 
-        wait for  1*TbPeriod ;
-        InstrTypeIn   <= "01";
-        DestinationIn <= "00011";
-        TagIn         <= "01001";
+        wait for 1*TbPeriod;
+
+        CDBQ <= (others => '0');
+        CDBV <= (others => '0');
+
+        wait for  6*TbPeriod ;
+
+        InstrTypeIn   <= "01";           --Instruction Type
+        DestinationIn <= "00100";        --Destination
+        TagIn         <= "01011";        --Tag
         PCIn          <= std_logic_vector(to_unsigned(4,32));
-        ExceptionIn   <= '0';
+        ExceptionIn   <= '0';            --Exception
         WrEn          <= '1';
-        ReadAddr1     <= "00000";
-        ReadAddr2     <= "00000";
-        wait for  2*TbPeriod ;
+
+        wait for  1*TbPeriod ;
+
+        InstrTypeIn   <= "01";           --Instruction Type
+        DestinationIn <= "00011";        --Destination
+        TagIn         <= "01001";        --Tag
+        PCIn          <= std_logic_vector(to_unsigned(4,32));
+        ExceptionIn   <= '0';            --Exception
+        WrEn          <= '1';
 
         -- EDIT Add stimuli here
         wait for 100 * TbPeriod;
         -- Stop the clock and hence terminate the simulation
-        TbSimEnded <= '1';
-        wait;
+    else---------------------------------------------------------------------Simulation 1
 
+        InstrTypeIn   <= "01";           --Instruction Type
+        DestinationIn <= "00001";        --Destination
+        TagIn         <= "01011";        --Tag
+        PCIn          <= std_logic_vector(to_unsigned(4,32));
+        WrEn          <= '1';
+
+        wait for  1*TbPeriod ;
+
+        InstrTypeIn   <= "01";           --Instruction Type
+        DestinationIn <= "00010";        --Destination
+        TagIn         <= "01010";        --Tag
+        PCIn          <= std_logic_vector(to_unsigned(8,32));
+        WrEn          <= '1';
+
+        wait for  1*TbPeriod ;
+
+        InstrTypeIn   <= "01";           --Instruction Type
+        DestinationIn <= "00011";        --Destination
+        TagIn         <= "01001";        --Tag
+        PCIn          <= std_logic_vector(to_unsigned(12,32));
+        WrEn          <= '1';
+        
+        wait for  1*TbPeriod ;
+
+        InstrTypeIn   <= "01";           --Instruction Type
+        DestinationIn <= "00100";        --Destination
+        TagIn         <= "01001";        --Tag
+        PCIn          <= std_logic_vector(to_unsigned(16,32));
+        WrEn          <= '1';
+        ExceptionIn   <= '1';
+
+        wait for  1*TbPeriod ;
+
+        InstrTypeIn   <= "01";           --Instruction Type
+        DestinationIn <= "00101";        --Destination
+        TagIn         <= "01001";        --Tag
+        PCIn          <= std_logic_vector(to_unsigned(20,32));
+        WrEn          <= '1';
+        ExceptionIn   <= '0';
+
+        wait for  1*TbPeriod ;
+        WrEn          <= '0';
+        wait for  3*TbPeriod ;
+
+        CDBQ <= "01001";
+        CDBV <= std_logic_vector(to_unsigned(512,32));
+        wait for 1*TbPeriod;
+        CDBQ <= (others => '0');
+        CDBV <= (others => '0');
+        wait for 1*TbPeriod;
+
+        CDBQ <= (others => '0');
+        CDBV <= (others => '0');
+
+        wait for  3*TbPeriod ;
+        CDBQ <= "01011";
+        CDBV <= std_logic_vector(to_unsigned(1024,32));
+        wait for 1*TbPeriod;
+        CDBQ <= (others => '0');
+        CDBV <= (others => '0');
+
+        wait for  5*TbPeriod ;
+        CDBQ <= "01010";
+        CDBV <= std_logic_vector(to_unsigned(2048,32));
+        wait for 1*TbPeriod;
+        CDBQ <= (others => '0');
+        CDBV <= (others => '0');
+
+        -- EDIT Add stimuli here
+        wait for 100 * TbPeriod;
+    end if;
+    TbSimEnded <= '1';
 
     end process;
 

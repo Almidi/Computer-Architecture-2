@@ -1,0 +1,256 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wave_config>
+   <wave_state>
+   </wave_state>
+   <db_ref_list>
+      <db_ref path="tb_ReorderBuffer_behav.wdb" id="1">
+         <top_modules>
+            <top_module name="bus32pkg" />
+            <top_module name="tb_ReorderBuffer" />
+         </top_modules>
+      </db_ref>
+   </db_ref_list>
+   <zoom_setting>
+      <ZoomStartTime time="197500000fs"></ZoomStartTime>
+      <ZoomEndTime time="512500001fs"></ZoomEndTime>
+      <Cursor1Time time="267900000fs"></Cursor1Time>
+   </zoom_setting>
+   <column_width_setting>
+      <NameColumnWidth column_width="172"></NameColumnWidth>
+      <ValueColumnWidth column_width="78"></ValueColumnWidth>
+   </column_width_setting>
+   <WVObjectSize size="19" />
+   <wvobject type="logic" fp_name="/tb_ReorderBuffer/Clk">
+      <obj_property name="ElementShortName">Clk</obj_property>
+      <obj_property name="ObjectShortName">Clk</obj_property>
+   </wvobject>
+   <wvobject type="logic" fp_name="/tb_ReorderBuffer/Rst">
+      <obj_property name="ElementShortName">Rst</obj_property>
+      <obj_property name="ObjectShortName">Rst</obj_property>
+   </wvobject>
+   <wvobject type="logic" fp_name="/tb_ReorderBuffer/FullOut">
+      <obj_property name="ElementShortName">FullOut</obj_property>
+      <obj_property name="ObjectShortName">FullOut</obj_property>
+      <obj_property name="CustomSignalColor">#FF00FF</obj_property>
+      <obj_property name="UseCustomSignalColor">true</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/tb_ReorderBuffer/InstrTypeIn">
+      <obj_property name="ElementShortName">InstrTypeIn[1:0]</obj_property>
+      <obj_property name="ObjectShortName">InstrTypeIn[1:0]</obj_property>
+      <obj_property name="CustomSignalColor">#FAAFBE</obj_property>
+      <obj_property name="UseCustomSignalColor">true</obj_property>
+      <obj_property name="Radix">BINARYRADIX</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/tb_ReorderBuffer/DestinationIn">
+      <obj_property name="ElementShortName">DestinationIn[4:0]</obj_property>
+      <obj_property name="ObjectShortName">DestinationIn[4:0]</obj_property>
+      <obj_property name="CustomSignalColor">#FFD700</obj_property>
+      <obj_property name="UseCustomSignalColor">true</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/tb_ReorderBuffer/TagIn">
+      <obj_property name="ElementShortName">TagIn[4:0]</obj_property>
+      <obj_property name="ObjectShortName">TagIn[4:0]</obj_property>
+      <obj_property name="CustomSignalColor">#A52A2A</obj_property>
+      <obj_property name="UseCustomSignalColor">true</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/tb_ReorderBuffer/PCIn">
+      <obj_property name="ElementShortName">PCIn[31:0]</obj_property>
+      <obj_property name="ObjectShortName">PCIn[31:0]</obj_property>
+      <obj_property name="CustomSignalColor">#008000</obj_property>
+      <obj_property name="UseCustomSignalColor">true</obj_property>
+      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject type="logic" fp_name="/tb_ReorderBuffer/ExceptionIn">
+      <obj_property name="ElementShortName">ExceptionIn</obj_property>
+      <obj_property name="ObjectShortName">ExceptionIn</obj_property>
+      <obj_property name="CustomSignalColor">#FF0000</obj_property>
+      <obj_property name="UseCustomSignalColor">true</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/tb_ReorderBuffer/CDBQ">
+      <obj_property name="ElementShortName">CDBQ[4:0]</obj_property>
+      <obj_property name="ObjectShortName">CDBQ[4:0]</obj_property>
+      <obj_property name="CustomSignalColor">#0000FF</obj_property>
+      <obj_property name="UseCustomSignalColor">true</obj_property>
+      <obj_property name="Radix">BINARYRADIX</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/tb_ReorderBuffer/CDBV">
+      <obj_property name="ElementShortName">CDBV[31:0]</obj_property>
+      <obj_property name="ObjectShortName">CDBV[31:0]</obj_property>
+      <obj_property name="CustomSignalColor">#0000FF</obj_property>
+      <obj_property name="UseCustomSignalColor">true</obj_property>
+      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject type="logic" fp_name="/tb_ReorderBuffer/WrEn">
+      <obj_property name="ElementShortName">WrEn</obj_property>
+      <obj_property name="ObjectShortName">WrEn</obj_property>
+      <obj_property name="CustomSignalColor">#00FFFF</obj_property>
+      <obj_property name="UseCustomSignalColor">true</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/tb_ReorderBuffer/TagOut2">
+      <obj_property name="ElementShortName">TagOut2[4:0]</obj_property>
+      <obj_property name="ObjectShortName">TagOut2[4:0]</obj_property>
+   </wvobject>
+   <wvobject type="group" fp_name="group647">
+      <obj_property name="label">ToRF</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+      <obj_property name="isExpanded"></obj_property>
+      <wvobject type="logic" fp_name="/tb_ReorderBuffer/RFWrEn">
+         <obj_property name="ElementShortName">RFWrEn</obj_property>
+         <obj_property name="ObjectShortName">RFWrEn</obj_property>
+         <obj_property name="CustomSignalColor">#00FFFF</obj_property>
+         <obj_property name="UseCustomSignalColor">true</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_ReorderBuffer/RFAddr">
+         <obj_property name="ElementShortName">RFAddr[4:0]</obj_property>
+         <obj_property name="ObjectShortName">RFAddr[4:0]</obj_property>
+         <obj_property name="CustomSignalColor">#FFFFFF</obj_property>
+         <obj_property name="UseCustomSignalColor">true</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_ReorderBuffer/RFWrData">
+         <obj_property name="ElementShortName">RFWrData[31:0]</obj_property>
+         <obj_property name="ObjectShortName">RFWrData[31:0]</obj_property>
+         <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
+         <obj_property name="CustomSignalColor">#FFFFFF</obj_property>
+         <obj_property name="UseCustomSignalColor">true</obj_property>
+      </wvobject>
+   </wvobject>
+   <wvobject type="group" fp_name="group729">
+      <obj_property name="label">ExceptionData</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+      <obj_property name="isExpanded"></obj_property>
+      <wvobject type="array" fp_name="/tb_ReorderBuffer/PCOut">
+         <obj_property name="ElementShortName">PCOut[31:0]</obj_property>
+         <obj_property name="ObjectShortName">PCOut[31:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+         <obj_property name="CustomSignalColor">#008000</obj_property>
+         <obj_property name="UseCustomSignalColor">true</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_ReorderBuffer/InstrTypeOut">
+         <obj_property name="ElementShortName">InstrTypeOut[1:0]</obj_property>
+         <obj_property name="ObjectShortName">InstrTypeOut[1:0]</obj_property>
+         <obj_property name="Radix">BINARYRADIX</obj_property>
+         <obj_property name="CustomSignalColor">#FAAFBE</obj_property>
+         <obj_property name="UseCustomSignalColor">true</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/tb_ReorderBuffer/Exc">
+         <obj_property name="ElementShortName">Exc</obj_property>
+         <obj_property name="ObjectShortName">Exc</obj_property>
+         <obj_property name="CustomSignalColor">#FF0000</obj_property>
+         <obj_property name="UseCustomSignalColor">true</obj_property>
+      </wvobject>
+   </wvobject>
+   <wvobject type="array" fp_name="/tb_ReorderBuffer/dut/Head/Output">
+      <obj_property name="DisplayName">label</obj_property>
+      <obj_property name="ElementShortName">Output[0:3]</obj_property>
+      <obj_property name="ObjectShortName">Output[0:3]</obj_property>
+      <obj_property name="label">Head</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/tb_ReorderBuffer/dut/Tail/Output">
+      <obj_property name="DisplayName">label</obj_property>
+      <obj_property name="ElementShortName">Output[0:3]</obj_property>
+      <obj_property name="ObjectShortName">Output[0:3]</obj_property>
+      <obj_property name="label">Tail</obj_property>
+   </wvobject>
+   <wvobject type="group" fp_name="group645">
+      <obj_property name="label">Port1</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+      <wvobject type="array" fp_name="/tb_ReorderBuffer/ReadAddr1">
+         <obj_property name="ElementShortName">ReadAddr1[4:0]</obj_property>
+         <obj_property name="ObjectShortName">ReadAddr1[4:0]</obj_property>
+         <obj_property name="CustomSignalColor">#FFD700</obj_property>
+         <obj_property name="UseCustomSignalColor">true</obj_property>
+         <obj_property name="Radix">BINARYRADIX</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_ReorderBuffer/DataOut1">
+         <obj_property name="ElementShortName">DataOut1[31:0]</obj_property>
+         <obj_property name="ObjectShortName">DataOut1[31:0]</obj_property>
+         <obj_property name="CustomSignalColor">#008080</obj_property>
+         <obj_property name="UseCustomSignalColor">true</obj_property>
+         <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_ReorderBuffer/TagOut1">
+         <obj_property name="ElementShortName">TagOut1[4:0]</obj_property>
+         <obj_property name="ObjectShortName">TagOut1[4:0]</obj_property>
+         <obj_property name="CustomSignalColor">#A52A2A</obj_property>
+         <obj_property name="UseCustomSignalColor">true</obj_property>
+         <obj_property name="Radix">BINARYRADIX</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/tb_ReorderBuffer/Available1">
+         <obj_property name="ElementShortName">Available1</obj_property>
+         <obj_property name="ObjectShortName">Available1</obj_property>
+         <obj_property name="CustomSignalColor">#DCDCDC</obj_property>
+         <obj_property name="UseCustomSignalColor">true</obj_property>
+      </wvobject>
+   </wvobject>
+   <wvobject type="group" fp_name="group646">
+      <obj_property name="label">Port2</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+      <wvobject type="array" fp_name="/tb_ReorderBuffer/ReadAddr2">
+         <obj_property name="ElementShortName">ReadAddr2[4:0]</obj_property>
+         <obj_property name="ObjectShortName">ReadAddr2[4:0]</obj_property>
+         <obj_property name="CustomSignalColor">#FFD700</obj_property>
+         <obj_property name="UseCustomSignalColor">true</obj_property>
+         <obj_property name="Radix">BINARYRADIX</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_ReorderBuffer/DataOut2">
+         <obj_property name="ElementShortName">DataOut2[31:0]</obj_property>
+         <obj_property name="ObjectShortName">DataOut2[31:0]</obj_property>
+         <obj_property name="CustomSignalColor">#008080</obj_property>
+         <obj_property name="UseCustomSignalColor">true</obj_property>
+         <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_ReorderBuffer/TagOut2">
+         <obj_property name="ElementShortName">TagOut2[4:0]</obj_property>
+         <obj_property name="ObjectShortName">TagOut2[4:0]</obj_property>
+         <obj_property name="CustomSignalColor">#A52A2A</obj_property>
+         <obj_property name="UseCustomSignalColor">true</obj_property>
+         <obj_property name="Radix">BINARYRADIX</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/tb_ReorderBuffer/Available2">
+         <obj_property name="ElementShortName">Available2</obj_property>
+         <obj_property name="ObjectShortName">Available2</obj_property>
+         <obj_property name="CustomSignalColor">#DCDCDC</obj_property>
+         <obj_property name="UseCustomSignalColor">true</obj_property>
+      </wvobject>
+   </wvobject>
+   <wvobject type="group" fp_name="group648">
+      <obj_property name="label">Blocks</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+      <wvobject type="array" fp_name="/tb_ReorderBuffer/dut/WrEnSignal">
+         <obj_property name="ElementShortName">WrEnSignal[15:0]</obj_property>
+         <obj_property name="ObjectShortName">WrEnSignal[15:0]</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_ReorderBuffer/dut/ReadyOutSignal">
+         <obj_property name="ElementShortName">ReadyOutSignal[15:0]</obj_property>
+         <obj_property name="ObjectShortName">ReadyOutSignal[15:0]</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_ReorderBuffer/dut/ExceptionOutSignal">
+         <obj_property name="ElementShortName">ExceptionOutSignal[15:0]</obj_property>
+         <obj_property name="ObjectShortName">ExceptionOutSignal[15:0]</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_ReorderBuffer/dut/NewestOutSignal">
+         <obj_property name="ElementShortName">NewestOutSignal[15:0]</obj_property>
+         <obj_property name="ObjectShortName">NewestOutSignal[15:0]</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_ReorderBuffer/dut/InstrTypeOutSignal">
+         <obj_property name="ElementShortName">InstrTypeOutSignal[15:0][1:0]</obj_property>
+         <obj_property name="ObjectShortName">InstrTypeOutSignal[15:0][1:0]</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_ReorderBuffer/dut/DestinationOutSignal">
+         <obj_property name="ElementShortName">DestinationOutSignal[15:0][4:0]</obj_property>
+         <obj_property name="ObjectShortName">DestinationOutSignal[15:0][4:0]</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_ReorderBuffer/dut/TagOutSignal">
+         <obj_property name="ElementShortName">TagOutSignal[15:0][4:0]</obj_property>
+         <obj_property name="ObjectShortName">TagOutSignal[15:0][4:0]</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_ReorderBuffer/dut/ValueOutSignal">
+         <obj_property name="ElementShortName">ValueOutSignal[15:0][31:0]</obj_property>
+         <obj_property name="ObjectShortName">ValueOutSignal[15:0][31:0]</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_ReorderBuffer/dut/PCOutSignal">
+         <obj_property name="ElementShortName">PCOutSignal[15:0][31:0]</obj_property>
+         <obj_property name="ObjectShortName">PCOutSignal[15:0][31:0]</obj_property>
+      </wvobject>
+   </wvobject>
+</wave_config>
