@@ -12,7 +12,6 @@ entity TOP is Port (
     CDB_QBuffer         : in STD_LOGIC_VECTOR (4 downto 0);
     CDB_VBuffer         : in STD_LOGIC_VECTOR (31 downto 0);
     CDB_BufferRequest   : in STD_LOGIC;
-    InstrTypeIn         : in STD_LOGIC_VECTOR(1 downto 0);
     PCIn                : in STD_LOGIC_VECTOR(31 downto 0);
     ExceptionIn         : in std_logic;
     Clk                 : in STD_LOGIC;
@@ -299,7 +298,7 @@ begin
         GrantBuffer			=> CDB_GrantBuffer);
 
     ROB: ReorderBuffer Port map (
-        InstrTypeIn     => InstrTypeIn,
+        InstrTypeIn     => FUType,
         DestinationIn   => IssueUnit_RFAddrW,
         TagIn           => IssueUnit_RFTag,
         PCIn            => PCIn,

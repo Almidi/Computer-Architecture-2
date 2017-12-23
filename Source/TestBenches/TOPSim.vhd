@@ -18,7 +18,6 @@ architecture tb of TOPSim is
               CDB_QBuffer       : in std_logic_vector (4 downto 0);
               CDB_VBuffer       : in std_logic_vector (31 downto 0);
               CDB_BufferRequest : in std_logic;
-              InstrTypeIn       : in STD_LOGIC_VECTOR(1 downto 0);
               PCIn              : in STD_LOGIC_VECTOR(31 downto 0);
               ExceptionIn       : in std_logic;
               Accepted          : out std_logic;
@@ -39,7 +38,6 @@ architecture tb of TOPSim is
     signal CDB_QBuffer       : std_logic_vector (4 downto 0);
     signal CDB_VBuffer       : std_logic_vector (31 downto 0);
     signal CDB_BufferRequest : std_logic;
-    signal InstrTypeIn       : STD_LOGIC_VECTOR(1 downto 0);
     signal PCIn              : STD_LOGIC_VECTOR(31 downto 0);
     signal ExceptionIn       : std_logic;
     signal Accepted          : std_logic;
@@ -67,7 +65,6 @@ begin
               CDB_QBuffer       => CDB_QBuffer,
               CDB_VBuffer       => CDB_VBuffer,
               CDB_BufferRequest => CDB_BufferRequest,
-              InstrTypeIn       => InstrTypeIn,
               PCIn              => PCIn,
               ExceptionIn       => ExceptionIn,
               Accepted          => Accepted,
@@ -104,7 +101,6 @@ begin
         CDB_QBuffer <= (others => '0');
         CDB_VBuffer <= (others => '0');
         CDB_BufferRequest <= '0';
-        InstrTypeIn <= "01";
         PCIn        <= (others => '0');
         ExceptionIn <= '0';
 
