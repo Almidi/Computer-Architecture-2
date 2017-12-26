@@ -3,32 +3,36 @@ use IEEE.STD_LOGIC_1164.ALL;
 use work.Bus32pkg.ALL;
 use IEEE.NUMERIC_STD.ALL;
 entity RegisterFile is
-	Port( ReadAddr1 : in STD_LOGIC_VECTOR (4 downto 0);
-		ReadAddr2 : in STD_LOGIC_VECTOR (4 downto 0);
-		AddrW : in STD_LOGIC_VECTOR (4 downto 0);
-		RFWrData : in STD_LOGIC_VECTOR (31 downto 0);
-		WrEn : in STD_LOGIC;
-		Clk : in STD_LOGIC;
-		Rst : in STD_LOGIC;
-		DataOut1 : out STD_LOGIC_VECTOR (31 downto 0);
-		DataOut2 : out STD_LOGIC_VECTOR (31 downto 0));
+	Port( 
+		ReadAddr1 	: in STD_LOGIC_VECTOR (4 downto 0);
+		ReadAddr2 	: in STD_LOGIC_VECTOR (4 downto 0);
+		AddrW 		: in STD_LOGIC_VECTOR (4 downto 0);
+		RFWrData 	: in STD_LOGIC_VECTOR (31 downto 0);
+		WrEn 		: in STD_LOGIC;
+		Clk 		: in STD_LOGIC;
+		Rst 		: in STD_LOGIC;
+		DataOut1	: out STD_LOGIC_VECTOR (31 downto 0);
+		DataOut2 	: out STD_LOGIC_VECTOR (31 downto 0));
 end RegisterFile;
 architecture Structural of RegisterFile is
 	component Register32 is
-		Port ( DataIn : in STD_LOGIC_VECTOR (31 downto 0);
-			WrEn : in STD_LOGIC;
-			Clk : in STD_LOGIC;
+		Port ( 
+			DataIn 	: in STD_LOGIC_VECTOR (31 downto 0);
+			WrEn 	: in STD_LOGIC;
+			Clk 	: in STD_LOGIC;
 			DataOut : out STD_LOGIC_VECTOR (31 downto 0);
-			Rst : in STD_LOGIC);
+			Rst 	: in STD_LOGIC);
 	end component;
 	component BusMultiplexer32 is
-		Port (Input : in Bus32;
-			Sel : in  STD_LOGIC_VECTOR (4 downto 0);
-			Output : out  STD_LOGIC_VECTOR (31 downto 0));
+		Port (
+			Input 	: in Bus32;
+			Sel 	: in  STD_LOGIC_VECTOR (4 downto 0);
+			Output 	: out  STD_LOGIC_VECTOR (31 downto 0));
 	end component;
 	component Decoder5to32 is
-		Port ( Input : in STD_LOGIC_VECTOR (4 downto 0);
-		       Output : out STD_LOGIC_VECTOR (31 downto 0));
+		Port ( 
+			Input 	: in STD_LOGIC_VECTOR (4 downto 0);
+		    Output 	: out STD_LOGIC_VECTOR (31 downto 0));
 	end component;
 	
 	signal register32Out : Bus32;
