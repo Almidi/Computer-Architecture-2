@@ -3,9 +3,7 @@ use ieee.std_logic_1164.all;
 use ieee.numeric_std.all;
 entity tb_Memory is
 end tb_Memory;
-
 architecture tb of tb_Memory is
-
     component Memory
         port (DataIn    : in std_logic_vector (31 downto 0);
               WriteAddr : in std_logic_vector (4 downto 0);
@@ -34,12 +32,10 @@ architecture tb of tb_Memory is
     signal VOut      : std_logic_vector (31 downto 0);
     signal QOut      : std_logic_vector (4 downto 0);
 
-    constant TbPeriod : time := 10 ns; -- EDIT Put right period here
+    constant TbPeriod : time := 10 ns;
     signal TbClock : std_logic := '0';
     signal TbSimEnded : std_logic := '0';
-
 begin
-
     dut : Memory
     port map (DataIn    => DataIn,
               WriteAddr => WriteAddr,
@@ -56,8 +52,6 @@ begin
 
     -- Clock generation
     TbClock <= not TbClock after TbPeriod/2 when TbSimEnded /= '1' else '0';
-
-    -- EDIT: Check that Clk is really your main clock signal
     Clk <= TbClock;
 
     stimuli : process
@@ -71,7 +65,6 @@ begin
         Grant <= '0';
 
         -- Reset generation
-        -- EDIT: Check that Rst is really your reset signal
         Rst <= '1';
 		wait for 1 * TbPeriod;
         Rst <= '0';
@@ -88,6 +81,7 @@ begin
 			wait for 1 * TbPeriod;
 		end loop;
 
+		-- Nops
 		DataIn 		<= std_logic_vector(to_unsigned(0,32));
 		WriteAddr 	<= std_logic_vector(to_unsigned(0,5));
 		WrEn 		<= '0';
